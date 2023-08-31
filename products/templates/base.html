@@ -37,6 +37,7 @@
     {% include "misc/includes/header.html" %}
 
         {% block content %}
+        <div class="container">
             <div class="row bg-secondaryd py-2 px-xl-5">
                 <div class="col-lg-3">{% block sidebar %}
                     <div class="navbar-nav mr-auto py-0 d-none d-lg-block">
@@ -45,6 +46,7 @@
                     {% endblock %}</div>
                 <div class="col-lg-9">{% block main %}{% endblock %}</div>
             </div>
+        </div>
         {% endblock %}
     
     {% include "misc/includes/footer.html" %}

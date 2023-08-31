@@ -32,6 +32,8 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('search/', views.products, name="search_products"),
     path('paypal/', include('paypal.standard.ipn.urls')),
+    path('payment/', include('payment.urls', namespace='payment')),
+    #path('', views.index, name='index'),
     path("", ProductListView.as_view(), name="product_list"),
     path('products/', include(("products.urls", "products"), namespace="products")),
 ]

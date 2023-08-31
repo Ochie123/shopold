@@ -1,0 +1,23 @@
+<div class="">
+    <h3>Top Rated</h3>
+    <div class="item-list">
+        {% for product in toprated_products %}
+            {% debug %}
+            <a href="{{ product.get_url_path }}"
+               data-modal-title="{{ product.title }}"
+               data-modal-url="{% url 'products:product_detail_modal' pk=product.pk  %}"
+               class="item d-block my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="float-right">
+                        </div>
+                        <p class="card-text">{{ product.title }}<br/>
+                            <small>
+                                {{ product.price }}</small>
+                        </p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>  
+</div>

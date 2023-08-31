@@ -1,48 +1,23 @@
 {%load static %}
+
   <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-.flex-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.flex-wrapper > div {
-  width: 100%;
-  max-width: 25%;
-  padding: 10px;
+      * {
+
+
 
 }
 
-@media only screen and (max-width: 600px) {
-  .flex-wrapper > div {
-    max-width: 50%;
-  }
-}
-@media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-    }
 
-.img-container {
+
+.img-containere {
    position: relative;
    overflow:hidden;
    height: 150px;
 }
 
-.img-container img {
+.img-containere img {
   position: absolute;
   top:0;
   left:0;
@@ -50,56 +25,103 @@
   height:100%;
   object-fit: cover;
 }
-  </style>
-    <!-- Section START -->
-        <div class="row">
-          <div class="col-md-12">
-            <!-- Title -->
-            <div class="mb-4 d-md-flex justify-content-between align-items-center">
-              <h2 class="m-0"><i class="bi bi-megaphone"></i> </h2>
+      </style>
+  
+  <div class="med-related-prod-wrap" id="med-related-prod-wrapper">
 
-            </div>
-            <div class="tiny-slider arrow-hover arrow-blur arrow-dark arrow-round">
-              <div class="tiny-slider-inner"
-                data-autoplay="true"
-                data-hoverpause="true"
-                data-gutter="24"
-                data-arrow="true"
-                data-dots="false"
-                data-items-xl="6"
-                data-items-md="4"
-                data-items-sm="3.5"
-                data-items-xs="2.2">
+      <div class="med-rel-prod-slider-wrapper">
+          <div class="med-rel-prod-slider carousel-content">
+  
 
-                <!-- Card item START -->
-              
-                {% for p in products %}             
-                <div class="item">
+
+
+            {% for p in products %}             
+            <div class="med-product-card">
+              <div class="pad15">
+                <div className="pad15">
+                  <a href="{{ p.get_absolute_url }}">
+                   <div class="img-containere">
+                    {% for ima in p.productimage_set.all %}
+                    <img src="{{ ima.image.url }}" alt="cover">
+                    {% endfor %}
+                  </div>
                   <div class="pad15">
-                    <div className="pad15">
-                      <a href="{{ p.get_absolute_url }}">
-                       <div class="img-container">
-                        {% for ima in p.productimage_set.all %}
-                        <img src="{{ ima.image.url }}" alt="cover">
-                        {% endfor %}
-                      </div>
-                      <div class="pad15">
-                    <h5 class="card-title"><a href="{{ p.get_absolute_url }}"> {{ p.title | truncatechars:30 }}</a> </h5>
-                    <ul class="product_price list-unstyled">
-                     
-                      <li class="new_price">Kes: {{ p.price }}</li>
-                  </ul>
-                  </div>
-                      </a>
-                  </div>
-                  </div>
+                <h5 class="card-title"><a href="{{ p.get_absolute_url }}"> {{ p.title | truncatechars:30 }}</a> </h5>
+                <ul class="product_price list-unstyled">
+                 
+                  <li class="new_price">$ {{ p.price }}</li>
+              </ul>
               </div>
-              {% endfor %}
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
+                  </a>
+              </div>
+              </div>
+          </div>
+          {% endfor %}
 
+  
+
+  
+  
+
+          </div>
+          <div class="med-slider-arrow-section">
+              <button class="med-slider-prev med-slider-arrow btn-left" aria-label="left-arrow" onclick="" id="med-btn-left" type="button"></button>
+              <button class="med-slider-next med-slider-arrow btn-right" aria-label="right-arrow" onclick="" id="med-btn-right" type="button"></button>
+          </div>
+      </div>
+  </div>
+  
+  <script>
+      const bindCarouselEvents = (containerId) => {
+          const wrapper = document.getElementById(containerId);
+          const btn_left = wrapper.getElementsByClassName('btn-left')[0]
+          const btn_right = wrapper.getElementsByClassName('btn-right')[0]
+          const content = wrapper.getElementsByClassName('carousel-content')[0]
+          const content_scroll_width = content.scrollWidth;
+          let content_scoll_left = content.scrollLeft;
+          if (btn_right) {
+              btn_right.addEventListener('click', () => {
+                  content_scoll_left += 224;
+                  if (content_scoll_left >= content_scroll_width) { 
+                      content_scoll_left = content_scroll_width;
+                  }
+                  content.scrollLeft = content_scoll_left;
+              });
+          }
+          if (btn_left) {
+              btn_left.addEventListener('click', () => {
+                  content_scoll_left -= 224;
+                  content.scrollLeft = content_scoll_left;
+              });
+          }
+  
+          // scroll binding
+          content.addEventListener('scroll', () => {
+              let scrollLeft = Math.ceil(content.scrollLeft)
+              let contentScrollWidth = content.scrollWidth
+              let contentWidth = content.clientWidth
+              let rightEdge = (contentScrollWidth - contentWidth)
+              if (scrollLeft >= rightEdge) {
+                  btn_right.style.display = "none"
+              } else if (scrollLeft < rightEdge) {
+                  btn_right.style.display = "block"
+              }
+  
+              if (scrollLeft == 0) {
+                  btn_left.style.display = "none"
+              } else if (scrollLeft > 0) {
+                  btn_left.style.display = "block"
+              }
+  
+              content_scoll_left = scrollLeft
+          });
+      }
+  
+      // javascript for scroll on click
+      window.addEventListener('DOMContentLoaded', function(){
+          bindCarouselEvents('med-related-prod-wrapper')
+      });
+      </script>
+  
+ 
 

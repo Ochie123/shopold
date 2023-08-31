@@ -18,7 +18,7 @@ def tracking_id(request):
 def recommended_from_search(request):
 # get the common words from the stored searches 
     common_words = frequent_search_words(request) 
-    from categories import search
+    from products import search
     matching = []
     for word in common_words:
         results = search.products(word).get('products',[]) 
@@ -46,7 +46,7 @@ def sort_words_by_frequency(some_string):
     return [p[0] for p in sorted_words]
 
 def log_product_view(request, product): 
-     ##log the current customer as having viewed the given product instance """
+    ##log the current customer as having viewed the given product instance """
     t_id = tracking_id(request)
     try:
         v = ProductView.objects.get(tracking_id=t_id, product=product)
@@ -54,13 +54,16 @@ def log_product_view(request, product):
     except ProductView.DoesNotExist:
         v = ProductView()
         v.product = product
-        v.ip_address = request.META.get('REMOTE_ADDR') 
+        
         if not request.META.get('REMOTE_ADDR'):
             v.ip_address = '127.0.0.1'
+        else:
+            v.ip_address = request.META.get('REMOTE_ADDR')
+            
         v.user = None 
         v.tracking_id = t_id
-   
         v.save()
+
 
 def recommended_from_views(request):
 ###get product recommendations based on products that the customer has viewed;

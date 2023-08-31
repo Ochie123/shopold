@@ -17,8 +17,13 @@ from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
 from ordered_model.admin import OrderedTabularInline, OrderedInlineModelAdminMixin
 
-from .models import Product, ProductImage, SearchTerm, ProductView
+from .models import Product, ProductImage, SearchTerm, ProductView, Tag
 from categories.models import Category
+
+admin.site.register(Tag)
+class TagsAdmin(admin.ModelAdmin):
+    fieldsets = ((_("Tag"), {"fields": ("title",)}),)
+    prepopulated_fields = {"slug": ("title",)}
 
 class ProductForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(
@@ -184,7 +189,7 @@ class ProductAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
 
     actions = [export_xlsx]
 
-    fieldsets = ((_("Product"), {"fields": ("categories","title", "slug", "description", "price")}),)
+    fieldsets = ((_("Product"), {"fields": ("categories","tags",'toprated', 'bestseller',"title", "slug", "description", "price")}),)
     prepopulated_fields = {"slug": ("title",)}
     inlines = [ProductImageInline]
 

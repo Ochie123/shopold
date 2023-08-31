@@ -3,12 +3,6 @@
 
 {% block content %}
 
-<div class="container">
-<h4>Search Results for: '{{ q }}'</h1> 
-<p class="search-count">Found <strong>
-    {{ results.paginator.count }}
-    </strong> result{{ results.paginator.count|pluralize}}.</p>
-</div>
 {% include "products/search_results.html" %}
 <div class="cb">&nbsp;</div>
 

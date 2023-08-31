@@ -29,9 +29,11 @@
     <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/tags.css' %}" rel="stylesheet">
     <link href="{% static 'css/best.css' %}" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
-    
+    <link href="{% static 'css/slider.css' %}" rel="stylesheet">
+
     {% block css %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>
@@ -39,7 +41,14 @@
     {% include "misc/includes/header.html" %}
    
         {% block content %}
-
+        <div class="row bg-secondaryd py-2 px-xl-5">
+            <div class="col-lg-3">{% block sidebar %}
+                <div class="navbar-nav mr-auto py-0 d-none d-lg-block">
+                {% include "products/includes/filters.html" %}
+            </div>
+                {% endblock %}</div>
+            <div class="col-lg-9">{% block main %}{% endblock %}</div>
+        </div>
         {% endblock %}
 
     {% include "misc/includes/footer.html" %}

@@ -6,6 +6,7 @@ from django.urls import reverse, NoReverseMatch
 from django.db import models
 from django.utils.timezone import now as timezone_now
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
 
 from ordered_model.models import OrderedModel
 
@@ -18,6 +19,23 @@ class FeaturedProductManager(models.Manager):
     def all(self):
         return super(FeaturedProductManager, self).all() .filter(is_active=True).filter(featured=True)
 
+class Tag(models.Model):
+    title = models.CharField(max_length=255, default='') 
+    slug = models.SlugField(default='', blank=True)
+
+    class Meta:
+        ordering = ['title']
+
+    def save(self, *args, **kwargs): 
+        self.slug = slugify(self.title) 
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return '%s' % self.title
+    
+    def get_absolute_url(self):
+        return reverse('tag', args=[str(self.slug)])
+
 class Product(models.Model):
     uuid = models.UUIDField(primary_key=True, default=None, editable=False)
     categories = models.ManyToManyField( "categories.Category", 
@@ -25,6 +43,10 @@ class Product(models.Model):
                             
                             related_name="category_products",
                         )
+    
+    tags = models.ManyToManyField(Tag, blank=True)
+    toprated = models.BooleanField(default=False, help_text="1=toprated")
+    bestseller = models.BooleanField(default=False, help_text="1=bestseller")
     title = models.CharField(_("title"), max_length=200)
     slug = models.SlugField(_("slug"), max_length=200)
     description = models.TextField(_("description"), blank=True)

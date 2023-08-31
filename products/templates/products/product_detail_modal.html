@@ -1,20 +1,27 @@
 {% load i18n %}
-<p class="text-center">
-    <div class="img-fluid">
-      <a href="{{ product.get_url_path }}">
-      <div class="img-container">
-        {% with product.productimage_set.first as profile_image %}
-        <img src="{{ profile_image.image.url }}" alt="cover">
-        {% endwith %}   
-      </div>
-    </a>
+<style>
+    .img-container {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .img-container img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<div class="modal-body text-center">
+    <div class="img-container">
+        <a href="{{ product.get_url_path }}">
+            {% with product.productimage_set.first as profile_image %}
+            <img src="{{ profile_image.image.url }}" alt="cover">
+            {% endwith %}
+        </a>
     </div>
-</p>
+</div>
 <div class="modal-footer text-right">
     <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
         {% trans "See details…" %}
     </a>
 </div>
-
-
-

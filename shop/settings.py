@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ALLOWED_ORIGINS = [
+    "https://rapio.serveo.net",
+    # Add other trusted origins here
+]
 
 # Application definition
 
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ordered_model",
     "imagekit",
+    "utils",
     "categories",
     "products",
     "accounts",
@@ -66,7 +71,7 @@ ROOT_URLCONF = "shop.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -74,6 +79,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "utils.context_processors.utils",
+                "utils.context_processors.categories",
                 "cart.context_processors.cart",
             ],
         },
@@ -125,7 +132,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -151,5 +158,11 @@ PRODUCTS_PER_ROW = 7
 
 CART_SESSION_ID = 'cart'
 
-PAYPAL_RECEIVER_EMAIL = 'paypalemail@shop.com' 
+PAYPAL_RECEIVER_EMAIL = 'sb-scyab27236618@personal.example.com' 
 PAYPAL_TEST = True
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'youngpope07@gmail.com'
+EMAIL_HOST_PASSWORD = 'P0740220793p'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

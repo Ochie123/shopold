@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load search_tags %}
+{% load i18n static utility_tags %}
+{% load catalog_tags %}
+
+{% block main %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+<style>
+@media (max-width: 767px) { 
+  .show-only-on-small {
+    display: block;
+  }
+  .show-only-on-large {
+    display: none;
+  }
+}
+ 
+@media (min-width: 768px) { 
+  .show-only-on-small {
+    display: none;
+  }
+  .show-only-on-large {
+    display: block;
+  }
+}
+</style>
+
+<div class="">
+
+{% include "products/product_list.html" %}
+{% product_list recently_viewed 'Your Recently Viewed' %}
+{% product_list view_recs 'Similar Products' %}
+{% include "homepage/toprated.html" %}
+{% product_list search_recs 'Recommended For You' %}
+
+</div>
+
+
+</body>
+{% endblock %}

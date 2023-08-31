@@ -40,13 +40,13 @@
       user-select: none;
         }
         
-    .img-container {
+    .img-containere {
        position: relative;
        overflow:hidden;
        height: 150px;
     }
     
-    .img-container img {
+    .img-containere img {
       position: absolute;
       top:0;
       left:0;
@@ -61,8 +61,14 @@
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <form action="">
-                       
+                              <div class="input-group">
+                                
+                                      <h5>showing 1-30 of 500 results</h5>
+                    
+                             
+                            </div>
                             </form>
+
                             <div class="dropdown ml-4">
                                 <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -82,11 +88,11 @@
                     {% for product in object_list %}
 
 
-                  <div class="">
+                  <div class="item-list">
                     <div class="product-grid">
                         <div class="product-image">
                           <a href="{{ product.get_absolute_url }}">
-                          <div class="img-container">
+                          <div class="img-containere">
                             {% with product.productimage_set.first as profile_image %}
                             <img src="{{ profile_image.image.url }}" alt="cover">
                             {% endwith %}   
@@ -105,22 +111,27 @@
 
 
                                 <a href="{{ product.get_url_path }}"
-                             
+                                data-modal-title="{{ product.title }}"
                                 data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
-                                class=""> 
-                              
-
-                                         <i class="fas fa-eye text-primary mr-1"></i>
-                                           
-                                         </p>
-  
-                             </a>  
+                                class="item d-block my-1">
+                                 <div class="card">
+                                     <div class="card-body">
+                                         <div class="float-right">
+                                             <div class="rating" aria-label="">
+                                                 <span style="width:{{ product.price }}"></span>
+                                             </div>
+                                         </div>
+                                         <i class="fas fa-eye text-primary"></i>
+                                     </div>
+                                 </div>
+                             </a>
                                 <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                             </div>
                         </div>
                     </div>
                 </div>
                     {% endfor %}
+                  </div>
                     {% include "misc/includes/pagination.html" %}  
                     {% else %}
                     <p>{% trans "There are no products yet." %}</p>
@@ -128,6 +139,8 @@
               </div>
             </div>
             </div>
+         <hr>  
+{% include "products/footerp.html" %}
 
 {% endblock %}
 
