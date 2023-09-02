@@ -17,9 +17,8 @@
     
     .flex-wrapper > div {
       width: 100%;
-      max-width: 25%;
-      padding: 10px;
-     
+      max-width: 33.33%; /* Show 3 products per column on large screens */
+      padding: 5px;
     }
     
     @media only screen and (max-width: 600px) {
@@ -45,6 +44,9 @@
        overflow:hidden;
        height: 150px;
     }
+    body {
+        margin: 0; /* Remove margin from the body element */
+}
     
     .img-containere img {
       position: absolute;
@@ -52,7 +54,7 @@
       left:0;
       width: 100%;
       height:100%;
-      object-fit: cover
+      object-fit: contain;
     }
       </style>
             <!-- Shop Product Start -->
@@ -90,20 +92,20 @@
 
                   <div class="item-list">
                     <div class="product-grid">
-                        <div class="product-image">
+                      <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                           <a href="{{ product.get_absolute_url }}">
-                          <div class="img-containere">
+                          
                             {% with product.productimage_set.first as profile_image %}
-                            <img src="{{ profile_image.image.url }}" alt="cover">
+                            <img class="img-fluid w-100" src="{{ profile_image.image.url }}" alt="cover">
                             {% endwith %}   
-                          </div>
+                         
                         </a>
                         </div>
   
                         <div class="product-content">
                           <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <div class="d-flex justify-content-center">
-                                <h6>{{ product.title }}</h6><h6 class="text-muted ml-2">${{product.price}}</h6>
+                                <h6><small>{{ product.title | truncatechars:30 }}</h6><h6 class="text-muted ml-2">${{product.price}}</small></h6>
                             </div>
                         </div>
 
@@ -114,8 +116,8 @@
                                 data-modal-title="{{ product.title }}"
                                 data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
                                 class="item d-block my-1">
-                                 <div class="card">
-                                     <div class="card-body">
+                                 <div class="">
+                                     <div class="">
                                          <div class="float-right">
                                              <div class="rating" aria-label="">
                                                  <span style="width:{{ product.price }}"></span>

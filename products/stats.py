@@ -45,6 +45,14 @@ def sort_words_by_frequency(some_string):
     # return the list of words, most frequent first
     return [p[0] for p in sorted_words]
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 def log_product_view(request, product): 
     ##log the current customer as having viewed the given product instance """
     t_id = tracking_id(request)
@@ -54,11 +62,7 @@ def log_product_view(request, product):
     except ProductView.DoesNotExist:
         v = ProductView()
         v.product = product
-        
-        if not request.META.get('REMOTE_ADDR'):
-            v.ip_address = '127.0.0.1'
-        else:
-            v.ip_address = request.META.get('REMOTE_ADDR')
+        v.ip_address = get_client_ip(request)
             
         v.user = None 
         v.tracking_id = t_id
