@@ -1,15 +1,7 @@
-{%load static %}
 
+{% load i18n static utility_tags %}
+{% block main %}
   <style>
-
-
-      * {
-
-
-
-}
-
-
 
 .img-containere {
    position: relative;
@@ -32,31 +24,69 @@
       <div class="med-rel-prod-slider-wrapper">
           <div class="med-rel-prod-slider carousel-content">
   
-
-
-
-            {% for p in products %}             
-            <div class="med-product-card">
-              <div class="pad15">
-                <div className="pad15">
-                  <a href="{{ p.get_absolute_url }}">
+            {% for product in products %}  
+            <div class="item-list">
+            
+            <div class="med-product-card border-0 mb-4">         
+            <div class="product-item">
+              <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"> 
+               
+                  <a href="{{ product.get_absolute_url }}">
                    <div class="img-containere">
-                    {% for ima in p.productimage_set.all %}
+                    {% for ima in product.productimage_set.all %}
                     <img src="{{ ima.image.url }}" alt="cover">
                     {% endfor %}
                   </div>
-                  <div class="pad15">
-                <h5 class="card-title"><a href="{{ p.get_absolute_url }}"> {{ p.title | truncatechars:30 }}</a> </h5>
-                <ul class="product_price list-unstyled">
-                 
-                  <li class="new_price">$ {{ p.price }}</li>
-              </ul>
-              </div>
                   </a>
               </div>
+              <div class="product-content">
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                  <div class="d-flex justify-content-center">
+                    <div class="d-none d-lg-block">
+                    <div class="d-flex justify-content-center">
+                      
+                      <h6><small>{{ product.title | truncatechars:30 }}</small></h6><h6 class="text-muted ml-2">${{product.price}}</h6>
+                    </div>
+                    </div>
+
+                    <div class="d-block d-lg-none">
+                      <div class="d-flex justify-content-center">
+                        <h6><small>{{ product.title | truncatechars:30 }}</small></h6><small><h6 class="text-muted ml-2">${{product.price}}</small></h6>
+                      </div>
+                      </div>
+
+
+                  </div>
               </div>
+
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                      <a href="{{ product.get_url_path }}"
+                      data-modal-title="{{ product.title }}"
+                      data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
+                      class="item d-block my-1">
+                       <div class="">
+                        <small>   
+                           <div class="">
+                               <div class="float-right">
+                                   <div class="rating" aria-label="">
+                                       <span style="width:{{ product.price }}"></span>
+                                   </div>
+                               </div>
+                               <i class="fas fa-eye text-primary"></i>
+                              
+                           </div>
+                          </small>
+                       </div>
+                   </a>
+                      <a href="" class="btn btn-sm text-dark p-0"><small>  <i class="fas fa-shopping-cart text-primary mr-1"></i>Cart</small></a>
+                  </div>
+              </div>
+
+
+
           </div>
-          
+        </div>  
+    </div>
           {% endfor %}
 <!--
           <div class="med-slider-arrow-section">
@@ -123,6 +153,7 @@
           bindCarouselEvents('med-related-prod-wrapper')
       });
       </script>
-  
- 
+{% endblock %}
+
+
 

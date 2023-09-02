@@ -1,4 +1,4 @@
-{% extends "indexe.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load catalog_tags %}
 {% block content %}
@@ -156,24 +156,55 @@
 </div>
 <div class="container">
     <hr>
-    <div class="description description-tabs">
-        <ul id="myTab" class="nav nav-pills">
-            <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Product description</a></li>
-            <li class=""><a href="#specifications" data-toggle="tab">How to Download</a></li>
-           
-        </ul>
-        <div id="myTabContent" class="tab-content">
-            <div class="tab-pane fade active in" id="more-information">
-                <br />
-                <p>
-                    <dd>{{ product.desription }}</dd>
-                </p>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">How To Download</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Product Contents</a>
             </div>
-            <div class="tab-pane fade" id="specifications">
-                <br />
-                <dl class="">{{ p.specification|safe }}</dl>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <h4 class="mb-3">{{ product.title }} Description</h4>
+                    {{product.description}}
+                </div>
+                <div class="tab-pane fade" id="tab-pane-2">
+                    <h4 class="mb-3">How To Download</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul>
+                                <li>
+                                    There will be a download link immediately payment is completed.
+                                </li>
+                                <li>
+                                    The files will also be auto emailed. Check your email junk folder if you miss the email in your inbox.
+                                </li>
+                                <li>
+                                    Please visit our download guide page for detailed explanation on how to download.
+                                </li>
+                                <li>
+                                    From the zip use the file that is compatible with your machine or project.
+                                </li>
+                              </ul> 
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab-pane-3">
+                    <h4 class="mb-3">Product Contents</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul>
+                                <li>
+                                    This product include a zipped file with 5 file formats: SVG, PNG, EPS, PSD and DXF.
+                                </li>
+                                <li>
+                                    The files are well crafted and optimized for vinyl, stickers, laser cut, cricut, scrapbooking, silhouette among others.
+                                </li>
+                              </ul> 
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane fade" id="proscons">{{ p.proscons|safe }}</div>
         </div>
     </div>
 </div>

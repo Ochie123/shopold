@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static 
 from products import views
@@ -35,6 +35,7 @@ urlpatterns = [
     path('payment/', include('payment.urls', namespace='payment')),
     #path('', views.index, name='index'),
     path("", ProductListView.as_view(), name="product_list"),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('products/', include(("products.urls", "products"), namespace="products")),
 ]
 

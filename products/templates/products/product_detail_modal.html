@@ -11,7 +11,11 @@
     }
 </style>
 
+
+
 <div class="modal-body text-center">
+    <div class="row">
+        <div class="col-md-6">
     <div class="img-container">
         <a href="{{ product.get_url_path }}">
             {% with product.productimage_set.first as profile_image %}
@@ -20,6 +24,18 @@
         </a>
     </div>
 </div>
+    <div class="col-md-6">
+        <!-- Other product details here -->
+        <h5>{{ product.title }}</h5>
+        <p>{{ product.description }}</p>
+        <p>${{ product.price }}</p>
+        <!-- Other details -->
+    </div>
+
+</div>
+</div>
+
+
 <div class="modal-footer text-right">
     <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
         {% trans "See details…" %}

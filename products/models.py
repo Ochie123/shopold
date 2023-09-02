@@ -8,6 +8,8 @@ from django.utils.timezone import now as timezone_now
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 
+from ckeditor_uploader.fields import RichTextUploadingField 
+
 from ordered_model.models import OrderedModel
 
 class ActiveProductManager(models.Manager): 
@@ -49,7 +51,7 @@ class Product(models.Model):
     bestseller = models.BooleanField(default=False, help_text="1=bestseller")
     title = models.CharField(_("title"), max_length=200)
     slug = models.SlugField(_("slug"), max_length=200)
-    description = models.TextField(_("description"), blank=True)
+    description = RichTextUploadingField(_("description"), blank=True)
     price = models.DecimalField(
         _("price ($)"), max_digits=8, decimal_places=2, blank=True, null=True
     )

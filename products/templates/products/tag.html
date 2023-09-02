@@ -91,7 +91,7 @@
 
 
                   <div class="item-list">
-                    <div class="product-grid">
+                    <div class="card product-item border-0 mb-4">
                       <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                           <a href="{{ product.get_absolute_url }}">
                           
@@ -116,15 +116,18 @@
                                 data-modal-title="{{ product.title }}"
                                 data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
                                 class="item d-block my-1">
-                                 <div class="card">
-                                     <div class="card-body">
+                                <div class="">
+                                  <small>   
+                                     <div class="">
                                          <div class="float-right">
                                              <div class="rating" aria-label="">
                                                  <span style="width:{{ product.price }}"></span>
                                              </div>
                                          </div>
                                          <i class="fas fa-eye text-primary"></i>
+                                        
                                      </div>
+                                    </small>
                                  </div>
                              </a>
                                 <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>

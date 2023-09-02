@@ -88,15 +88,13 @@
                     <div class="flex-wrapper">
                     {% if object_list %}
                     {% for product in object_list %}
-
-
                   <div class="item-list">
-                    <div class="product-grid">
+                    <div class="card product-item border-0 mb-4">
                       <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                           <a href="{{ product.get_absolute_url }}">
                           
                             {% with product.productimage_set.first as profile_image %}
-                            <img class="img-fluid w-100" src="{{ profile_image.image.url }}" alt="cover">
+                            <img class="img-fluid w-100" src="{{ profile_image.image.url }}" alt="">
                             {% endwith %}   
                          
                         </a>
@@ -105,7 +103,20 @@
                         <div class="product-content">
                           <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <div class="d-flex justify-content-center">
-                                <h6><small>{{ product.title | truncatechars:30 }}</h6><h6 class="text-muted ml-2">${{product.price}}</small></h6>
+                              <div class="d-none d-lg-block">
+                              <div class="d-flex justify-content-center">
+                                
+                                <h6><small>{{ product.title | truncatechars:30 }}</small></h6><h6 class="text-muted ml-2">${{product.price}}</h6>
+                              </div>
+                              </div>
+
+                              <div class="d-block d-lg-none">
+                                <div class="d-flex justify-content-center">
+                                  <h6><small>{{ product.title | truncatechars:30 }}</small></h6><small><h6 class="text-muted ml-2">${{product.price}}</small></h6>
+                                </div>
+                                </div>
+
+
                             </div>
                         </div>
 
@@ -117,6 +128,7 @@
                                 data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
                                 class="item d-block my-1">
                                  <div class="">
+                                  <small>   
                                      <div class="">
                                          <div class="float-right">
                                              <div class="rating" aria-label="">
@@ -124,10 +136,12 @@
                                              </div>
                                          </div>
                                          <i class="fas fa-eye text-primary"></i>
+                                        
                                      </div>
+                                    </small>
                                  </div>
                              </a>
-                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                <a href="" class="btn btn-sm text-dark p-0"><small>  <i class="fas fa-shopping-cart text-primary mr-1"></i>Cart</small></a>
                             </div>
                         </div>
                     </div>
@@ -146,33 +160,3 @@
 
 {% endblock %}
 
-{% block js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
-    <script src="{% static 'js/list.js' %}"></script>
-{% endblock %}
-
-{% block extra_body %}
-    <script type="text/template" class="loader">
-        <div class="text-center">
-            <div class="loading-indicator"></div>
-        </div>
-    </script>
-    <div id="modal" class="modal fade" tabindex="-1" role="dialog"
-         aria-hidden="true" aria-labelledby="modal_title">
-        <div class="modal-dialog modal-dialog-centered"
-             role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 id="modal_title"
-                        class="modal-title"></h4>
-                    <button type="button" class="close"
-                            data-dismiss="modal"
-                            aria-label="{% trans 'Close' %}">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body"></div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
