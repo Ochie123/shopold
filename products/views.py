@@ -21,7 +21,7 @@ from products import stats
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from products import search
 
-PAGE_SIZE = getattr(settings, "PAGE_SIZE", 30)
+PAGE_SIZE = getattr(settings, "PAGE_SIZE", 3)
 # Create your views here.
 
 def tag(request, slug=None):
@@ -70,11 +70,15 @@ def products(request):
     
     results = paginator.get_page(page)
     #f = ProductFilter(request.GET, queryset=Product.objects.filter(results))
+    bestseller_products = Product.objects.filter(bestseller=1)
+    toprated_products = Product.objects.filter(toprated=1)
 
     return render(request, "search/results.html", {
         "results": results,
         #'filter': f,
-            'q': q
+            'q': q,
+             "bestseller_products": bestseller_products,
+            "toprated_products": toprated_products,
             })
 
 def product_detail_modal(request, pk):
@@ -83,10 +87,6 @@ def product_detail_modal(request, pk):
                                          uuid=pk,
                                          )
         stats.log_product_view(request, product)
-
-        view_recs = stats.recommended_from_views(request)
-        recently_viewed = stats.get_recently_viewed(request)
-        
         return render(request,
                   'products/product_detail_modal.html',
                   {'product': product,
@@ -106,13 +106,18 @@ def product_detail(request, pk, slug):
         search_recs = stats.recommended_from_search(request)
         recently_viewed = stats.get_recently_viewed(request)
 
+        bestseller_products = Product.objects.filter(bestseller=1)
+        toprated_products = Product.objects.filter(toprated=1)
+
         return render(request,
                   'products/product_detail.html',
                   {'product': product,
                    'view_recs': view_recs,
                    'search_recs': search_recs,
                    'recently_viewed': recently_viewed,
-                   'cart_product_form': cart_product_form 
+                   'cart_product_form': cart_product_form ,
+                    "bestseller_products": bestseller_products,
+                    "toprated_products": toprated_products,
                   })
 
 def product_list(request):
@@ -181,9 +186,9 @@ def filter_facets(facets, qs, form, filters):
     return qs
 
 
-class ProductListView(View):
+#class ProductListView(View):
     form_class = ProductFilterForm
-    template_name = "products/product_list.html"
+    template_name = "products/product_lists.html"
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(data=request.GET)
@@ -233,24 +238,87 @@ class ProductListView(View):
             page = paginator.page(1)
         except EmptyPage:
             page = paginator.page(paginator.num_pages)
-        return page
+   #     return page
 
 ###search
 
+def product_toprated(request):
+    toprated_products = Product.objects.filter(toprated=1)
+  
+    #product_filter = RangeFilter(request.GET)
+
+    return render(request, 
+                'homepage/toprated.html',
+                {'toprated_products': toprated_products}
+                )
+
+def product_bestseller(request):
+    bestseller_products = Product.objects.filter(bestseller=1)
+  
+    #product_filter = RangeFilter(request.GET)
+
+    return render(request, 
+                'homepage/bestdeals.html',
+                {'bestseller_products': bestseller_products})
 def index(request):
     """ site home page """
-    #product_list= Product.objects.all()
+    # Create the filter form and apply any filtering if necessary
+    form = ProductFilterForm(data=request.GET)
+    products, facets = get_queryset_and_facets(form)
+
+    # Paginate the products
+    paginator = Paginator(products, PAGE_SIZE)
+    page_number = request.GET.get("page")
+    try:
+        page = paginator.page(page_number)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    # Get other data
     search_recs = stats.recommended_from_search(request)
+    bestseller_products = Product.objects.filter(bestseller=1)
     toprated_products = Product.objects.filter(toprated=1)
     recently_viewed = stats.get_recently_viewed(request)
     view_recs = stats.recommended_from_views(request)
     page_title = 'SVGhippo - Home to svgs'
-    return render(request,
-                "catalog/index.html",{
-               # 'product_list':product_list,
-                'search_recs': search_recs,
-                'toprated_products': toprated_products,
-                'recently_viewed': recently_viewed,
-                'view_recs': view_recs,
-                'page_title': page_title,
-                })
+
+    return render(
+        request,
+        "catalog/index.html",
+        {
+            "page_title": page_title,
+            "products": page,
+            "form": form,
+            "facets": facets,
+            "search_recs": search_recs,
+            "bestseller_products": bestseller_products,
+            "toprated_products": toprated_products,
+            "recently_viewed": recently_viewed,
+            "view_recs": view_recs,
+        },
+    )
+
+def get_queryset_and_facets(form):
+    qs = Product.objects.order_by("title")
+    facets = {
+        "selected": {},
+        "categories": {
+            "categories": form.fields["category"].queryset,
+        },
+    }
+    if form.is_valid():
+        filters = [("category", "categories")]
+        qs = filter_facets(facets, qs, form, filters)
+    return qs, facets
+
+def filter_facets(facets, qs, form, filters):
+    for query_param, filter_param in filters:
+        value = form.cleaned_data[query_param]
+        if value:
+            selected_value = value
+            facets["selected"][query_param] = selected_value
+            filter_args = {filter_param: value}
+            qs = qs.filter(**filter_args).distinct()
+    return qs

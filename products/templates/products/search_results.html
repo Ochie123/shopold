@@ -65,7 +65,7 @@
                             <form action="">
                               <div class="input-group">
                                 
-                                      <h5>showing 1-30 of 500 results</h5>
+                                      <h5>showing {{ results.number }}-{{ results.number|add:results.paginator.per_page }} of {{ results.paginator.count }} results</h5>
                     
                              
                             </div>
@@ -145,37 +145,7 @@
             </div>
             </div>
          <hr>  
-{% include "products/footerp.html" %}
+
 
 {% endblock %}
 
-{% block js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
-    <script src="{% static 'js/list.js' %}"></script>
-{% endblock %}
-
-{% block extra_body %}
-    <script type="text/template" class="loader">
-        <div class="text-center">
-            <div class="loading-indicator"></div>
-        </div>
-    </script>
-    <div id="modal" class="modal fade" tabindex="-1" role="dialog"
-         aria-hidden="true" aria-labelledby="modal_title">
-        <div class="modal-dialog modal-dialog-centered"
-             role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 id="modal_title"
-                        class="modal-title"></h4>
-                    <button type="button" class="close"
-                            data-dismiss="modal"
-                            aria-label="{% trans 'Close' %}">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body"></div>
-            </div>
-        </div>
-    </div>
-{% endblock %}

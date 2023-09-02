@@ -1,7 +1,7 @@
 <div class="">
-    <h3>Top Rated</h3>
+    <h3>Bestdeals</h3>
     <div class="item-list">
-        {% for product in toprated_products %}
+        {% for product in bestseller_products %}
             <a href="{{ product.get_url_path }}"
                data-modal-title="{{ product.title }}"
                data-modal-url="{% url 'products:product_detail_modal' pk=product.pk  %}"

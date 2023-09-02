@@ -20,11 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from products import views
 
-from products.views import ( 
-               ProductListView,
-               
-    
-)
+
 
 urlpatterns = [
     path("ad-ui/", admin.site.urls),
@@ -33,8 +29,9 @@ urlpatterns = [
     path('search/', views.products, name="search_products"),
     path('paypal/', include('paypal.standard.ipn.urls')),
     path('payment/', include('payment.urls', namespace='payment')),
-    #path('', views.index, name='index'),
-    path("", ProductListView.as_view(), name="product_list"),
+    path('', views.index, name='index'),
+    #
+    #path("", views.product_list, name="product_list"),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('products/', include(("products.urls", "products"), namespace="products")),
 ]
