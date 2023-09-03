@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.generic import View
 from django.utils.functional import LazyObject
-
+from django.db.models import Count
 from cart.forms import CartAddProductForm
 from .forms import ProductFilterForm
 from .models import Product, Tag
@@ -70,8 +70,8 @@ def products(request):
     
     results = paginator.get_page(page)
     #f = ProductFilter(request.GET, queryset=Product.objects.filter(results))
-    bestseller_products = Product.objects.filter(bestseller=1)
-    toprated_products = Product.objects.filter(toprated=1)
+    bestseller_products = Product.published.all().filter(bestseller=1)
+    toprated_products = Product.published.all().filter(toprated=1)
 
     return render(request, "search/results.html", {
         "results": results,
@@ -97,18 +97,24 @@ def product_detail(request, pk, slug):
         product = get_object_or_404(Product, 
                                         uuid=pk,
                                          slug=slug,
+                                         status=Product.Status.PUBLISHED,
         
                                          )
-        
         cart_product_form = CartAddProductForm()
         stats.log_product_view(request, product)
         view_recs = stats.recommended_from_views(request)
         search_recs = stats.recommended_from_search(request)
         recently_viewed = stats.get_recently_viewed(request)
 
-        bestseller_products = Product.objects.filter(bestseller=1)
-        toprated_products = Product.objects.filter(toprated=1)
+        bestseller_products = Product.published.all().filter(bestseller=1)
+        toprated_products = Product.published.all().filter(toprated=1)
 
+        product_tags_ids = product.tags.values_list('id', flat=True)
+        similar_products = Product.published.filter(tags__in=product_tags_ids)\
+                                  .exclude(pk=product.pk)
+        similar_products = similar_products.annotate(same_tags=Count('tags'))\
+                                .order_by('-same_tags','-publish')[:5]
+        
         return render(request,
                   'products/product_detail.html',
                   {'product': product,
@@ -118,10 +124,11 @@ def product_detail(request, pk, slug):
                    'cart_product_form': cart_product_form ,
                     "bestseller_products": bestseller_products,
                     "toprated_products": toprated_products,
+                    'similar_products': similar_products,
                   })
 
 def product_list(request):
-    qs = Product.objects.order_by("title")
+    qs = Product.published.all().order_by("title")
     form = ProductFilterForm(data=request.GET)
 
     facets = {
@@ -162,7 +169,7 @@ def product_list(request):
     return render(request, "products/product_list.html", context)
 
 def product_toprated(request):
-    toprated_products = Product.objects.filter(toprated=1)
+    toprated_products = Product.published.all().filter(toprated=1).order_by("-publish")
   
     #product_filter = RangeFilter(request.GET)
 
@@ -243,7 +250,7 @@ def filter_facets(facets, qs, form, filters):
 ###search
 
 def product_toprated(request):
-    toprated_products = Product.objects.filter(toprated=1)
+    toprated_products = Product.published.filter(toprated=1).order_by("-publish")
   
     #product_filter = RangeFilter(request.GET)
 
@@ -253,7 +260,7 @@ def product_toprated(request):
                 )
 
 def product_bestseller(request):
-    bestseller_products = Product.objects.filter(bestseller=1)
+    bestseller_products = Product.published.filter(bestseller=1).order_by("-publish")
   
     #product_filter = RangeFilter(request.GET)
 
@@ -278,8 +285,8 @@ def index(request):
 
     # Get other data
     search_recs = stats.recommended_from_search(request)
-    bestseller_products = Product.objects.filter(bestseller=1)
-    toprated_products = Product.objects.filter(toprated=1)
+    bestseller_products = Product.published.all().filter(bestseller=1)
+    toprated_products = Product.published.all().filter(toprated=1)
     recently_viewed = stats.get_recently_viewed(request)
     view_recs = stats.recommended_from_views(request)
     page_title = 'SVGhippo - Home to svgs'
@@ -301,7 +308,7 @@ def index(request):
     )
 
 def get_queryset_and_facets(form):
-    qs = Product.objects.order_by("title")
+    qs = Product.published.all().order_by("-publish")
     facets = {
         "selected": {},
         "categories": {

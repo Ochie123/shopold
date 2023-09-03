@@ -140,9 +140,22 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% include "misc/includes/pagination.html" %}  
-                {% else %}
-                <p>{% trans "There are no products yet." %}</p>
+     
+                <div class="row">
+                    <div class="col text-center">
+                        {% if products.has_next %}
+                        <div class="text-center">
+                            <div class="loading-indicator"></div>
+                                </div>
+                        <p class="">
+                            <a class="next-page"
+                               href="{% modify_query page=products.next_page_number %}">
+                                {% trans "More..." %}</a>
+                        </p>
+                    </div>
+                </div>
+                
+            {% endif %}
             {% endif %}
         </div>
     </div>

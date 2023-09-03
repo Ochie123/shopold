@@ -166,7 +166,7 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
                     <h4 class="mb-3">{{ product.title }} Description</h4>
-                    {{product.description}}
+                    {{product.description|safe}}
                 </div>
                 <div class="tab-pane fade" id="tab-pane-2">
                     <h4 class="mb-3">How To Download</h4>
@@ -212,5 +212,7 @@
 {% product_list search_recs 'Recommended for you' %}
 {% product_list recently_viewed 'Your Recently Viewed' %}
 
-{% include "products/footerp.html" %}
+<div class="container">
+{% include "products/footerpd.html" %}
+</div>
 {% endblock %}

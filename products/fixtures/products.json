@@ -1,0 +1,148 @@
+[
+{
+  "model": "products.tag",
+  "pk": 1,
+  "fields": {
+    "title": "Fashion",
+    "slug": "fashion"
+  }
+},
+{
+  "model": "products.tag",
+  "pk": 2,
+  "fields": {
+    "title": "Tag 2",
+    "slug": "tag-2"
+  }
+},
+{
+  "model": "products.tag",
+  "pk": 3,
+  "fields": {
+    "title": "Tag 3",
+    "slug": "tag-3"
+  }
+},
+{
+  "model": "products.tag",
+  "pk": 4,
+  "fields": {
+    "title": "Tag 4",
+    "slug": "tag-4"
+  }
+},
+{
+  "model": "products.product",
+  "pk": "0de14f86-245e-4e6b-8dd7-cedc71e7d669",
+  "fields": {
+    "toprated": false,
+    "bestseller": true,
+    "title": "Product 2",
+    "slug": "product-2",
+    "description": "<p><strong>Product 2 description</strong></p>",
+    "price": "2.99",
+    "is_active": true,
+    "publish": "2023-09-03T16:45:01.975Z",
+    "created": "2023-09-03T16:45:01.989Z",
+    "updated": "2023-09-03T16:45:01.989Z",
+    "status": "PB",
+    "categories": [
+      2,
+      4
+    ],
+    "tags": [
+      1,
+      2,
+      4
+    ]
+  }
+},
+{
+  "model": "products.product",
+  "pk": "649be8e1-7d5b-4e95-adec-ab57dfa3c1cc",
+  "fields": {
+    "toprated": true,
+    "bestseller": true,
+    "title": "pRODUCT 1",
+    "slug": "product-1",
+    "description": "<p><strong>Product 1 description</strong></p>",
+    "price": "1.99",
+    "is_active": true,
+    "publish": "2023-09-03T16:44:13.045Z",
+    "created": "2023-09-03T16:44:13.222Z",
+    "updated": "2023-09-03T16:44:13.222Z",
+    "status": "PB",
+    "categories": [
+      1,
+      2,
+      4
+    ],
+    "tags": [
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "product": "649be8e1-7d5b-4e95-adec-ab57dfa3c1cc",
+    "image": "product-images/Beach-squad-SVG-247x247.jpg",
+    "thumbnail": "product-thumbnails/Beach-squad-SVG-247x247.jpg"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 2,
+  "fields": {
+    "order": 0,
+    "product": "0de14f86-245e-4e6b-8dd7-cedc71e7d669",
+    "image": "product-images/Spring-Vibes-retro-SVG-247x247_q9g1sgY.jpg",
+    "thumbnail": "product-thumbnails/Spring-Vibes-retro-SVG-247x247_Me0OISx.jpg"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 3,
+  "fields": {
+    "order": 0,
+    "product": "0140b77b-930c-4b3b-af84-de9b41bd03b3",
+    "image": "product-images/Tree-of-life-SVG-247x247.jpg",
+    "thumbnail": "product-thumbnails/Tree-of-life-SVG-247x247.jpg"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 4,
+  "fields": {
+    "order": 0,
+    "product": "6a71362b-54ae-4498-95bf-1ebfcadc086c",
+    "image": "product-images/Women-Volleyball-Spiker-Silhouette-SVG-247x247_kspw5fX.jpg",
+    "thumbnail": "product-thumbnails/Women-Volleyball-Spiker-Silhouette-SVG-247x247_hz7uoqj.jpg"
+  }
+},
+{
+  "model": "products.productview",
+  "pk": 1,
+  "fields": {
+    "date": "2023-09-03T16:50:59.279Z",
+    "ip_address": "127.0.0.1",
+    "tracking_id": "jVQVkNTXqQC4s6hvPmwChz0ii+8SItltjFGNK7aRW9NkidHf",
+    "product": "649be8e1-7d5b-4e95-adec-ab57dfa3c1cc",
+    "user": null
+  }
+},
+{
+  "model": "products.productview",
+  "pk": 2,
+  "fields": {
+    "date": "2023-09-03T16:50:28.654Z",
+    "ip_address": "127.0.0.1",
+    "tracking_id": "jVQVkNTXqQC4s6hvPmwChz0ii+8SItltjFGNK7aRW9NkidHf",
+    "product": "0de14f86-245e-4e6b-8dd7-cedc71e7d669",
+    "user": null
+  }
+}
+]

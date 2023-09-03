@@ -26,8 +26,8 @@
 </div>
     <div class="col-md-6">
         <!-- Other product details here -->
-        <h5>{{ product.title }}</h5>
-        <p>{{ product.description }}</p>
+       
+        <p>{{ product.description|safe }}</p> 
         <p>${{ product.price }}</p>
         <!-- Other details -->
     </div>
@@ -35,9 +35,15 @@
 </div>
 </div>
 
-
+<div class="row">
 <div class="modal-footer text-right">
     <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
         {% trans "See details…" %}
     </a>
 </div>
+
+<div class="modal-footer text-left">
+    <a href="" class="btn btn-sm text-dark p-0">  <i class="fas fa-shopping-cart text-primary mr-1"></i>Cart</a>
+</div>
+</div>
+

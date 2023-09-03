@@ -35,7 +35,7 @@ def store(request, q):
 # get products matching the search text 
 def products(search_text):
     words = _prepare_words(search_text)
-    products = Product.objects.all() 
+    products = Product.published.all() 
     results = {}
     results['products'] = []
 # iterate through keywords 

@@ -7,19 +7,17 @@ from django.db import models
 from django.utils.timezone import now as timezone_now
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
+from django.utils import timezone
 
 from ckeditor_uploader.fields import RichTextUploadingField 
 
 from ordered_model.models import OrderedModel
 
-class ActiveProductManager(models.Manager): 
-    def get_query_set(self):
-        return super(ActiveProductManager, self).get_query_set().filter(is_active=True)
+#class ActiveProductManager(models.Manager): 
+   # def get_query_set(self):
+     #   return super(ActiveProductManager, self).get_query_set().filter(is_active=True)
 
 
-class FeaturedProductManager(models.Manager): 
-    def all(self):
-        return super(FeaturedProductManager, self).all() .filter(is_active=True).filter(featured=True)
 
 class Tag(models.Model):
     title = models.CharField(max_length=255, default='') 
@@ -38,7 +36,16 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return reverse('tag', args=[str(self.slug)])
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(status=Product.Status.PUBLISHED)
+
+
 class Product(models.Model):
+    class Status(models.TextChoices):
+        DRAFT = 'DF', 'Draft'
+        PUBLISHED = 'PB', 'Published'
+
     uuid = models.UUIDField(primary_key=True, default=None, editable=False)
     categories = models.ManyToManyField( "categories.Category", 
                             verbose_name=_("Categories"),
@@ -57,12 +64,25 @@ class Product(models.Model):
     )
     is_active = models.BooleanField(default=True) 
 
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=2,
+                              choices=Status.choices,
+                              default=Status.DRAFT)
+    
+    objects = models.Manager() # The default manager.
+    published = PublishedManager() # Our custom manager.
+
+    
     class Meta:
+        ordering = ['-publish']
+        indexes = [
+            models.Index(fields=['-publish']),
+        ]
         verbose_name = _("Product")
         verbose_name_plural = _("Products")
-
-    objects = models.Manager() 
-    active = ActiveProductManager()               
+           
 
 
     def __str__(self):
