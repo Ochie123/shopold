@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     
 ]
 
+#python3 manage.py dumpdata products --indent=2 --output=products/fixtures/products.json
+##python manage.py loaddata products.json
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

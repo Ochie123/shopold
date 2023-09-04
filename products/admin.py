@@ -182,14 +182,14 @@ class ProductImageInline(OrderedTabularInline):
     get_image_preview.short_description = _("Preview")
 @admin.register(Product)
 class ProductAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
-    list_display = ["first_image",'publish','status', "title", "has_description", "price"]
+    list_display = ["first_image",'publish','status', "title", "has_description", "has_file", "price"]
     list_display_links = ["first_image", "title"]
     list_editable = ["price"]
     list_filter = [ImageFilter, 'bestseller', 'toprated', 'status', ]
 
     actions = [export_xlsx]
 
-    fieldsets = ((_("Product"), {"fields": ("categories","tags",'toprated', 'bestseller',"title", "slug", "description", "price", "status")}),)
+    fieldsets = ((_("Product"), {"fields": ("categories","tags",'toprated', 'bestseller',"title", "slug", "description", "price","file", "status")}),)
     prepopulated_fields = {"slug": ("title",)}
     inlines = [ProductImageInline]
 
@@ -210,6 +210,12 @@ class ProductAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
 
     has_description.short_description = _("Has description?")
     has_description.boolean = True
+
+    def has_file(self, obj):
+        return bool(obj.file)
+
+    has_file.short_description = _("Has File?")
+    has_file.boolean = True
 
 @admin.register(SearchTerm)
 class SearchTermAdmin(admin.ModelAdmin):

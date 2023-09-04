@@ -1,3 +1,5 @@
+import os
+from django.http import FileResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
@@ -5,6 +7,7 @@ from django.views.generic import ListView, DetailView
 from django.forms import modelformset_factory
 from django.urls import reverse_lazy
 from django.conf import settings
+from django.utils.text import slugify
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.generic import View
 from django.utils.functional import LazyObject
@@ -329,3 +332,28 @@ def filter_facets(facets, qs, form, filters):
             filter_args = {filter_param: value}
             qs = qs.filter(**filter_args).distinct()
     return qs
+
+
+def download_product_file(request, pk, slug):
+    product = get_object_or_404(Product, uuid=pk, slug=slug)
+    
+    if product.file:
+        # Extract filename and extension from the FieldFile's name
+        filename = os.path.basename(product.file.name)
+        base_filename, extension = os.path.splitext(filename)
+        extension = extension[1:]  # remove the dot
+        
+        response = FileResponse(
+            product.file, content_type=f"application/zip"
+        )
+        slug = slugify(product.title)[:100]
+        response["Content-Disposition"] = (
+            "attachment; filename="
+            f"{slug}.{extension}"
+        )
+    else:
+        response = HttpResponseNotFound(
+            content="File unavailable"
+        )
+    
+    return response

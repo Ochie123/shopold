@@ -58,6 +58,8 @@ class Product(models.Model):
     bestseller = models.BooleanField(default=False, help_text="1=bestseller")
     title = models.CharField(_("title"), max_length=200)
     slug = models.SlugField(_("slug"), max_length=200)
+    file = models.FileField(upload_to='files', blank=True, null=True)
+
     description = RichTextUploadingField(_("description"), blank=True)
     price = models.DecimalField(
         _("price ($)"), max_digits=8, decimal_places=2, blank=True, null=True

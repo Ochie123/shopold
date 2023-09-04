@@ -2,6 +2,22 @@
 {% load i18n %}
 
 {% block content %}
+<div class="container">
     <h1>{% trans "Your payment was successful" %}</h1>
     <p>{% trans "Your payment has been successfully received." %}</p>
+</div>
+{% endblock %}
+
+{% block title %}
+  Thank you
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="text-center">Thank you</h1>
+  <p>Your order has been successfully completed. Your order number is
+  <strong>{{ order.id }}</strong>.</p>
+  <a href="{% url 'products:download_product_file' pk=product.pk slug=product.slug %}" class="btn btn-primary">Download file</a>
+  
+</div>
 {% endblock %}
