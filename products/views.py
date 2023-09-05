@@ -171,15 +171,7 @@ def product_list(request):
     context = {"form": form, "facets": facets, "object_list": page}
     return render(request, "products/product_list.html", context)
 
-def product_toprated(request):
-    toprated_products = Product.published.all().filter(toprated=1).order_by("-publish")
-  
-    #product_filter = RangeFilter(request.GET)
 
-    return render(request, 
-                'homepage/toprated.html',
-                {'toprated_products': toprated_products}
-                )
 
 
 
@@ -270,6 +262,17 @@ def product_bestseller(request):
     return render(request, 
                 'homepage/bestdeals.html',
                 {'bestseller_products': bestseller_products})
+
+def product_toprated(request):
+    toprated_products = Product.published.all().filter(toprated=1).order_by("-publish")
+  
+    #product_filter = RangeFilter(request.GET)
+
+    return render(request, 
+                'homepage/toprated.html',
+                {'toprated_products': toprated_products}
+                )
+
 def index(request):
     """ site home page """
     # Create the filter form and apply any filtering if necessary
@@ -312,6 +315,10 @@ def index(request):
 
 def get_queryset_and_facets(form):
     qs = Product.published.all().order_by("-publish")
+
+    categories = form.fields["category"].queryset.annotate(
+        product_count=Count("category_products")
+    )
     facets = {
         "selected": {},
         "categories": {

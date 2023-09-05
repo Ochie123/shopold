@@ -1,13 +1,13 @@
-{% load i18n static %}
 <!doctype html>
+{% load i18n static %}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>{% block head_title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     {% include "misc/includes/favicons.html" %}
     {% block meta_tags %}{% endblock %}
-    <!-- Google Web Fonts -->
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
 
@@ -30,29 +30,29 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/best.css' %}" rel="stylesheet">
     <link href="{% static 'css/slider.css' %}" rel="stylesheet">
+    
     {% block css %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>
+
 <body>
     {% include "misc/includes/header.html" %}
-
+    <div class="container my-1 px-2">
         {% block content %}
-        <div class="container">
-            <div class="row bg-secondaryd py-2 px-xl-5">
-                <div class="col-lg-3">{% block sidebar %}
-                    <div class="navbar-nav mr-auto py-0 d-none d-lg-block">
+            <div class="row">
+                <div class="col-lg-3">
+                {% block sidebar %}
+                <div class="navbar-nav mr-auto py-0 d-none d-lg-block">
                     {% include "products/includes/filters.html" %}
                 </div>
-                    {% endblock %}</div>
+                {% endblock %}</div>
                 <div class="col-lg-9">{% block main %}{% endblock %}</div>
             </div>
-            <div class="container">
-            {% include "products/footerp.html" %}    
-        </div>
-        </div>
         {% endblock %}
-    
-  
+    </div>
+    <div class="container">
+        {% include "products/footerp.html" %} 
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -61,8 +61,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-
-    {% block js %}
+     {% block js %}
     <script src="//unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
     <script src="{% static 'js/list.js' %}"></script>

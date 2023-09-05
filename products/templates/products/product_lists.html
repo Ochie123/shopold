@@ -143,19 +143,10 @@
      
                 <div class="row">
                     <div class="col text-center">
-                        {% if products.has_next %}
-                        <div class="text-center">
-                            <div class="loading-indicator"></div>
-                                </div>
-                        <p class="">
-                            <a class="next-page"
-                               href="{% modify_query page=products.next_page_number %}">
-                                {% trans "More..." %}</a>
-                        </p>
+                        {% include "misc/includes/pagination.html" %}  
                     </div>
                 </div>
-                
-            {% endif %}
+         
             {% endif %}
         </div>
     </div>

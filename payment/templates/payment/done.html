@@ -17,6 +17,10 @@
   <h1 class="text-center">Thank you</h1>
   <p>Your order has been successfully completed. Your order number is
   <strong>{{ order.id }}</strong>.</p>
+  {% for item in cart %}
+  {% with product=item.product %}
+
+  
   <a href="{% url 'products:download_product_file' pk=product.pk slug=product.slug %}" class="btn btn-primary">Download file</a>
   
 </div>

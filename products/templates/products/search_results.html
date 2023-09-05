@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n static utility_tags %}
 
+{% block title %}{{ request.GET.q }} - SVG Hippo{% endblock %}
 
 {% block main %}
 <style>
