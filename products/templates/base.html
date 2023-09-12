@@ -29,9 +29,14 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/best.css' %}" rel="stylesheet">
+    <link href="{% static 'css/best.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <link href="{% static 'css/slider.css' %}" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+<script src="{% static 'js/search.js' %}"></script>
     {% block css %}{% endblock %}
+    {% block external %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>
 
@@ -54,7 +59,11 @@
         {% include "products/footerp.html" %} 
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous">
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
@@ -65,6 +74,35 @@
     <script src="//unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
     <script src="{% static 'js/list.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
+
+    <script type="text/javascript">
+$(document).ready(function() {
+    $('#add-to-cart-form').on('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        var form = $(this);
+        var url = form.data('url');
+        var formData = form.serialize();
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                // Handle the success response here, if needed
+                    // Handle the success response here, if needed
+                    var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
+                    $('#cart-count').text(cartCount);
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle any error that occurred during the Ajax request
+            }
+        });
+    });
+});
+    
+</script>
     {% endblock %}
 
 

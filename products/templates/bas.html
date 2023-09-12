@@ -24,20 +24,12 @@
           href="{% static 'css/originalstyle.css' %}"
           crossorigin="anonymous" />
 
-
     <!-- Libraries Stylesheet -->
     <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/best.css' %}" rel="stylesheet">
     <link href="{% static 'css/slider.css' %}" rel="stylesheet">
-
-
-   
-   
-        <link href="{% static 'css/tags.css' %}" rel="stylesheet">
-        <link href="{% static 'css/best.css' %}" rel="stylesheet">
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 <script src="{% static 'js/search.js' %}"></script>
@@ -47,7 +39,7 @@
 </head>
 
 <body>
-    {% include "misc/includes/header.html" %}
+
     <div class="container my-1 px-2">
         {% block content %}
             <div class="row">
@@ -57,15 +49,23 @@
                     {% include "products/includes/filters.html" %}
                 </div>
                 {% endblock %}</div>
-                <div class="col-lg-9">{% block main %}{% endblock %}</div>
+                <div class="col-lg-9">{% block main %}
+                  <div id="search-results"> 
+                    {% if show_results %}
+                {% include "bookmark_list.html" %} {% endif %}
+                   </div>
+                  
+                  {% endblock %}</div>
             </div>
         {% endblock %}
     </div>
-  
+    <div class="container">
+     
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             crossorigin="anonymous">
     </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -79,33 +79,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
     <script src="{% static 'js/list.js' %}"></script>
     <script src="{% static 'js/search.js' %}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#add-to-cart-form').on('submit', function(event) {
-                event.preventDefault(); // Prevent the form from submitting normally
-        
-                var form = $(this);
-                var url = form.data('url');
-                var formData = form.serialize();
-        
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        // Handle the success response here, if needed
-                            // Handle the success response here, if needed
-                            var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
-                            $('#cart-count').text(cartCount);
-                    },
-                    error: function(xhr, errmsg, err) {
-                        // Handle any error that occurred during the Ajax request
-                    }
-                });
-            });
-        });
-            
-        </script>
     {% endblock %}
 
 

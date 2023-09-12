@@ -1,6 +1,7 @@
 
 {% load i18n static utility_tags %}
 {% block main %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
 
 .img-containere {
@@ -59,7 +60,7 @@
                   </div>
               </div>
 
-                    <div class="card-footer d-flex justify-content-between bg-light border">
+                    <div class="card-footer d-flex justify-content-center bg-light border">
                       <a href="{{ product.get_url_path }}"
                       data-modal-title="{{ product.title }}"
                       data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
@@ -78,7 +79,6 @@
                           </small>
                        </div>
                    </a>
-                      <a href="" class="btn btn-sm text-dark p-0"><small>  <i class="fas fa-shopping-cart text-primary mr-1"></i>Cart</small></a>
                   </div>
               </div>
 
@@ -152,7 +152,38 @@
       window.addEventListener('DOMContentLoaded', function(){
           bindCarouselEvents('med-related-prod-wrapper')
       });
+
+
       </script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add-to-cart-form').on('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+    
+            var form = $(this);
+            var url = form.data('url');
+            var formData = form.serialize();
+    
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Handle the success response here, if needed
+                    // Handle the success response here, if needed
+    
+                    // Update the product count in the header HTML
+                    var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
+                    $('#cart-count').text(cartCount);
+                },
+                error: function(xhr, errmsg, err) {
+                    // Handle any error that occurred during the Ajax request
+                }
+            });
+        });
+    });
+    </script>
 {% endblock %}
 
 

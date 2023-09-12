@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
 
-                                <div class="card-footer d-flex justify-content-between bg-light border">
+                                <div class="card-footer d-flex justify-content-center bg-light border">
                                     <a href="{{ product.get_url_path }}"
                                     data-modal-title="{{ product.title }}"
                                     data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
@@ -134,7 +134,9 @@
                                             </small>
                                         </div>
                                     </a>
-                                    <a href="" class="btn btn-sm text-dark p-0"><small>  <i class="fas fa-shopping-cart text-primary mr-1"></i>Cart</small></a>
+                                
+
+ 
                                 </div>
                             </div>
                         </div>
@@ -154,6 +156,5 @@
     <!-- Pagination -->
 
 </div>
-
 </body>
 {% endblock %}

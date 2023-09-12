@@ -19,6 +19,7 @@ urlpatterns = [
         name="download_product_file",
     ),
     path('search/', views.products, name="search_products"),
+    path('sear/', views.search_page, name="search_page")
     
    # path('<slug:slug>/', ProductDetail.as_view(), name="product-detail"),
 ]

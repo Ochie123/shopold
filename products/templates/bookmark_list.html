@@ -1,10 +1,12 @@
-{% extends "base.html" %}
+
 {% load i18n static utility_tags %}
 
 {% block title %}{{ request.GET.q }} - SVG Hippo{% endblock %}
 
 {% block main %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+<script src="{% static 'js/search.js' %}"></script>
 <style>
     * {
       box-sizing: border-box;
@@ -67,7 +69,7 @@
                             <form action="">
                               <div class="input-group">
                                 
-                                      <h5>showing {{ results.number }}-{{ results.number|add:results.paginator.per_page }} of {{ results.paginator.count }} results</h5>
+                                      <h5>showing results</h5>
                     
                              
                             </div>
@@ -88,8 +90,8 @@
                     </div>
                     <div class="">
                     <div class="flex-wrapper">
-                        {% if results %}
-                        {% for product in results %}
+                        {% if products %}
+                        {% for product in products %}
 
 
                   <div class="item-list">
@@ -111,7 +113,7 @@
                             </div>
                         </div>
 
-                              <div class="card-footer d-flex justify-content-center bg-light border">
+                              <div class="card-footer d-flex justify-content-between bg-light border">
 
 
                                 <a href="{{ product.get_url_path }}"
@@ -132,6 +134,7 @@
                                     </small>
                                  </div>
                              </a>
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                             </div>
                         </div>
                     </div>

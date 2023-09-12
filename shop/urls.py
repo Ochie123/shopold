@@ -27,6 +27,7 @@ urlpatterns = [
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('search/', views.products, name="search_products"),
+    path('sear/', views.search_page, name="search_page"),
     path('paypal/', include('paypal.standard.ipn.urls')),
     path('payment/', include('payment.urls', namespace='payment')),
     path('', views.index, name='index'),

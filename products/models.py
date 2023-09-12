@@ -53,7 +53,7 @@ class Product(models.Model):
                             related_name="category_products",
                         )
     
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag,related_name="tag_products", blank=True)
     toprated = models.BooleanField(default=False, help_text="1=toprated")
     bestseller = models.BooleanField(default=False, help_text="1=bestseller")
     title = models.CharField(_("title"), max_length=200)

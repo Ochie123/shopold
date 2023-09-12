@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block content %}
+<style>
+  .container {
+    overflow: auto; /* Clear the float */
+  }
+</style>
 <div class="container my-1 px-2">
   <h3 class="text-center">Checkout</h3>
   <div class="order-info">
@@ -21,8 +26,10 @@
   </div>
   <form method="post" class="order-form">
     {{ form.as_p }}
-    <p><input type="submit" value="Pay with Paypal"></p>
+
+    <p><input type="submit" value="Pay with Paypal"> {{ paypalform.render }}</p>
     {% csrf_token %}
   </form>
+  
 </div>
 {% endblock %}

@@ -4,7 +4,6 @@
 {% block title %}{{ request.GET.q }} - SVG Hippo{% endblock %}
 
 {% block main %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     * {
       box-sizing: border-box;
@@ -111,7 +110,7 @@
                             </div>
                         </div>
 
-                              <div class="card-footer d-flex justify-content-center bg-light border">
+                              <div class="card-footer d-flex justify-content-between bg-light border">
 
 
                                 <a href="{{ product.get_url_path }}"
@@ -132,6 +131,7 @@
                                     </small>
                                  </div>
                              </a>
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                             </div>
                         </div>
                     </div>

@@ -7,10 +7,19 @@ from django.contrib.auth import get_user_model
 from crispy_forms import bootstrap, helper, layout
 
 from categories.models import Category
-
+from products.models import Tag
 from .models import Product
 from products.models import SearchTerm
 User = get_user_model()
+
+
+
+class SearchsForm(forms.Form): 
+    query = forms.CharField(
+    label=u'Enter a keyword to search for',
+    widget=forms.TextInput(attrs={'size': 32}) 
+    )
+
 
 class ProductFilterForm(forms.Form):
 
@@ -22,20 +31,6 @@ class ProductFilterForm(forms.Form):
         ).filter(product_count__gt=0),
     )
 
-class ProductSearchForm(forms.Form):
-    q = forms.CharField(label=_("Search for"), required=False)
-
-    def __init__(self, request, *args, **kwargs):
-        self.request = request
-        super().__init__(*args, **kwargs)
-
-        self.helper = helper.FormHelper()
-        self.helper.form_action = self.request.path
-        self.helper.form_method = "GET"
-        self.helper.layout = layout.Layout(
-            layout.Field("q", css_class="input-block-level"),
-            layout.Submit("search", _("Search")),
-        )
 
 ###Search
 class SearchForm(forms.ModelForm): 
