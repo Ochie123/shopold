@@ -44,7 +44,8 @@
                     <!-- Left content -->
                     <div class="col-lg-3 d-none d-lg-block">
                         <a href="/" class="text-decoration-none">
-                            <h2 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold"><i class='fas fa-hippo' style='font-size:24px'></i></span></h2>
+                    
+                            <img class="img-fluid" src="{% static 'img/logo.png' %}" alt="logo">
                         </a>
                     </div>
                     
@@ -120,7 +121,13 @@
         </div>
         
     <!-- Topbar End -->
+<style>
+.logo {
+    max-width: 0%; /* Ensures the logo doesn't exceed the parent container */
+    height: auto; /* Maintains the aspect ratio of the logo */
+}
 
+</style>
 
     <!-- Navbar Start -->
     <div class="container-fluid">
@@ -132,7 +139,13 @@
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
                     <a href="/" class="text-decoration-none d-block d-lg-none">
-                        <h2 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary "><i class='fas fa-hippo' style='font-size:24px'></i></span></h2>
+                        <h4 class="m-0 display-5 font-weight-semi-bold">
+                            <span class="text-primary">
+                                <i class="" style="font-size: 10px;">
+                                    <img class="img-fluid" src="{% static 'img/logo.png' %}" style="max-width: 120px; height: auto;" alt="logo">
+                                </i>
+                            </span>
+                        </h4>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -152,4 +165,28 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#add-to-cart-form').on('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+        
+                var form = $(this);
+                var url = form.data('url');
+                var formData = form.serialize();
+        
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
+                        $('#cart-count').text(cartCount);
+                    },
+                    error: function(xhr, errmsg, err) {
+                        // Handle any error that occurred during the Ajax request
+                    }
+                });
+            });
+        });
+        </script>
     <!-- Navbar End -->

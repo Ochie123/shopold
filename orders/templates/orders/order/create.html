@@ -24,12 +24,11 @@
     </ul>
     <p>Total: ${{ cart.get_total_price }}</p>
   </div>
-  <form method="post" class="order-form">
+  <form method="post" class="order-form" action="{% url 'payment:process' %}">
     {{ form.as_p }}
-
-    <p><input type="submit" value="Pay with Paypal"> {{ paypalform.render }}</p>
+    <p><input type="submit" value="Pay with Paypal"></p>
     {% csrf_token %}
-  </form>
+</form>
   
 </div>
 {% endblock %}

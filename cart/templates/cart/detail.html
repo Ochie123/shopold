@@ -34,12 +34,14 @@
             </td>
             <td>{{ product.title }}</td>
             <td>
-              <form action="{% url "cart:cart_add" product.uuid %}" method="post">
+              <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post">
                 {{ item.update_quantity_form.quantity }}
                 {{ item.update_quantity_form.override }}
                 <input type="submit" value="Update">
                 {% csrf_token %}
               </form>
+
+      
             </td>
             <td>
               <form action="{% url "cart:cart_remove" product.uuid %}" method="post">

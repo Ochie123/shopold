@@ -42,6 +42,7 @@
                         <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
                         <script>
                             const egg = React.createElement;
+                        
                             class ImageBox extends React.Component {
                                 constructor(props) {
                                     super(props);
@@ -49,29 +50,35 @@
                                         currentImage: this.props.imageStart
                                     }
                                 }
+                        
                                 click(image) {
                                     this.setState({
                                         currentImage: image
                                     });
                                 }
+                        
                                 render() {
-                                    const images = this.props.images.map((i) =>
-                                        egg('div', { className: "image", key: i.id },
+                                    const images = this.props.images.map((i, index) =>
+                                        egg('div', { className: "image", key: index }, // Provide a unique key
                                             egg('img', {
-                                                onClick: this.click.bind(this, i),
+                                                onClick: () => this.click(i),
                                                 width: "100",
                                                 src: i.thumbnail
                                             }),
                                         ),
                                     );
-                                    return egg('div', { className: "gallery" },
-                                        egg('div', { className: "current-image" },
-                                            egg('img', { src: this.state.currentImage.image })
-                                        ),
-                                        images
+                        
+                                    return (
+                                        egg('div', { className: "gallery" },
+                                            egg('div', { className: "current-image" },
+                                                egg('img', { src: this.state.currentImage.image })
+                                            ),
+                                            images
+                                        )
                                     );
                                 }
                             }
+                        
                             document.addEventListener("DOMContentLoaded", function (event) {
                                 const images = [
                                     {% for image in product.productimage_set.all %}
@@ -81,12 +88,12 @@
                                     },
                                     {% endfor %}
                                 ];
-                                ReactDOM.render(
-                                    egg(ImageBox, { images: images, imageStart: images[0] }),
-                                    document.getElementById('imagebox')
-                                );
+                        
+                                const root = ReactDOM.createRoot(document.getElementById('imagebox'));
+                                root.render(egg(ImageBox, { images: images, imageStart: images[0] }));
                             });
                         </script>
+                        
                         <style>
                             .image {
                                 margin: 10px;
@@ -143,11 +150,12 @@
                     </ul>
                 </div>
                 <hr>
-                <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post">
+                <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post" style="margin-top: 20px; text-align: center;">
                     {{ cart_product_form }}
                     {% csrf_token %}
-                    <button type="submit" class="btn-theme btn buy-btn">Add to cart</button>
+                    <button type="submit" class="btn-theme btn buy-btn" style="background-color: #3498db; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Add to cart</button>
                 </form>
+                
                 
             </div>
         </div>

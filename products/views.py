@@ -32,9 +32,27 @@ def tag(request, slug=None):
     tag = get_object_or_404(Tag, slug=slug)
     products = Product.objects.filter(tags__slug=slug)
     title = 'products tagged with "%s"' % tag
-    return render(request, 'products/tag.html', {'products': products,
-                                             'tag': tag,
-                                             'title': title
+
+    paginator = Paginator(products, PAGE_SIZE)
+    page_number = request.GET.get("page")
+    try:
+        page = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page is not an integer, show first page.
+        page = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, show last existing page.
+        page = paginator.page(paginator.num_pages)
+
+    bestseller_products = Product.published.all().filter(bestseller=1)
+    toprated_products = Product.published.all().filter(toprated=1)
+    return render(request, 'products/tag.html', {
+                                                "products": page,
+                                               
+                                                "bestseller_products": bestseller_products,
+                                                "toprated_products": toprated_products,
+                                               'tag': tag,
+                                                'title': title
                                              })
 
 class ProductList(ListView):
@@ -46,7 +64,7 @@ def products(request):
     cart_product_form = CartAddProductForm()
     # get current page number. Set to 1 is missing or invalid 
     try:
-        page = int(request.GET.get('page', 1)) 
+        page = int(request.GET.get('page', 30)) 
     except ValueError:
         page = 1
     matching = search.products(q).get('products', []) 
@@ -227,9 +245,11 @@ def product_toprated(request):
 def index(request):
     """ site home page """
     # Create the filter form and apply any filtering if necessary
+    # Get the sort parameter from the query strin
+
     form = ProductFilterForm(data=request.GET)
     cart_product_form = CartAddProductForm()
-    products, facets = get_queryset_and_facets(form)
+    products, facets = get_queryset_and_facets(form, request)
 
     # Paginate the products
     paginator = Paginator(products, PAGE_SIZE)
@@ -266,8 +286,16 @@ def index(request):
         },
     )
 
-def get_queryset_and_facets(form):
-    qs = Product.published.all().order_by("-publish")
+def get_queryset_and_facets(form, request):
+    sort_param = request.GET.get("sort")
+    if sort_param == "oldest":
+        qs = Product.published.all().order_by("publish")
+    elif sort_param == "":
+        qs = Product.published.all().order_by("-popularity")
+    elif sort_param == "":
+        qs = Product.published.all().order_by("-rating")
+    else:
+        qs = Product.published.all().order_by("-publish")
 
     categories = form.fields["category"].queryset.annotate(
         product_count=Count("category_products")
@@ -380,7 +408,7 @@ def indexs(request):
     toprated_products = Product.published.all().filter(toprated=1)
     recently_viewed = stats.get_recently_viewed(request)
     view_recs = stats.recommended_from_views(request)
-    page_title = 'SVGhippo - Home to svgs'
+    page_title = 'SVG Craft - Home to svgs'
  
     if 'ajax' in request.GET:
         return render(request, 'bookmark_list.html',  {           

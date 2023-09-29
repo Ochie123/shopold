@@ -118,20 +118,19 @@
                                 data-modal-title="{{ product.title }}"
                                 data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
                                 class="item d-block my-1">
-                                <div class="">
-                                  <small>   
-                                     <div class="">
-                                         <div class="float-right">
-                                             <div class="rating" aria-label="">
-                                                 <span style="width:{{ product.price }}"></span>
-                                             </div>
-                                         </div>
-                                         <i class="fas fa-eye text-primary"></i>
-                                        
-                                     </div>
-                                    </small>
-                                 </div>
-                             </a>
+                                    <div class="">
+                                        <small>
+                                            <div class="">
+                                                <div class="float-right">
+                                                    <div class="rating" aria-label="">
+                                                        <span style="width: {{ product.price }}"></span>
+                                                    </div>
+                                                </div>
+                                                <i class="fas fa-eye text-primary"></i>
+                                            </div>
+                                        </small>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>

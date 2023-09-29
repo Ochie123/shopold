@@ -15,9 +15,16 @@ def cart_add(request, product_uuid):
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], override_quantity=cd['override'])
-        return JsonResponse({'message': 'Product added to cart successfully'})
+        
+        # Calculate the updated cart count
+        cart_count = len(cart)  # Assuming the cart is an iterable
+        
+        # Return the cart count in the JSON response
+        return JsonResponse({'message': 'Product added to cart successfully', 'cart_count': cart_count})
     else:
         return JsonResponse({'error': 'Invalid form data'}, status=400)
+    
+
 
 @require_POST
 def cart_remove(request, product_uuid):

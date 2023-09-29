@@ -59,14 +59,17 @@ INSTALLED_APPS = [
 
 #python3 manage.py dumpdata products --indent=2 --output=products/fixtures/products.json
 ##python manage.py loaddata products.json
+##  'categories.urlcanon.WwwRedirectMiddleware',
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "products.urlcanon.WwwRedirectMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    'products.urlcanon.WwwRedirectMiddleware',
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -166,14 +169,14 @@ PRODUCTS_PER_ROW = 7
 
 CART_SESSION_ID = 'cart'
 
-PAYPAL_RECEIVER_EMAIL = 'sb-scyab27236618@personal.example.com' 
-PAYPAL_TEST = True
+PAYPAL_RECEIVER_EMAIL = 'youngpope07@gmail.com' 
+PAYPAL_TEST = False
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'youngpope07@gmail.com'
-EMAIL_HOST_PASSWORD = 'P0740220793p'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.privateemail.com'
+EMAIL_HOST_USER = 'sales@svgcraft.co'
+EMAIL_HOST_PASSWORD = '@Pato2023.#'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 
 CKEDITOR_CONFIGS = {
     'default': {

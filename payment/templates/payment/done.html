@@ -1,6 +1,8 @@
 {% extends "indexe.html" %}
 {% load i18n %}
-
+{% block title %}
+  Thank you
+{% endblock %}
 {% block content %}
 <div class="container">
     <h1>{% trans "Your payment was successful" %}</h1>
@@ -8,20 +10,7 @@
 </div>
 {% endblock %}
 
-{% block title %}
-  Thank you
-{% endblock %}
 
-{% block content %}
-<div class="container">
-  <h1 class="text-center">Thank you</h1>
-  <p>Your order has been successfully completed. Your order number is
-  <strong>{{ order.id }}</strong>.</p>
-  {% for item in cart %}
-  {% with product=item.product %}
 
-  
-  <a href="{% url 'products:download_product_file' pk=product.pk slug=product.slug %}" class="btn btn-primary">Download file</a>
-  
-</div>
+
 {% endblock %}

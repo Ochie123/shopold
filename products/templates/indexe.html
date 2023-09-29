@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>{% block title %}{% endblock %}</title>
-    {% include "misc/includes/favicons.html" %}
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon.ico' %}">
+ 
     {% block meta_tags %}{% endblock %}
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -48,6 +49,11 @@
 
 <body>
     {% include "misc/includes/header.html" %}
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    
     <div class="container my-1 px-2">
         {% block content %}
             <div class="row">

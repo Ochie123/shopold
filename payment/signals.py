@@ -20,9 +20,9 @@ def payment_notification(sender, **kwargs):
         order.save()
 
         # create invoice e-mail
-        subject = 'SVGHippo - Invoice nr. {}'.format(order.id)
+        subject = 'SVG Craft - Invoice nr. {}'.format(order.id)
         message = 'Please, find attached the invoice for your recent purchase.'
-        email = EmailMessage(subject, message, 'purchases@svghippo.com', [order.email])
+        email = EmailMessage(subject, message, 'sales@svgcraft.co', [order.email])
 
         # generate PDF
         html = render_to_string('orders/order/pdf.html', {'order': order})

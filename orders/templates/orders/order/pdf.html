@@ -1,6 +1,6 @@
 <html>
 <body>
-    <h1>SVGhippo</h1>
+    <h1>SVG Craft</h1>
     <p>
         Invoice nr. {{ order.id }}</br>
         <span class="secondary">{{ order.created|date:"M d, Y" }}</span>
@@ -10,8 +10,6 @@
     <p>
         {{ order.first_name }} {{ order.last_name }}<br>
         {{ order.email }}<br>
-        {{ order.address }}<br>
-        {{ order.postal_code }}, {{ order.city }}
     </p>
 
     <h3>Items bought</h3>

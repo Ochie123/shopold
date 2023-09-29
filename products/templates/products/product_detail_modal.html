@@ -69,10 +69,6 @@ $(document).ready(function() {
             type: 'POST',
             data: formData,
             success: function(response) {
-                // Handle the success response here, if needed
-                // Handle the success response here, if needed
-
-                // Update the product count in the header HTML
                 var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
                 $('#cart-count').text(cartCount);
             },

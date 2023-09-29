@@ -5,14 +5,11 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 import weasyprint
-
 from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from .tasks import order_created
 from cart.cart import Cart
 
-
-    
 def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
@@ -27,14 +24,14 @@ def order_create(request):
             # clear the cart
             cart.clear()
             # launch asynchronous task
-            order_created.delay(order.id) # set the order in the session 
-            request.session['order_id'] = order.id # redirect to the payment 
+            order_created.delay(order.id)
+            # set the order in the session
+            request.session['order_id'] = order.id
+            # redirect to the payment process
             return redirect(reverse('payment:process'))
     else:
         form = OrderCreateForm()
-    return render(request,
-                  'orders/order/create.html',
-                  {'cart': cart, 'form': form})
+    return render(request, 'orders/order/create.html', {'cart': cart, 'form': form})
 
 def admin_order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
