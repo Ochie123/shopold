@@ -16,7 +16,7 @@
             <div class="">
                 <a href="{{ product.get_url_path }}"
                    data-modal-title="{{ product.title }}"
-                   data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
+                   data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
                    class="item d-block">
                     <h5 class="card-title"><small> {{ product.title | truncatechars:40 }}</small> </h5>
                     <h6 class="card-text"><small> ${{ product.price }}</small> </h6>

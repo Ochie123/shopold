@@ -13,6 +13,9 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.generic import View
 from django.utils.functional import LazyObject
 from django.db.models import Count
+from django.views.generic.edit import FormView 
+
+from django.forms.models import modelform_factory 
 from cart.forms import CartAddProductForm
 from .forms import ProductFilterForm, SearchsForm
 from .models import Product, Tag
@@ -24,6 +27,8 @@ from products import stats
 ##Search
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from products import search
+
+from products import forms
 
 PAGE_SIZE = getattr(settings, "PAGE_SIZE", 30)
 # Create your views here.
@@ -55,6 +60,16 @@ def tag(request, slug=None):
                                                 'title': title
                                              })
 
+
+class ContactUsView(FormView):
+    template_name = "products/contact_form.html"
+    form_class = forms.ContactForm
+    success_url = "/"
+
+    def form_valid(self, form):
+        form.send_mail()
+        return super().form_valid(form)
+    
 class ProductList(ListView):
     model = Product
 
@@ -107,10 +122,10 @@ def products(request):
             'cart_product_form': cart_product_form ,
             })
 
-def product_detail_modal(request, pk):
+def product_detail_modal(request, slug):
 
         product = get_object_or_404(Product, 
-                                         uuid=pk,
+                                         slug=slug,
                                          )
         cart_product_form = CartAddProductForm()
         stats.log_product_view(request, product)
@@ -120,10 +135,12 @@ def product_detail_modal(request, pk):
                    'cart_product_form': cart_product_form ,
                   })
 
-def product_detail(request, pk, slug):
+def product_detail(request, year, month, day, slug):
 
         product = get_object_or_404(Product, 
-                                        uuid=pk,
+                                        publish__year=year, 
+                                        publish__month=month, 
+                                        publish__day=day,
                                          slug=slug,
                                          status=Product.Status.PUBLISHED,
         
@@ -379,7 +396,7 @@ def indexs(request):
     search_form = SearchsForm() 
     products = [] 
     form = ProductFilterForm(data=request.GET)
-    products, facets = get_queryset_and_facets(form)
+    products, facets = get_queryset_and_facets(form, request)
 
     # Paginate the products
     paginator = Paginator(products, PAGE_SIZE)

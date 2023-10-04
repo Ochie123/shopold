@@ -24,6 +24,11 @@ from products import views
 
 urlpatterns = [
     path("ad-ui/", admin.site.urls),
+       path(
+        "support/",
+        views.ContactUsView.as_view(),
+        name="contact_us",
+    ),
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('search/', views.products, name="search_products"),
@@ -34,7 +39,7 @@ urlpatterns = [
     #
     #path("", views.product_list, name="product_list"),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    path('products/', include(("products.urls", "products"), namespace="products")),
+    path('product/', include(("products.urls", "products"), namespace="products")),
 ]
 
 

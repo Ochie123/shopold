@@ -57,7 +57,7 @@ class Product(models.Model):
     toprated = models.BooleanField(default=False, help_text="1=toprated")
     bestseller = models.BooleanField(default=False, help_text="1=bestseller")
     title = models.CharField(_("title"), max_length=200)
-    slug = models.SlugField(_("slug"), max_length=200)
+    slug = models.SlugField(_("slug"), max_length=200, unique_for_date='publish')
     file = models.FileField(upload_to='files', blank=True, null=True)
 
     description = RichTextUploadingField(_("description"), blank=True)
@@ -93,11 +93,14 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('products:product_detail',
-                       args=[self.uuid, self.slug])
+                       args=[self.publish.year, 
+                             self.publish.month,
+                             self.publish.day,
+                             self.slug])
     
 
     def get_url_path(self):
-        return reverse("products:product_detail_modal", kwargs={"pk": self.pk})
+        return reverse("products:product_detail_modal", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
         if self.pk is None:

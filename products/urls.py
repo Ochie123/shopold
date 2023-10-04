@@ -8,11 +8,16 @@ urlpatterns = [
    path('', views.index, name='index'),
    path("", views.product_list, name="product_list"),
    # path("", ProductListView.as_view(), name="product_list"),
+   path(
+        "support/",
+        views.ContactUsView.as_view(),
+        name="contact_us",
+    ),
     path('toprated/', views.product_toprated, name='product_toprated'),
      path('bestseller/', views.product_bestseller, name='product_bestseller'),
     path('tags/<slug:slug>/', views.tag, name='tag'),
-    path('<uuid:pk>/', views.product_detail_modal,name='product_detail_modal'),
-    path('<uuid:pk>/<slug:slug>/', views.product_detail,name='product_detail'),
+    path('<slug:slug>/', views.product_detail_modal,name='product_detail_modal'),
+    path('<int:year>/<int:month>/<int:day>/<slug:slug>/', views.product_detail,name='product_detail'),
    path(
         "<uuid:pk>/<slug:slug>/download-file/",
         views.download_product_file,

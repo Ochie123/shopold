@@ -63,7 +63,7 @@
                     <div class="card-footer d-flex justify-content-center bg-light border">
                       <a href="{{ product.get_url_path }}"
                       data-modal-title="{{ product.title }}"
-                      data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
+                      data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
                       class="item d-block my-1">
                        <div class="">
                         <small>   

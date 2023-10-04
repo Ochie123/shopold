@@ -66,7 +66,7 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <form action="">
                 <div class="input-group">
-                    <h5>showing {{ products.number }}-{{ products.number|add:products.paginator.per_page }} of {{ products.paginator.count }} results</h5>
+                    <h5>showing  results</h5>
                 </div>
             </form>
 
@@ -118,7 +118,7 @@
                                 <div class="card-footer d-flex justify-content-center bg-light border">
                                     <a href="{{ product.get_url_path }}"
                                     data-modal-title="{{ product.title }}"
-                                    data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
+                                    data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
                                     class="item d-block my-1">
                                         <div class="">
                                             <small>
