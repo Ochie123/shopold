@@ -17,10 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.conf import settings
-from django.conf.urls.static import static 
+from django.conf.urls.static import static
+from categories.models import Category 
 from products import views
+from django.contrib.sitemaps import GenericSitemap # new
+from django.contrib.sitemaps.views import sitemap
+
+from products.models import Product # new
 
 
+info_dict = {
+    'queryset': Category.objects.all(),
+    'queryset': Product.objects.all(),
+}
 
 urlpatterns = [
     path("ad-ui/", admin.site.urls),
@@ -40,6 +49,10 @@ urlpatterns = [
     #path("", views.product_list, name="product_list"),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('product/', include(("products.urls", "products"), namespace="products")),
+
+    path('sitemap.xml', sitemap, # new
+        {'sitemaps': {'categories': GenericSitemap(info_dict, priority=0.6)}},
+        name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 

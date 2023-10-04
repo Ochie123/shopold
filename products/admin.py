@@ -20,6 +20,10 @@ from ordered_model.admin import OrderedTabularInline, OrderedInlineModelAdminMix
 from .models import Product, ProductImage, SearchTerm, ProductView, Tag
 from categories.models import Category
 
+admin.site.site_header = 'SVG Craft Administration'
+admin.site.site_header_color = "purple" 
+admin.site.module_caption_color = "grey"
+
 admin.site.register(Tag)
 class TagsAdmin(admin.ModelAdmin):
     fieldsets = ((_("Tag"), {"fields": ("title",)}),)

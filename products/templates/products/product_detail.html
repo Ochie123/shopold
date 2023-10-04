@@ -177,8 +177,7 @@
                     <h4 class="mb-3">{{ product.title }} Description</h4>
                     {{product.description|safe}}
                    
-                    <a href="{% url 'products:download_product_file' pk=product.pk slug=product.slug %}" class="btn btn-primary">Download file</a>
-
+             
                 </div>
                 <div class="tab-pane fade" id="tab-pane-2">
                     <h4 class="mb-3">How To Download</h4>
@@ -220,13 +219,7 @@
         </div>
     </div>
 </div>
-{% product_list view_recs 'Similar Products' %}
-{% product_list search_recs 'Recommended for you' %}
-{% product_list recently_viewed 'Your Recently Viewed' %}
 
-<div class="container my-1 px-2">
-{% include "products/footerpd.html" %}
-</div>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#add-to-cart-form').on('submit', function(event) {
@@ -255,7 +248,13 @@ $(document).ready(function() {
     });
 });
 </script>
+{% product_list view_recs 'Similar Products' %}
+{% product_list search_recs 'Recommended for you' %}
+{% product_list recently_viewed 'Your Recently Viewed' %}
 
+<div class="container my-1 px-2">
+{% include "products/footerpd.html" %}
+</div>
 
 
 

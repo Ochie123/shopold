@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-+*+tbj*la@+=#p7e3yfu#ny7+5^d@*orki4y53dik62l&&bsi8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
+    'django.contrib.flatpages',
+    "django.contrib.sites",
     'ckeditor', # CKEditor config
     'ckeditor_uploader', # CKEditor media uploader
     "ordered_model",
@@ -68,6 +71,7 @@ MIDDLEWARE = [
     "products.urlcanon.WwwRedirectMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     "django.contrib.messages.middleware.MessageMiddleware",
     'products.urlcanon.WwwRedirectMiddleware',
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -242,3 +246,4 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+SITE_ID = 1

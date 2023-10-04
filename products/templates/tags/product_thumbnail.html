@@ -155,35 +155,6 @@
 
 
       </script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#add-to-cart-form').on('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-    
-            var form = $(this);
-            var url = form.data('url');
-            var formData = form.serialize();
-    
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    // Handle the success response here, if needed
-                    // Handle the success response here, if needed
-    
-                    // Update the product count in the header HTML
-                    var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
-                    $('#cart-count').text(cartCount);
-                },
-                error: function(xhr, errmsg, err) {
-                    // Handle any error that occurred during the Ajax request
-                }
-            });
-        });
-    });
-    </script>
 {% endblock %}
 
 
