@@ -6,17 +6,19 @@ from . import views
 
 urlpatterns = [
    path('', views.index, name='index'),
-   path("", views.product_list, name="product_list"),
+   path('category/', views.index, name='category_filter'),
    # path("", ProductListView.as_view(), name="product_list"),
-   path(
-        "support/",
-        views.ContactUsView.as_view(),
-        name="contact_us",
-    ),
+  # path(
+    #    "support/",
+    #    views.ContactUsView.as_view(),
+     #   name="contact_us",
+   # ),
     path('toprated/', views.product_toprated, name='product_toprated'),
      path('bestseller/', views.product_bestseller, name='product_bestseller'),
     path('tags/<slug:slug>/', views.tag, name='tag'),
+    #path('<slug:slug>/<uuid:pk>', views.product_detail_modal,name='product_detail_modal'),
     path('<slug:slug>/', views.product_detail_modal,name='product_detail_modal'),
+    #path('<int:year>/<int:month>/<int:day>/<slug:slug>/<uuid:pk>', views.product_detail,name='product_detail'),
     path('<int:year>/<int:month>/<int:day>/<slug:slug>/', views.product_detail,name='product_detail'),
    path(
         "<uuid:pk>/<slug:slug>/download-file/",
@@ -24,7 +26,9 @@ urlpatterns = [
         name="download_product_file",
     ),
     path('search/', views.products, name="search_products"),
-    path('sear/', views.search_page, name="search_page")
+
+   # path('search/', views.index_view, name="index_view"),
+   
     
    # path('<slug:slug>/', ProductDetail.as_view(), name="product-detail"),
 ]

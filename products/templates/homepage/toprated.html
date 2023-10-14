@@ -1,8 +1,8 @@
-<h3>Top Rated</h3>
+<br>
+<h2 class="title text-left mb-4">Top Rated</h2><!-- End .title text-center -->
+
 <div class="item-list">
     {% for product in toprated_products|slice:":5"%}
- 
-    <div class="card mb-3">
     
         <div class="row">
           <div class="col">
@@ -18,14 +18,15 @@
                    data-modal-title="{{ product.title }}"
                    data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
                    class="item d-block">
-                    <h5 class="card-title"><small> {{ product.title | truncatechars:40 }}</small> </h5>
-                    <h6 class="card-text"><small> ${{ product.price }}</small> </h6>
+                    <h5 class="card-title"><small> {{ product.title }}</small> </h5>
+                    <div class="product-price">
+                      ${{ product.price }}
+                  </div><!-- End .product-price -->
                 </a>
             </div>
           </div>
         </div>
-      </div>
-    
+      
     {% endfor %}
 
 

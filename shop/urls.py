@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.conf import settings
+from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from categories.models import Category 
 from products import views
@@ -25,6 +27,7 @@ from django.contrib.sitemaps.views import sitemap
 
 from products.models import Product # new
 
+from products import forms
 
 info_dict = {
     'queryset': Category.objects.all(),
@@ -38,13 +41,24 @@ urlpatterns = [
         views.ContactUsView.as_view(),
         name="contact_us",
     ),
+    path(
+        'signup/', 
+        views.SignupView.as_view(), name="signup"),
+    path(
+        "login/", auth_views.LoginView.as_view( template_name="login.html",
+        form_class=forms.AuthenticationForm, ),
+        name="login",
+), 
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
-    path('search/', views.products, name="search_products"),
-    path('sear/', views.search_page, name="search_page"),
+    #path('search/', views.products, name="search_products"),
+    #path('search/', views.index_view, name="index_view"),
     path('paypal/', include('paypal.standard.ipn.urls')),
     path('payment/', include('payment.urls', namespace='payment')),
     path('', views.index, name='index'),
+    path('category/', views.index, name='category_filter'),
     #
     #path("", views.product_list, name="product_list"),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),

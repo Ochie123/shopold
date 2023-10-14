@@ -40,4 +40,4 @@ def cart_detail(request):
         item['update_quantity_form'] = CartAddProductForm(initial={
                             'quantity': item['quantity'],
                             'override': True})
-    return render(request, 'cart/detail.html', {'cart': cart})
+    return render(request, 'cart/new_detail.html', {'cart': cart})

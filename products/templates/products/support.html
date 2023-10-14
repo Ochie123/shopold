@@ -1,0 +1,118 @@
+{% extends "best.html" %}
+{%block title %} Support {% endblock %}
+{% block main %}
+<main class="main">
+	<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+		<div class="container">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Contact us</li>
+			</ol>
+		</div><!-- End .container -->
+	</nav><!-- End .breadcrumb-nav -->
+
+
+	<div class="page-content pb-0">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 mb-2 mb-lg-0">
+					<h2 class="title mb-1">Contact Information</h2><!-- End .title mb-2 -->
+					<p class="mb-3">Please fill out the form below to contact us</p>
+					<div class="row">
+						<div class="col-sm-7">
+							<div class="contact-info">
+
+								<ul class="contact-list">
+									<li>
+										<i class="icon-envelope"></i>
+										<a href="mailto:#">sales@svgcaft.co</a>
+									</li>
+								</ul><!-- End .contact-list -->
+							</div><!-- End .contact-info -->
+						</div><!-- End .col-sm-7 -->
+
+						<div class="col-sm-5">
+							<div class="contact-info">
+								<h3>Office Hours</h3>
+
+								<ul class="contact-list">
+									<li>
+										<i class="icon-clock-o"></i>
+										<span class="text-dark">Monday-Saturday</span> <br>11am-10pm ET
+									</li>
+									<li>
+										<i class="icon-calendar"></i>
+										<span class="text-dark">Sunday</span> <br>11am-6pm ET
+									</li>
+								</ul><!-- End .contact-list -->
+							</div><!-- End .contact-info -->
+						</div><!-- End .col-sm-5 -->
+					</div><!-- End .row -->
+				</div><!-- End .col-lg-6 -->
+				<div class="col-lg-6">
+					<h2 class="title mb-1">Got Any Questions?</h2><!-- End .title mb-2 -->
+					<p class="mb-2">Use the form below to get in touch with the sales team</p>
+                    <form method="POST" class="contact-form mb-3">
+                        {% csrf_token %}
+						<div class="row">
+							<div class="col-sm-6">
+								<label for="cname" class="sr-only">{{ form.name.label_tag }}</label>
+                                <input
+                                type="text"
+                                class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+                                id="id_name"
+                                name="name"
+                                placeholder="Your name"
+                                value="{{ form.name.value|default:"" }}"
+                            >
+                            {% if form.name.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.name.errors }}
+                            </div>
+                        {% endif %}
+							</div><!-- End .col-sm-6 -->
+
+							<div class="col-sm-6">
+								<label for="cemail" class="sr-only">{{ form.email.label_tag }}</label>
+                                <input
+                                type="email"
+                                class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                                id="id_email"
+                                name="email"
+                                placeholder="Your email"
+                                value="{{ form.email.value|default:"" }}"
+                            >
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+							</div><!-- End .col-sm-6 -->
+						</div><!-- End .row -->
+
+						<label for="cmessage" class="sr-only"> {{ form.message.label_tag }}</label>
+                        <textarea
+                        class="form-control {% if form.message.errors %}is-invalid{% endif %}"
+                        id="id_message"
+                        name="message"
+                        cols="30" rows="4" 
+                        required placeholder="Message *"
+                    >
+                     {{ form.message.value|default:"" }}
+                 </textarea>
+                     {% if form.message.errors %}
+                     <div class="invalid-feedback">
+                    {{ form.message.errors }}
+                      </div>
+                     {% endif %}
+						<button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
+							<span>SUBMIT</span>
+							<i class="icon-long-arrow-right"></i>
+						</button>
+					</form><!-- End .contact-form -->
+				</div><!-- End .col-lg-6 -->
+			</div><!-- End .row -->
+		</div><!-- End .container -->
+	</div><!-- End .page-content -->
+</main><!-- End .main -->
+{% endblock %}

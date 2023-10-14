@@ -96,11 +96,15 @@ class Product(models.Model):
                        args=[self.publish.year, 
                              self.publish.month,
                              self.publish.day,
-                             self.slug])
+                             self.slug,
+                             #self.uuid,
+                             ])
     
 
     def get_url_path(self):
-        return reverse("products:product_detail_modal", kwargs={"slug": self.slug})
+        return reverse("products:product_detail_modal", kwargs={"slug": self.slug, 
+                                                                #"pk":self.uuid
+                                                                })
 
     def save(self, *args, **kwargs):
         if self.pk is None:

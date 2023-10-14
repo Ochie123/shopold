@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
     "https://rapio.serveo.net",
+    'https://libero.serveo.net'
     # Add other trusted origins here
 ]
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     'django.contrib.flatpages',
     "django.contrib.sites",
+    'widget_tweaks',
     'ckeditor', # CKEditor config
     'ckeditor_uploader', # CKEditor media uploader
     "ordered_model",
@@ -246,4 +248,7 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+from django.urls import reverse_lazy
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+
 SITE_ID = 1

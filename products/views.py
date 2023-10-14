@@ -1,4 +1,8 @@
 import os
+import logging
+from django.contrib.auth import login, authenticate 
+from django.contrib import messages
+
 from django.db.models import Q
 from django.http import FileResponse, HttpResponseNotFound
 from django.shortcuts import render
@@ -14,6 +18,10 @@ from django.views.generic import View
 from django.utils.functional import LazyObject
 from django.db.models import Count
 from django.views.generic.edit import FormView 
+from django.contrib.auth.mixins import (
+     LoginRequiredMixin, 
+     UserPassesTestMixin
+)
 
 from django.forms.models import modelform_factory 
 from cart.forms import CartAddProductForm
@@ -30,8 +38,38 @@ from products import search
 
 from products import forms
 
-PAGE_SIZE = getattr(settings, "PAGE_SIZE", 30)
+PAGE_SIZE = getattr(settings, "PAGE_SIZE", 21)
+logger = logging.getLogger(__name__)
 # Create your views here.
+class LogoutView(FormView): 
+    template_name = "logout.html" 
+
+class SignupView(FormView): 
+    template_name = "signup.html" 
+    form_class = forms.UserCreationForm
+
+    def get_success_url(self):
+        redirect_to = self.request.GET.get("next", "/") 
+        return redirect_to
+
+    def form_valid(self, form):
+        response = super().form_valid(form) 
+        form.save()
+
+        email = form.cleaned_data.get("email") 
+        raw_password = form.cleaned_data.get("password1") 
+        logger.info(
+            "New signup for email=%s through SignupView", email )
+        user = authenticate(email=email, password=raw_password) 
+        login(self.request, user)
+
+        form.send_mail()
+    
+        messages.info(
+        self.request, "You signed up successfully."
+)
+        return response
+
 
 def tag(request, slug=None):
     tag = get_object_or_404(Tag, slug=slug)
@@ -62,7 +100,7 @@ def tag(request, slug=None):
 
 
 class ContactUsView(FormView):
-    template_name = "products/contact_form.html"
+    template_name = "products/support.html"
     form_class = forms.ContactForm
     success_url = "/"
 
@@ -161,7 +199,7 @@ def product_detail(request, year, month, day, slug):
                                 .order_by('-same_tags','-publish')[:5]
         
         return render(request,
-                  'products/product_detail.html',
+                  'products/product_detail_new.html',
                   {'product': product,
                    'view_recs': view_recs,
                    'search_recs': search_recs,
@@ -259,15 +297,23 @@ def product_toprated(request):
                 {'toprated_products': toprated_products}
                 )
 
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+
 def index(request):
     """ site home page """
-    # Create the filter form and apply any filtering if necessary
-    # Get the sort parameter from the query strin
-
+    sort_param = request.GET.get("sort")
+    if sort_param == "oldest":
+        qs = Product.published.all().order_by("publish")
+    elif sort_param == "":
+        qs = Product.published.all().order_by("-popularity")
+    elif sort_param == "":
+        qs = Product.published.all().order_by("-rating")
+    else:
+        qs = Product.published.all().order_by("-publish")
     form = ProductFilterForm(data=request.GET)
     cart_product_form = CartAddProductForm()
     products, facets = get_queryset_and_facets(form, request)
-
     # Paginate the products
     paginator = Paginator(products, PAGE_SIZE)
     page_number = request.GET.get("page")
@@ -277,14 +323,30 @@ def index(request):
         page = paginator.page(1)
     except EmptyPage:
         page = paginator.page(paginator.num_pages)
-
     # Get other data
     search_recs = stats.recommended_from_search(request)
     bestseller_products = Product.published.all().filter(bestseller=1)
     toprated_products = Product.published.all().filter(toprated=1)
     recently_viewed = stats.get_recently_viewed(request)
     view_recs = stats.recommended_from_views(request)
-    page_title = 'SVGhippo - Home to svgs'
+    page_title = 'SVG Craft - Home to svgs'
+    
+    # AJAX search functionality
+    url_parameter = request.GET.get("q")
+    if url_parameter:
+        products = Product.objects.filter(title__icontains=url_parameter)
+    else:
+        products = Product.objects.all()
+    
+    # Check if the request is AJAX
+    is_ajax_request = request.headers.get("x-requested-with") == "XMLHttpRequest"
+    if is_ajax_request:
+        html = render_to_string(
+            template_name="catalog/products-partial.html",
+            context={"products": products}
+        )
+        data_dict = {"html_from_view": html}
+        return JsonResponse(data=data_dict, safe=False)
 
     return render(
         request,
@@ -293,7 +355,7 @@ def index(request):
             "page_title": page_title,
             "products": page,
             "form": form,
-            'cart_product_form': cart_product_form ,
+            "cart_product_form": cart_product_form,
             "facets": facets,
             "search_recs": search_recs,
             "bestseller_products": bestseller_products,
@@ -362,99 +424,3 @@ def download_product_file(request, pk, slug):
         )
     
     return response
-
-def search_page(request): 
-    search_form = SearchsForm() 
-    products = [] 
-    show_results = False
-    if 'query' in request.GET: 
-        show_results = True
-        query = request.GET['query'].strip() 
-        if query:
-            keywords = query.split() 
-            q = Q()
-            for keyword in keywords:
-                q = q & Q(title__icontains=keyword)
-            search_form = SearchsForm({'query' : query}) 
-            products = Product.objects.filter(q)[:10]
-    context = { 
-        'search_form': search_form,
-        'products': products, 
-        'show_results': show_results, 
-}
-
-    if 'ajax' in request.GET:
-        return render(request, 'bookmark_list.html', context)
-    else:
-        return render(request, 'search.html', context)
-
-
-
-def indexs(request):
-    """ site home page """
-    # Create the filter form and apply any filtering if necessary
-    search_form = SearchsForm() 
-    products = [] 
-    form = ProductFilterForm(data=request.GET)
-    products, facets = get_queryset_and_facets(form, request)
-
-    # Paginate the products
-    paginator = Paginator(products, PAGE_SIZE)
-    page_number = request.GET.get("page")
-    show_results = False
-    if 'query' in request.GET: 
-        show_results = True
-        query = request.GET['query'].strip() 
-        if query:
-            keywords = query.split() 
-            q = Q()
-            for keyword in keywords:
-                q = q & Q(title__icontains=keyword)
-            search_form = SearchsForm({'query' : query}) 
-            products = Product.objects.filter(q)[:10]
-    try:
-        page = paginator.page(page_number)
-    except PageNotAnInteger:
-        page = paginator.page(1)
-    except EmptyPage:
-        page = paginator.page(paginator.num_pages)
-
-    # Get other data
-    search_recs = stats.recommended_from_search(request)
-    bestseller_products = Product.published.all().filter(bestseller=1)
-    toprated_products = Product.published.all().filter(toprated=1)
-    recently_viewed = stats.get_recently_viewed(request)
-    view_recs = stats.recommended_from_views(request)
-    page_title = 'SVG Craft - Home to svgs'
- 
-    if 'ajax' in request.GET:
-        return render(request, 'bookmark_list.html',  {           
-            "page_title": page_title,
-            "products": page,
-            'search_form': search_form,
-            "form": form,
-            "facets": facets,
-            "search_recs": search_recs,
-            "bestseller_products": bestseller_products,
-            "toprated_products": toprated_products,
-            "recently_viewed": recently_viewed,
-            "view_recs": view_recs,
-            'search_form': search_form,
-        'products': products, 
-        'show_results': show_results},)
-    else:
-        return render(request,  "catalog/index.html", {          
-            "page_title": page_title,
-            "products": page,
-            'search_form': search_form,
-            "form": form,
-            "facets": facets,
-            "search_recs": search_recs,
-            "bestseller_products": bestseller_products,
-            "toprated_products": toprated_products,
-            "recently_viewed": recently_viewed,
-            "view_recs": view_recs,
-            'search_form': search_form,
-        'products': products, 
-        'show_results': show_results
-            }, )
