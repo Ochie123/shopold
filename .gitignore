@@ -3,3 +3,5 @@ env
 env/
 product-images/
 product-thumbnails/
+media/
+/media
