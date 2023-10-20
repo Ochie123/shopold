@@ -1,66 +1,577 @@
-{% load static %}
-<!doctype html>
+<!DOCTYPE html>
 {% load i18n static %}
+{% load inclusionsx_tags %}
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>{% block head_title %}{% endblock %}</title>
-    {% include "misc/includes/favicons.html" %}
-    {% block meta_tags %}{% endblock %}
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="keywords" content="SVGs">
+    <meta name="description" content="SVG Craft - Best SVGs collection">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon.ico' %}">
+    <link rel="manifest" href="{% static 'img/icons/site.html' %}">
+    <link rel="mask-icon" href="{% static 'img/icons/safari-pinned-tab.svg' %}" color="#666666">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <meta name="apple-mobile-web-app-title" content="SVG Craft">
+    <meta name="application-name" content="SVG Craft">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="{% static 'img/icons/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+  
+    <link rel="stylesheet" href="{% static 'newdesign/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'newdesign/css/style.css' %}">
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'newdesign/css/plugins/owl-carousel/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'newdesign/css/plugins/magnific-popup/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'newdesign/css/plugins/nouislider/nouislider.css' %}">
 
-
-    
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous" />
-    <link rel="stylesheet"
-          href="{% static 'css/originalstyle.css' %}"
-          crossorigin="anonymous" />
-
-    <!-- Libraries Stylesheet -->
-    <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/tags.css' %}" rel="stylesheet">
-    <link href="{% static 'css/best.css' %}" rel="stylesheet">
-    <link href="{% static 'css/base.css' %}" rel="stylesheet">
-    <link href="{% static 'css/slider.css' %}" rel="stylesheet">
 
     {% block css %}{% endblock %}
+    {% block external %}{% endblock %}
     {% block extra_head %}{% endblock %}
 </head>
-<body>
-    {% include "misc/includes/header.html" %}
-   
-        {% block content %}
-        <div class="row bg-secondaryd py-2 px-xl-5">
-            <div class="col-lg-3">{% block sidebar %}
-                <div class="navbar-nav mr-auto py-0 d-none d-lg-block">
-                {% include "products/includes/filters.html" %}
-            </div>
-                {% endblock %}</div>
-            <div class="col-lg-9">{% block main %}{% endblock %}</div>
-        </div>
-        {% endblock %}
 
-    {% include "misc/includes/footer.html" %}
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    {% block js %}{% endblock %}
-    {% block extra_body %}{% endblock %}
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <div class="header-dropdown">
+                            <a href="#">Usd</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">Eur</a></li>
+                                    <li><a href="#">Usd</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+
+                        <div class="header-dropdown">
+                            <a href="#">Eng</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">Spanish</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li><a href="tel:#"><i class="icon-envelope"></i>sales@svgcraft.co</a></li>
+                                    <li><a href="/about">About Us</a></li>
+                                    <li><a href="/support">Contact Us</a></li>
+                                    {% if request.user.is_authenticated %}
+                                    <li>
+                                    <div class="header-dropdown">
+                                        <a href="#">User </a>
+                                        <div class="header-menu">
+                                            <ul>
+                                                <li><a href="{% url 'my_order' %}">Profile</a></li>
+                                                <li><a href="/"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
+                                                <li><a href="{% url "signout" %}"><i class="fa fa-sign-out"></i> Signout</a></li>
+                                            </ul>
+                                        </div><!-- End .header-menu -->
+                                    </div><!-- End .header-dropdown -->
+                                </li>
+                                    {% else %}
+                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+<style>
+/* Hide the search container by default */
+#search-container {
+    display: none;
+}
+
+/* Display the search container on small devices */
+@media (max-width: 768px) {
+    #search-container {
+        display: block;
+    }
+
+}
+@media (min-width: 768px) {
+    #search-container {
+        display: block;
+    }
+}
+</style>
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="/" class="logo">
+                            <img src="{% static 'img/logo.png' %}" alt="SVG Craft Logo" width="105" height="25">
+                        </a>
+
+
+                        <nav class="main-nav">
+                            <ul class="menu ">
+                                <li class="megamenu-container active">
+                                    <a href="/" class="">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/support" class="">Contact</a>
+                                </li>
+                                <li>
+                                    <a href="/about" class="">About us</a>
+                                </li>
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                                         <!-- Search Form -->
+
+                            <div id="search-container" class="header-search">
+                                <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
+                                <form action="#" method="get">
+                                    <div class="header-search-wrapper">
+                                        <label for="q" class="sr-only">Search</label>
+                                        <input type="search" class="form-control" name="q" id="user-input" placeholder="Search in..." required>
+                                    </div><!-- End .header-search-wrapper -->
+                                </form>
+                            </div><!-- End #search-container -->
+                        
+
+                        <div class="dropdown cart-dropdown">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <i class="icon-shopping-cart"></i>
+                                <span class="cart-count" id="cart-count">
+                                    {% with total_items=cart|length %}
+                                        {% if total_items > 0 %}
+                                            {{ total_items }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    {% endwith %}
+                                </span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+                                    {% for item in cart %}
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a>
+                                            </h4>
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty">{{ item.quantity }}</span>
+                                                x {{ item.product.price }}
+                                            </span>
+                                        </div><!-- End .product-cart-details -->
+                                        <figure class="product-image-container">
+                                            <a href="{{ item.product.get_absolute_url }}">
+                                                {% with item.product.productimage_set.first as profile_image %}
+                                                <img src="{{ profile_image.image.url }}" alt="cover">
+                                                {% endwith %}
+                                            </a>
+                                        </figure>
+                                        <a href="#" class="btn-remove" title="Remove Product" data-product-uuid="{{ item.product.uuid }}">
+                                            <i class="icon-close"></i>
+                                        </a>
+                                    </div><!-- End .product -->
+                                    {% endfor %}
+                                </div><!-- End .cart-product -->
+                                <div class="dropdown-cart-total">
+                                    <span>Total</span>
+                                    <span class="cart-total-price">${{ cart.get_total_price }}</span>
+                                </div><!-- End .dropdown-cart-total -->
+                                <div class="dropdown-cart-action">
+                                    <a href="/cart" class="btn btn-primary">View Cart</a>
+                                    <a href="{% url 'orders:order_create' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .dropdown-cart-total -->
+                            </div><!-- End .dropdown-menu -->
+                            
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+       
+        <div class="message-div">
+
+         {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        </div>
+       
+
+  
+            
+        {% block main %}
+        {% endblock %}
+      
+        <footer class="footer">
+        	<div class="footer-middle">
+	            <div class="container">
+	            	<div class="row">
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget widget-about">
+	            				<img src="{% static 'img/logo.png' %}" class="footer-logo" alt="Footer Logo" width="105" height="25">
+	            				<p>Home to SVGs </p>
+
+	            				<div class="social-icons">
+	            					<a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+	            				</div><!-- End .soial-icons -->
+	            			</div><!-- End .widget about-widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="/about">About SVG Craft</a></li>
+	            					<li><a href="#">How to shop on SVG Craft</a></li>
+	            					<li><a href="#">FAQ</a></li>
+	            					<li><a href="/support">Contact us</a></li>
+	            					<li><a href="/login">Log in</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Payment Methods</a></li>
+	            					<li><a href="#">Money-back guarantee!</a></li>
+	            					<li><a href="#">Returns</a></li>
+	            					<li><a href="#">Terms and conditions</a></li>
+	            					<li><a href="#">Privacy Policy</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Sign In</a></li>
+	            					<li><a href="#">View Cart</a></li>
+	            					<li><a href="#">Help</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+	            	</div><!-- End .row -->
+	            </div><!-- End .container -->
+	        </div><!-- End .footer-middle -->
+
+	        <div class="footer-bottom">
+	        	<div class="container">
+	        		<p class="footer-copyright">@ {% now "Y" %} Svgcraft Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+	        		<figure class="footer-payments">
+	        			<img src="{% static 'img/payments.png' %}" alt="Payment methods" width="272" height="20">
+	        		</figure><!-- End .footer-payments -->
+	        	</div><!-- End .container -->
+	        </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    <li class="active">
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/">Shop</a>
+                    </li>
+                    <li>
+                        <a href="/support" class="sf-with-ul">Contact</a>
+                    </li>
+
+                    <li>
+                        <a href="/about">About us</a>
+                    </li>
+                    <li>
+                        <a href="/">Blog</a>
+                    </li>
+                </ul>
+            </nav><!-- End .mobile-nav -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+    <!-- Sign in / Register Modal -->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="icon-close"></i></span>
+                    </button>
+
+                    <div class="form-box">
+                        <div class="form-tab">
+                            <ul class="nav nav-pills nav-fill" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="tab-content-5">
+                                <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
+                                    <form method="POST" action="{% url 'login' %}">
+                                        {% csrf_token %}
+                                        {{ form.non_field_errors }}
+                                        <div class="form-group">
+                                        {{ form.email.label_tag }} <input
+                                        type="email"
+                                        class="form-control {% if form.email.errors %} is-invalid{% endif %}"
+                                    id="id_email"
+                                    name="email"
+                                    placeholder="Your email"
+                                    value="{{ form.email.value|default:"" }}" required> {% if form.email.errors %}
+                                    <div class="invalid-feedback"> {{ form.email.errors }}
+                                    </div>
+                                    {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                    {{ form.password.label_tag }}
+                                    <input
+                                    type="password"
+                                    class="form-control{% if form.password.errors %} is-invalid{% endif %}"
+                                    id="id_password"
+                                    name="password"
+                                    placeholder="Your password"
+                                    value="{{ form.password.value|default:"" }}" required>
+                                    {% if form.password.errors %}
+                                    <div class="invalid-feedback">
+                                    {{ form.password.errors }}
+                                    </div>
+                                    {% endif %}
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button> </form>
+                                    
+                                      </form>
+                                    <div class="form-choice">
+                                        <p class="text-center">or sign in with</p>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-g">
+                                                    <i class="icon-google"></i>
+                                                    Login With Google
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-f">
+                                                    <i class="icon-facebook-f"></i>
+                                                    Login With Facebook
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .form-choice -->
+                                </div><!-- .End .tab-pane -->
+                                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                                    <form method="POST" action="{% url 'signup' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                        {{ form.email.label_tag }}
+                                        <input
+                                        type="email"
+                                        class="form-control {% if form.email.errors %} is-invalid{% endif %}"
+                                        id="id_email"
+                                        name="email"
+                                        placeholder="Your email"
+                                        value="{{ form.email.value|default:"" }}" required>
+                                        {% if form.email.errors %}
+                                        <div class="invalid-feedback">
+                                        {{ form.email.errors }}
+                                        </div>
+                                        {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                        {{ form.password1.label_tag }}
+                                        <input
+                                        type="password"
+                                        class="form-control {% if form.password1.errors %} is-invalid{% endif %}"
+                                        id="id_password1"
+                                        name="password1"
+                                        placeholder="Your password"
+                                        value="{{ form.password1.value|default:"" }}" required>
+                                        {% if form.password1.errors %} <div class="invalid-feedback">
+                                        {{ form.password1.errors }}
+                                        </div>
+                                        {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                        {{ form.password2.label_tag }}
+                                        <input
+                                        type="password"
+                                        class="form-control{% if form.password2.errors %} is-invalid{% endif %}"
+                                        id="id_password2"
+                                        name="password2"
+                                        placeholder="Confirm password"
+                                        value="{{ form.password2.value|default:"" }}" required>
+                                        {% if form.password2.errors %} <div class="invalid-feedback">
+                                            {{ form.password2.errors }}
+                                            </div>
+                                            {% endif %}
+                                            </div>
+                                          <p> <button type="submit" class="btn btn-primary">Create my account</button> </p> 
+                                         
+                                        </form>
+                                    <div class="form-choice">
+                                        <p class="text-center">or sign in with</p>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-g">
+                                                    <i class="icon-google"></i>
+                                                    Login With Google
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login  btn-f">
+                                                    <i class="icon-facebook-f"></i>
+                                                    Login With Facebook
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .form-choice -->
+                                </div><!-- .End .tab-pane -->
+                            </div><!-- End .tab-content -->
+                        </div><!-- End .form-tab -->
+                    </div><!-- End .form-box -->
+                </div><!-- End .modal-body -->
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div><!-- End .modal -->
+    <!-- Plugins JS File -->
+    <script src="{% static 'newdesign/js/jquery.min.js' %}"></script>
+    <script src="{% static 'newdesign/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'newdesign/js/jquery.hoverIntent.min.js' %}"></script>
+    <script src="{% static 'newdesign/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'newdesign/js/superfish.min.js' %}"></script>'
+    
+     <!--  
+    <script src="{% static 'newdesign/js/bootstrap-input-spinner.js' %}"></script> 
+    <script src="{% static 'newdesign/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'newdesign/js/wNumb.js' %}"></script>
+    <script src="{% static 'newdesign/js/nouislider.min.js' %}"></script>
+     <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+     -->
+
+    <script src="{% static 'newdesign/js/owl.carousel.min.js' %}"></script>
+    
+ 
+
+    <!-- Main JS File -->
+    <script src="{% static 'newdesign/js/main.js' %}"></script>
+
+    <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'js/list.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="//unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
+    <script src="{% static 'js/list.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
+    <script src="{% static 'js/layoutswitch.js' %}"></script>
+    <!--not required-->
+    {% block js %}
+
+
+    <script type="text/javascript">
+$(document).ready(function() {
+    $('#add-to-cart-form').on('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        var form = $(this);
+        var url = form.data('url');
+        var formData = form.serialize();
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                // Handle the success response here, if needed
+                    // Handle the success response here, if needed
+                    var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
+                    $('#cart-count').text(cartCount);
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle any error that occurred during the Ajax request
+            }
+        });
+    });
+});
+    
+</script>
+    {% endblock %}
+
+    {% block extra_body %}
+    <script type="text/template" class="loader">
+        <div class="text-center">
+            <div class="loading-indicator"></div>
+        </div>
+    </script>
+    <div id="modal" class="modal fade" tabindex="-1" role="dialog"
+         aria-hidden="true" aria-labelledby="modal_title">
+        <div class="modal-dialog modal-dialog-centered"
+             role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_title"
+                        class="modal-title"></h4>
+                    <button type="button" class="close"
+                            data-dismiss="modal"
+                            aria-label="{% trans 'Close' %}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    
 </body>
+
+
 </html>

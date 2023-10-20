@@ -1,10 +1,11 @@
 {% load i18n utility_tags %}
-<div class="filters panel-group" id="accordion">
+
+<div class="">
+<div class="filters panel-group">
     {% with title=_('Category') selected=facets.selected.category %}
         <div class="panel panel-default my-3">
-            {% include "misc/includes/filter_heading.html" with title=title %}
-            <div id="collapse-{{ title|slugify }}"
-                 class="panel-collapse{% if not selected %} collapse{% endif %}">
+            <div id="{{ title|slugify }}"
+                 class="{% if not selected %} {% endif %}">
                 <div class="panel-body"><div class="list-group">
                     {% include "misc/includes/filter_all.html" with param="category" %}
                     {% for cat in facets.categories.categories %}
@@ -12,10 +13,14 @@
                           {% if selected == cat %}
                           active{% endif %}"
                            href="{% modify_query "page" category=cat.pk %}">
-                            {{ cat }}</a>
+                           {{ cat }} ({{ cat.product_count }})</a>
                     {% endfor %}
                 </div></div>
             </div>
         </div>
     {% endwith %}
+    </div>
 </div>
+
+
+

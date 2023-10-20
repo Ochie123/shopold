@@ -15,27 +15,61 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
-from django.conf.urls.static import static 
+from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from categories.models import Category 
 from products import views
+from django.contrib.sitemaps import GenericSitemap # new
+from django.contrib.sitemaps.views import sitemap
 
-from products.views import ( 
-               ProductListView,
-               
-    
-)
+from products.models import Product # new
+
+from products import forms
+
+info_dict = {
+    'queryset': Category.objects.all(),
+    'queryset': Product.objects.all(),
+}
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("ad-ui/", admin.site.urls),
+       path(
+        "support/",
+        views.ContactUsView.as_view(),
+        name="contact_us",
+    ),
+    path(
+        'signup/', 
+        views.SignupView.as_view(), name="signup"),
+    path(
+        "login/", auth_views.LoginView.as_view( template_name="login.html",
+        form_class=forms.AuthenticationForm, ),
+        name="login",
+), 
+    path('signout/', auth_views.LogoutView.as_view(), name='signout'),
+    path('my-order/', views.my_order_view,name='my_order'),
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
-    path('search/', views.products, name="search_products"),
+    #path('search/', views.products, name="search_products"),
+    #path('search/', views.index_view, name="index_view"),
     path('paypal/', include('paypal.standard.ipn.urls')),
     path('payment/', include('payment.urls', namespace='payment')),
-    #path('', views.index, name='index'),
-    path("", ProductListView.as_view(), name="product_list"),
-    path('products/', include(("products.urls", "products"), namespace="products")),
+    path('', views.index, name='index'),
+    path('category/', views.index, name='category_filter'),
+    #
+    #path("", views.product_list, name="product_list"),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    path('product/', include(("products.urls", "products"), namespace="products")),
+
+    path('sitemap.xml', sitemap, # new
+        {'sitemaps': {'categories': GenericSitemap(info_dict, priority=0.6)}},
+        name='django.contrib.sitemaps.views.sitemap'),
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static("/media/", document_root=settings.MEDIA_ROOT)
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+

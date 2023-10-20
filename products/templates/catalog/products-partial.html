@@ -1,0 +1,48 @@
+<div class="products mb-3">
+    <div class="row justify-content-center">
+{% if products %}
+{% for product in products %}
+<div class="col-6 col-md-4 col-lg-4">
+    <div class="product product-7 text-center">
+
+        <figure class="product-media">
+            <span class="product-label label-new">N</span>
+            <a href="{{ product.get_absolute_url }}">
+
+                {% with product.productimage_set.first as profile_image %}
+                <img class="product-image" src="{{ profile_image.image.url }}" alt="Product image">
+                {% endwith %}  
+
+            </a>
+
+            <div class="prod">
+                <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
+                    {% csrf_token %}
+
+                    <div class="product-action">
+                        <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                            <span>Add to Cart</span>
+                            <span class="loader"></span>
+                        </button>
+
+                    </div><!-- End .product-details-action -->
+                </form>
+            </div><!-- End .product-action -->
+
+        </figure><!-- End .product-media -->
+
+        <div class="product-body">
+            <h3 class="product-title"><a href="">{{product.title}}</a></h3><!-- End .product-title -->
+            <div class="product-price">
+                ${{product.price}}
+            </div><!-- End .product-price -->
+        </div><!-- End .product-body -->
+
+    </div><!-- End .product -->
+</div><!-- End .col-sm-6 col-lg-4 -->
+{% endfor %}
+{% else %}
+<p>No products found.</p>
+{% endif %}
+    </div>
+</div>

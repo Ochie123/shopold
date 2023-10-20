@@ -1,0 +1,9 @@
+{% extends "e_base.html" %}
+{% load i18n %}
+{% block error_title %}
+{% trans "Sorry, we can't seem to complete your request." %}
+<div class="error-message-error">
+    {% trans "Request cannot be completed (500)" %}</div>
+{% endblock %}
+{% block error_message %}{% trans "Request not completed (500)" %}
+{% endblock %}

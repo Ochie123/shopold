@@ -1,0 +1,188 @@
+{% extends "best.html" %}
+{% load static %}
+{% block title %}
+  Checkout - SVG Craft
+{% endblock %}
+{% block main %}
+
+
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">Checkout<span>SVG Craft</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/cart">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="checkout">
+            <div class="container">
+                <div class="checkout-discount">
+                    <form action="#">
+                        <input type="text" class="form-control" required id="checkout-discount-input">
+                        <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
+                    </form>
+                </div><!-- End .checkout-discount -->
+                <form method="post">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+                                <div class="row">
+								<form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                                    <div class="col-sm-6">
+									<div class="form-group">
+                        {{ form.first_name.label_tag }}
+                        <input
+                            type="text"
+                            class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
+                            id="id_first_name"
+                            name="first_name"
+                            placeholder="first name"
+                            value="{{ form.first_name.value|default:'' }}"
+                        >
+                        {% if form.first_name.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.first_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                                    </div><!-- End .col-sm-6 -->
+
+                                    <div class="col-sm-6">
+									<div class="form-group">
+                        {{ form.last_name.label_tag }}
+                        <input
+                            type="text"
+                            class="form-control {% if form.last_name.errors %}is-invalid{% endif %}"
+                            id="id_last_name"
+                            name="last_name"
+                            placeholder="last name"
+                            value="{{ form.last_name.value|default:'' }}"
+                        >
+                        {% if form.last_name.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.last_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                                    </div><!-- End .col-sm-6 -->
+                                </div><!-- End .row -->
+
+
+
+								<div class="form-group">
+                        {{ form.email.label_tag }}
+                        <input
+                            type="email"
+                            class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                            id="id_email"
+                            name="email"
+                            placeholder="Your email"
+                            value="{{ form.email.value|default:'' }}"
+                        >
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div> 
+   
+                    <p><input type="submit" value="Pay with Paypal" class="btn btn-primary"></p>
+                    {% csrf_token %}
+                </form>
+                        </div><!-- End .col-lg-9 -->
+                        <aside class="col-lg-3">
+                            <div class="summary">
+                                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                                <table class="table table-summary">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for item in cart %}
+                                        <tr>
+                                            <td><a href="#"> {{ item.quantity }}x {{ item.product.title }}</a></td>
+                                            <td>${{ item.total_price }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr class="summary-subtotal">
+                                            <td>Subtotal:</td>
+                                            <td>${{ cart.get_total_price }}</td>
+                                        </tr><!-- End .summary-subtotal -->
+                                        <tr>
+                                            <td>Shipping:</td>
+                                            <td>Free shipping</td>
+                                        </tr>
+                                        <tr class="summary-total">
+                                            <td>Total:</td>
+                                            <td>${{ cart.get_total_price }}</td>
+                                        </tr><!-- End .summary-total -->
+                                    </tbody>
+                                </table><!-- End .table table-summary -->
+
+                                <div class="accordion-summary" id="accordion-payment">
+                                    <div class="card">
+                                        <div class="card-header" id="heading-4">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                                    PayPal <small class="float-right paypal-link">What is PayPal?</small>
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
+                                            <div class="card-body">
+                                                PayPal is an online payment platform that allows individuals and businesses to make secure financial transactions, including payments and money transfers, over the internet.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-5">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
+                                                    Credit Card (Stripe)
+                                                    <img src="{% static 'img/payments.png' %}" alt="payments cards">
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment">
+                                            <div class="card-body"> Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit ame.
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                              
+                                     
+                               
+                                </button>
+
+ 
+                            </div><!-- End .accordion -->
+                            </div><!-- End .summary -->
+                        </aside><!-- End .col-lg-3 -->
+                    </div><!-- End .row -->
+                </form>
+            </div><!-- End .container -->
+        </div><!-- End .checkout -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+
+
+
+{% endblock %}

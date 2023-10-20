@@ -1,7 +1,9 @@
-{% extends "indexe.html" %}
+{% extends "best.html" %}
+{% load i18n %}
+{% block title %}{{product.title}}{% endblock %}
 {% load static %}
 {% load catalog_tags %}
-{% block content %}
+{% block main %}
 <style>
     ._p-add-cart {
         margin-left: 0px;
@@ -28,7 +30,7 @@
 
 
 
-<div class="container">
+<div class="container my-1 px-2">
     <div class="">
         <div class="wrapper row">
             <div class="preview col-md-6">
@@ -40,6 +42,7 @@
                         <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
                         <script>
                             const egg = React.createElement;
+                        
                             class ImageBox extends React.Component {
                                 constructor(props) {
                                     super(props);
@@ -47,29 +50,35 @@
                                         currentImage: this.props.imageStart
                                     }
                                 }
+                        
                                 click(image) {
                                     this.setState({
                                         currentImage: image
                                     });
                                 }
+                        
                                 render() {
-                                    const images = this.props.images.map((i) =>
-                                        egg('div', { className: "image", key: i.id },
+                                    const images = this.props.images.map((i, index) =>
+                                        egg('div', { className: "image", key: index }, // Provide a unique key
                                             egg('img', {
-                                                onClick: this.click.bind(this, i),
+                                                onClick: () => this.click(i),
                                                 width: "100",
                                                 src: i.thumbnail
                                             }),
                                         ),
                                     );
-                                    return egg('div', { className: "gallery" },
-                                        egg('div', { className: "current-image" },
-                                            egg('img', { src: this.state.currentImage.image })
-                                        ),
-                                        images
+                        
+                                    return (
+                                        egg('div', { className: "gallery" },
+                                            egg('div', { className: "current-image" },
+                                                egg('img', { src: this.state.currentImage.image })
+                                            ),
+                                            images
+                                        )
                                     );
                                 }
                             }
+                        
                             document.addEventListener("DOMContentLoaded", function (event) {
                                 const images = [
                                     {% for image in product.productimage_set.all %}
@@ -79,12 +88,12 @@
                                     },
                                     {% endfor %}
                                 ];
-                                ReactDOM.render(
-                                    egg(ImageBox, { images: images, imageStart: images[0] }),
-                                    document.getElementById('imagebox')
-                                );
+                        
+                                const root = ReactDOM.createRoot(document.getElementById('imagebox'));
+                                root.render(egg(ImageBox, { images: images, imageStart: images[0] }));
                             });
                         </script>
+                        
                         <style>
                             .image {
                                 margin: 10px;
@@ -141,13 +150,13 @@
                     </ul>
                 </div>
                 <hr>
-                <div class="_p-add-cart">
-                    <form action="{% url 'cart:cart_add' product.uuid %}" method="post">
-                        {{ cart_product_form }}
-                        {% csrf_token %}
-                        <button type="submit" class="btn-theme btn buy-btn">Add to cart</button>
-                    </form>
-                </div>
+                <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post" style="margin-top: 20px; text-align: center;">
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn-theme btn buy-btn" style="background-color: #3498db; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Add to cart</button>
+                </form>
+                
+                
             </div>
         </div>
     </div>
@@ -156,30 +165,98 @@
 </div>
 <div class="container">
     <hr>
-    <div class="description description-tabs">
-        <ul id="myTab" class="nav nav-pills">
-            <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Product description</a></li>
-            <li class=""><a href="#specifications" data-toggle="tab">How to Download</a></li>
-           
-        </ul>
-        <div id="myTabContent" class="tab-content">
-            <div class="tab-pane fade active in" id="more-information">
-                <br />
-                <p>
-                    <dd>{{ product.desription }}</dd>
-                </p>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">How To Download</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Product Contents</a>
             </div>
-            <div class="tab-pane fade" id="specifications">
-                <br />
-                <dl class="">{{ p.specification|safe }}</dl>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tab-pane-1">
+                    <h4 class="mb-3">{{ product.title }} Description</h4>
+                    {{product.description|safe}}
+                   
+             
+                </div>
+                <div class="tab-pane fade" id="tab-pane-2">
+                    <h4 class="mb-3">How To Download</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul>
+                                <li>
+                                    There will be a download link immediately payment is completed.
+                                </li>
+                                <li>
+                                    The files will also be auto emailed. Check your email junk folder if you miss the email in your inbox.
+                                </li>
+                                <li>
+                                    Please visit our download guide page for detailed explanation on how to download.
+                                </li>
+                                <li>
+                                    From the zip use the file that is compatible with your machine or project.
+                                </li>
+                              </ul> 
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab-pane-3">
+                    <h4 class="mb-3">Product Contents</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul>
+                                <li>
+                                    This product include a zipped file with 5 file formats: SVG, PNG, EPS, PSD and DXF.
+                                </li>
+                                <li>
+                                    The files are well crafted and optimized for vinyl, stickers, laser cut, cricut, scrapbooking, silhouette among others.
+                                </li>
+                              </ul> 
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane fade" id="proscons">{{ p.proscons|safe }}</div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#add-to-cart-form').on('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        var form = $(this);
+        var url = form.data('url');
+        var formData = form.serialize();
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                // Handle the success response here, if needed
+                // Handle the success response here, if needed
+
+                // Update the product count in the header HTML
+                var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
+                $('#cart-count').text(cartCount);
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle any error that occurred during the Ajax request
+            }
+        });
+    });
+});
+</script>
 {% product_list view_recs 'Similar Products' %}
 {% product_list search_recs 'Recommended for you' %}
 {% product_list recently_viewed 'Your Recently Viewed' %}
 
-{% include "products/footerp.html" %}
+<div class="container my-1 px-2">
+{% include "products/footerpd.html" %}
+</div>
+
+
+
+
 {% endblock %}

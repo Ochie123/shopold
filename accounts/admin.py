@@ -41,4 +41,4 @@ class UserAdmin(DjangoUserAdmin):
     search_fields = ("email", "first_name", "last_name") 
     ordering = ("email",)
 
-admin.site.register(User, DjangoUserAdmin)
+admin.site.register(User, UserAdmin)

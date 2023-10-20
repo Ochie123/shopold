@@ -1,0 +1,25 @@
+
+{% load static %}
+
+{% block title %}Search Bookmarks{% endblock %} 
+{% block head %}Search Bookmarks
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+{% endblock %} 
+{% block external %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+<script src="{% static 'js/search.js' %}"></script>
+ {% endblock %}
+
+{% block main %}
+
+<form id="search-form" method="get" action=".">
+    {{ search_form.as_p }}
+    <input type="submit" value="search" /> </form>
+<div id="search-results"> 
+    {% if show_results %}
+{% include "bookmark_list.html" %} {% endif %}
+   </div>
+   {% endblock %}
+   

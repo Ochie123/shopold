@@ -7,17 +7,19 @@ from django.db import models
 from django.utils.timezone import now as timezone_now
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
+from django.utils import timezone
+import secrets
+import string
+
+from ckeditor_uploader.fields import RichTextUploadingField 
 
 from ordered_model.models import OrderedModel
 
-class ActiveProductManager(models.Manager): 
-    def get_query_set(self):
-        return super(ActiveProductManager, self).get_query_set().filter(is_active=True)
+#class ActiveProductManager(models.Manager): 
+   # def get_query_set(self):
+     #   return super(ActiveProductManager, self).get_query_set().filter(is_active=True)
 
 
-class FeaturedProductManager(models.Manager): 
-    def all(self):
-        return super(FeaturedProductManager, self).all() .filter(is_active=True).filter(featured=True)
 
 class Tag(models.Model):
     title = models.CharField(max_length=255, default='') 
@@ -36,7 +38,16 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return reverse('tag', args=[str(self.slug)])
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(status=Product.Status.PUBLISHED)
+
+
 class Product(models.Model):
+    class Status(models.TextChoices):
+        DRAFT = 'DF', 'Draft'
+        PUBLISHED = 'PB', 'Published'
+
     uuid = models.UUIDField(primary_key=True, default=None, editable=False)
     categories = models.ManyToManyField( "categories.Category", 
                             verbose_name=_("Categories"),
@@ -44,23 +55,40 @@ class Product(models.Model):
                             related_name="category_products",
                         )
     
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag,related_name="tag_products", blank=True)
     toprated = models.BooleanField(default=False, help_text="1=toprated")
     bestseller = models.BooleanField(default=False, help_text="1=bestseller")
     title = models.CharField(_("title"), max_length=200)
-    slug = models.SlugField(_("slug"), max_length=200)
-    description = models.TextField(_("description"), blank=True)
+    slug = models.SlugField(_("slug"), max_length=200, unique_for_date='publish')
+    file = models.FileField(upload_to='files', blank=True, null=True)
+
+    description = RichTextUploadingField(_("description"), blank=True)
     price = models.DecimalField(
         _("price ($)"), max_digits=8, decimal_places=2, blank=True, null=True
     )
     is_active = models.BooleanField(default=True) 
 
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=2,
+                              choices=Status.choices,
+                              default=Status.DRAFT)
+    
+    objects = models.Manager() # The default manager.
+    published = PublishedManager() # Our custom manager.
+
+    download_url = models.CharField(max_length=20, unique=True)
+    
+    
     class Meta:
+        ordering = ['-publish']
+        indexes = [
+            models.Index(fields=['-publish']),
+        ]
         verbose_name = _("Product")
         verbose_name_plural = _("Products")
-
-    objects = models.Manager() 
-    active = ActiveProductManager()               
+           
 
 
     def __str__(self):
@@ -69,16 +97,31 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('products:product_detail',
-                       args=[self.uuid, self.slug])
+                       args=[self.publish.year, 
+                             self.publish.month,
+                             self.publish.day,
+                             self.slug,
+                             #self.uuid,
+                             ])
     
 
     def get_url_path(self):
-        return reverse("products:product_detail_modal", kwargs={"pk": self.pk})
+        return reverse("products:product_detail_modal", kwargs={"slug": self.slug, 
+                                                                #"pk":self.uuid
+                                                                })
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.pk = uuid.uuid4()
+        if not self.uuid:
+            self.uuid = uuid.uuid4()
+        if not self.download_url:
+            self.download_url = self.generate_random_url()
         super().save(*args, **kwargs)
+
+
+    def generate_random_url(self):
+        characters = string.ascii_letters + string.digits
+        return ''.join(secrets.choice(characters) for _ in range(20))
+    
 
 class ProductImage(OrderedModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

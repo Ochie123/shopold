@@ -1,0 +1,161 @@
+
+{% load i18n static utility_tags %}
+{% block main %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+
+.img-containere {
+   position: relative;
+   overflow:hidden;
+   height: 150px;
+}
+
+.img-containere img {
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height:100%;
+  object-fit: contain;
+}
+      </style>
+  
+  <div class="med-related-prod-wrap" id="med-related-prod-wrapper">
+
+      <div class="med-rel-prod-slider-wrapper">
+          <div class="med-rel-prod-slider carousel-content">
+  
+            {% for product in products %}  
+            <div class="item-list">
+            
+            <div class="med-product-card border-0 mb-4">         
+            <div class="product-item">
+              <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"> 
+               
+                  <a href="{{ product.get_absolute_url }}">
+                   <div class="img-containere">
+                    {% for ima in product.productimage_set.all %}
+                    <img src="{{ ima.image.url }}" alt="cover">
+                    {% endfor %}
+                  </div>
+                  </a>
+              </div>
+              <div class="product-content">
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                  <div class="d-flex justify-content-center">
+                    <div class="d-none d-lg-block">
+                    <div class="d-flex justify-content-center">
+                      
+                      <h6><small>{{ product.title | truncatechars:30 }}</small></h6><h6 class="text-muted ml-2">${{product.price}}</h6>
+                    </div>
+                    </div>
+
+                    <div class="d-block d-lg-none">
+                      <div class="d-flex justify-content-center">
+                        <h6><small>{{ product.title | truncatechars:30 }}</small></h6><small><h6 class="text-muted ml-2">${{product.price}}</small></h6>
+                      </div>
+                      </div>
+
+
+                  </div>
+              </div>
+
+                    <div class="card-footer d-flex justify-content-center bg-light border">
+                      <a href="{{ product.get_url_path }}"
+                      data-modal-title="{{ product.title }}"
+                      data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
+                      class="item d-block my-1">
+                       <div class="">
+                        <small>   
+                           <div class="">
+                               <div class="float-right">
+                                   <div class="rating" aria-label="">
+                                       <span style="width:{{ product.price }}"></span>
+                                   </div>
+                               </div>
+                               <i class="fas fa-eye text-primary"></i>
+                              
+                           </div>
+                          </small>
+                       </div>
+                   </a>
+                  </div>
+              </div>
+
+
+
+          </div>
+        </div>  
+    </div>
+          {% endfor %}
+<!--
+          <div class="med-slider-arrow-section">
+            <button class="med-slider-prev med-slider-arrow btn-left" aria-label="left-arrow" onclick="" id="med-btn-left" type="button"></button>
+            <button class="med-slider-next med-slider-arrow btn-right" aria-label="right-arrow" onclick="" id="med-btn-right" type="button"></button>
+        </div>
+
+    -->
+  
+
+          </div>
+
+      </div>
+  </div>
+  
+  <script>
+      const bindCarouselEvents = (containerId) => {
+          const wrapper = document.getElementById(containerId);
+          const btn_left = wrapper.getElementsByClassName('btn-left')[0]
+          const btn_right = wrapper.getElementsByClassName('btn-right')[0]
+          const content = wrapper.getElementsByClassName('carousel-content')[0]
+          const content_scroll_width = content.scrollWidth;
+          let content_scoll_left = content.scrollLeft;
+          if (btn_right) {
+              btn_right.addEventListener('click', () => {
+                  content_scoll_left += 224;
+                  if (content_scoll_left >= content_scroll_width) { 
+                      content_scoll_left = content_scroll_width;
+                  }
+                  content.scrollLeft = content_scoll_left;
+              });
+          }
+          if (btn_left) {
+              btn_left.addEventListener('click', () => {
+                  content_scoll_left -= 224;
+                  content.scrollLeft = content_scoll_left;
+              });
+          }
+  
+          // scroll binding
+          content.addEventListener('scroll', () => {
+              let scrollLeft = Math.ceil(content.scrollLeft)
+              let contentScrollWidth = content.scrollWidth
+              let contentWidth = content.clientWidth
+              let rightEdge = (contentScrollWidth - contentWidth)
+              if (scrollLeft >= rightEdge) {
+                  btn_right.style.display = "none"
+              } else if (scrollLeft < rightEdge) {
+                  btn_right.style.display = "block"
+              }
+  
+              if (scrollLeft == 0) {
+                  btn_left.style.display = "none"
+              } else if (scrollLeft > 0) {
+                  btn_left.style.display = "block"
+              }
+  
+              content_scoll_left = scrollLeft
+          });
+      }
+  
+      // javascript for scroll on click
+      window.addEventListener('DOMContentLoaded', function(){
+          bindCarouselEvents('med-related-prod-wrapper')
+      });
+
+
+      </script>
+{% endblock %}
+
+
+

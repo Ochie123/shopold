@@ -1,7 +1,11 @@
-{% extends "indexe.html" %}
+{% extends "best.html" %}
 {% load i18n %}
 
-{% block content %}
-    <h1>{% trans "Your payment has not been processed" %}</h1>
+{% block main %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="text-center">
+    <h2>{% trans "Your payment has not been processed" %}</h2>
     <p>{% trans "There was a problem processing your payment." %}</p>
+    </div>
+</div>
 {% endblock %}

@@ -1,8 +1,10 @@
-
+{% extends "base.html" %}
 {% load i18n static utility_tags %}
 
-{% load search_tags %}
+{% block title %}{{ request.GET.q }} - SVG Hippo{% endblock %}
+
 {% block main %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     * {
       box-sizing: border-box;
@@ -17,9 +19,8 @@
     
     .flex-wrapper > div {
       width: 100%;
-      max-width: 25%;
-      padding: 10px;
-     
+      max-width: 33.33%; /* Show 3 products per column on large screens */
+      padding: 5px;
     }
     
     @media only screen and (max-width: 600px) {
@@ -45,6 +46,9 @@
        overflow:hidden;
        height: 150px;
     }
+    body {
+        margin: 0; /* Remove margin from the body element */
+}
     
     .img-containere img {
       position: absolute;
@@ -52,7 +56,7 @@
       left:0;
       width: 100%;
       height:100%;
-      object-fit: cover
+      object-fit: contain;
     }
       </style>
             <!-- Shop Product Start -->
@@ -61,13 +65,14 @@
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <form action="">
-                                <div class="">
-                                  <h4>  Search Results for: '{{ q }}' </h4>
-                                    <p class="search-count">Found <strong>
-                                        {{ results.paginator.count }}
-                                        </strong> result{{ results.paginator.count|pluralize}}.</p>
-                                </div>
+                              <div class="input-group">
+                                
+                                      <h5>showing {{ results.number }}-{{ results.number|add:results.paginator.per_page }} of {{ results.paginator.count }} results</h5>
+                    
+                             
+                            </div>
                             </form>
+
                             <div class="dropdown ml-4">
                                 <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -83,53 +88,55 @@
                     </div>
                     <div class="">
                     <div class="flex-wrapper">
-                    {% if results %}
-                    {% for product in results %}
+                        {% if results %}
+                        {% for product in results %}
 
 
-                    <div class="item-list">
-                      <div class="product-grid">
-                          <div class="product-image">
-                            <a href="{{ product.get_absolute_url }}">
-                            <div class="img-containere">
-                              {% with product.productimage_set.first as profile_image %}
-                              <img src="{{ profile_image.image.url }}" alt="cover">
-                              {% endwith %}   
+                  <div class="item-list">
+                    <div class="card product-item border-0 mb-4">
+                      <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                          <a href="{{ product.get_absolute_url }}">
+                          
+                            {% with product.productimage_set.first as profile_image %}
+                            <img class="img-fluid w-100" src="{{ profile_image.image.url }}" alt="cover">
+                            {% endwith %}   
+                         
+                        </a>
+                        </div>
+  
+                        <div class="product-content">
+                          <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                            <div class="d-flex justify-content-center">
+                              <h6><small>{{ product.title | truncatechars:30 }}</h6><h6 class="text-muted ml-2">${{product.price}}</small></h6>
                             </div>
-                          </a>
-                          </div>
-    
-                          <div class="product-content">
-                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                              <div class="d-flex justify-content-center">
-                                  <h6>{{ product.title }}</h6><h6 class="text-muted ml-2">${{product.price}}</h6>
-                              </div>
-                          </div>
-  
-                                <div class="card-footer d-flex justify-content-between bg-light border">
-  
-  
-                                  <a href="{{ product.get_url_path }}"
-                                  data-modal-title="{{ product.title }}"
-                                  data-modal-url="{% url 'products:product_detail_modal' pk=product.pk %}"
-                                  class="item d-block my-1">
-                                   <div class="card">
-                                       <div class="card-body">
-                                           <div class="float-right">
-                                               <div class="rating" aria-label="">
-                                                   <span style="width:{{ product.price }}"></span>
-                                               </div>
-                                           </div>
-                                           <i class="fas fa-eye text-primary"></i>
-                                       </div>
-                                   </div>
-                               </a>
-                                  <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                        </div>
+
+                              <div class="card-footer d-flex justify-content-center bg-light border">
+
+
+                                <a href="{{ product.get_url_path }}"
+                                data-modal-title="{{ product.title }}"
+                                data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
+                                class="item d-block my-1">
+                                    <div class="">
+                                        <small>
+                                            <div class="">
+                                                <div class="float-right">
+                                                    <div class="rating" aria-label="">
+                                                        <span style="width: {{ product.price }}"></span>
+                                                    </div>
+                                                </div>
+                                                <i class="fas fa-eye text-primary"></i>
+                                            </div>
+                                        </small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     {% endfor %}
+                  </div>
                     {% include "misc/includes/pagination.html" %}  
                     {% else %}
                     <p>{% trans "There are no products yet." %}</p>
@@ -137,36 +144,8 @@
               </div>
             </div>
             </div>
+         <hr>  
+
 
 {% endblock %}
 
-{% block js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
-    <script src="{% static 'js/list.js' %}"></script>
-{% endblock %}
-
-{% block extra_body %}
-    <script type="text/template" class="loader">
-        <div class="text-center">
-            <div class="loading-indicator"></div>
-        </div>
-    </script>
-    <div id="modal" class="modal fade" tabindex="-1" role="dialog"
-         aria-hidden="true" aria-labelledby="modal_title">
-        <div class="modal-dialog modal-dialog-centered"
-             role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 id="modal_title"
-                        class="modal-title"></h4>
-                    <button type="button" class="close"
-                            data-dismiss="modal"
-                            aria-label="{% trans 'Close' %}">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body"></div>
-            </div>
-        </div>
-    </div>
-{% endblock %}

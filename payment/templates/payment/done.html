@@ -1,7 +1,14 @@
-{% extends "indexe.html" %}
+{% extends "best.html" %}
 {% load i18n %}
+{% block title %}
+  Thank you
+{% endblock %}
 
-{% block content %}
-    <h1>{% trans "Your payment was successful" %}</h1>
-    <p>{% trans "Your payment has been successfully received." %}</p>
+{% block main %}
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="text-center">
+    <h2>{% trans "Your payment was successful" %}</h2>
+    <p>{% trans "Your payment has been successfully received. We have emailed your order. Please check the email linked to your PayPal account." %}</p>
+  </div>
+  </div>
 {% endblock %}

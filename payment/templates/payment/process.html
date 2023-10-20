@@ -1,9 +1,12 @@
-{% extends "indexe.html" %}
+{% extends "best.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Pay using PayPal" %}{% endblock %}
-
-{% block content %}
-    <h1>{% trans "Pay using PayPal" %}</h1>
-    {{ form.render }}
+{% block main %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="text-center">
+        <h2>{% trans "Pay using PayPal" %}</h2>
+        {{ form.render }}
+    </div>
+</div>
 {% endblock %}

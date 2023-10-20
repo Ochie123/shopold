@@ -1,0 +1,33 @@
+[
+{
+  "model": "products.tag",
+  "pk": 1,
+  "fields": {
+    "title": "Fashion",
+    "slug": "fashion"
+  }
+},
+{
+  "model": "products.tag",
+  "pk": 2,
+  "fields": {
+    "title": "Tag 2",
+    "slug": "tag-2"
+  }
+},
+{
+  "model": "products.tag",
+  "pk": 3,
+  "fields": {
+    "title": "Tag 3",
+    "slug": "tag-3"
+  }
+},
+{
+  "model": "products.tag",
+  "pk": 4,
+  "fields": {
+    "title": "Tag 4",
+    "slug": "tag-4"
+  }
+}

@@ -1,4 +1,6 @@
 {% load i18n %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <style>
     .img-container {
         max-width: 100%;
@@ -11,7 +13,11 @@
     }
 </style>
 
+
+
 <div class="modal-body text-center">
+    <div class="row">
+        <div class="col-md-6">
     <div class="img-container">
         <a href="{{ product.get_url_path }}">
             {% with product.productimage_set.first as profile_image %}
@@ -20,8 +26,65 @@
         </a>
     </div>
 </div>
+    <div class="col-md-6">
+        <!-- Other product details here -->
+       
+        <p>{{ product.description|safe }}</p> 
+        <p>${{ product.price }}</p>
+        <!-- Other details -->
+    </div>
+
+</div>
+</div>
+
+<div class="row">
 <div class="modal-footer text-right">
     <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
         {% trans "See details…" %}
     </a>
 </div>
+
+<div class="modal-footer text-left">
+    <div class="product-action">
+        <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
+            {% csrf_token %}
+                <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                    <span>Add to Cart</span>
+                    <span class="loader"></span>
+                </button> 
+        </form>
+    </div><!-- End .product-action -->                                   
+    <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
+        {% csrf_token %}
+            <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                <span>Add to Cart</span>
+                <span class="loader"></span>
+            </button> 
+    </form>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#add-to-cart-form').on('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        var form = $(this);
+        var url = form.data('url');
+        var formData = form.serialize();
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
+                $('#cart-count').text(cartCount);
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle any error that occurred during the Ajax request
+            }
+        });
+    });
+});
+</script>
+</div>
+

@@ -1,0 +1,18 @@
+{% extends "best.html" %}
+{% load i18n static %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+{% block title %}
+
+{{ flatpage.title }} - SVG Craft 
+
+{% endblock %}
+{% block main %}
+</br>
+</br>
+<div class="container">
+<h1>{{ flatpage.title }}</h1> {{ flatpage.content }}
+</div>
+</br>
+</br>
+{% endblock %}

@@ -1,0 +1,35 @@
+.tags {
+    list-style: 
+    none; padding-left: 0; 
+    &-tag {
+        display: inline-block; 
+        padding: 0.1em 0.1em; 
+        background-color: #fad507; 
+        color: #fff;
+        margin-right: 0.1em; 
+        border-radius: 1px; 
+        &-a {
+          color: #fff;
+        }
+        &:hover {
+            background-color: darken(#3C98F5, 10%);
+    } }
+    }.tags {
+        list-style: none;
+        padding-left: 0;
+   }
+    .tags-tag {
+        display: inline-block;
+        padding: 0.1em 0.1em;
+        background-color: #f39405;
+        color: #fff;
+        margin-right: 0.5em;
+        border-radius: 1px;
+   }
+    .tags-tag-a {
+        color: #fff;
+   }
+    .tags-tag:hover {
+        background-color: #fbf205;
+   }
+    

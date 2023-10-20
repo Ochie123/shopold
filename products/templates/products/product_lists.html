@@ -1,0 +1,159 @@
+
+{% load search_tags %}
+{% load i18n static utility_tags %}
+{% load catalog_tags %}
+
+{% block main %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        .flex-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        
+        .flex-wrapper > div {
+          width: 100%;
+          max-width: 33.33%; /* Show 3 products per column on large screens */
+          padding: 5px;
+        }
+        
+        @media only screen and (max-width: 600px) {
+          .flex-wrapper > div {
+            max-width: 50%;
+          }
+        }
+        @media (min-width: 768px) {
+              .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+              }
+            }
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+            }
+            
+        .img-containere {
+           position: relative;
+           overflow:hidden;
+           height: 150px;
+        }
+        body {
+            margin: 0; /* Remove margin from the body element */
+    }
+        
+        .img-containere img {
+          position: absolute;
+          top:0;
+          left:0;
+          width: 100%;
+          height:100%;
+          object-fit: contain;
+        }
+          </style>
+
+<div class="">
+    <div class="col-12 pb-1">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <form action="">
+                <div class="input-group">
+                    <h5>showing {{ products.number }}-{{ products.number|add:products.paginator.per_page }} of {{ products.paginator.count }} results</h5>
+                </div>
+            </form>
+
+            <div class="dropdown ml-4">
+                <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort by
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                    <a class="dropdown-item" href="?sort=oldest">Oldest</a>
+                    <a class="dropdown-item" href="?sort=popularity">Popularity</a>
+                    <a class="dropdown-item" href="?sort=rating">Best Rating</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="flex-wrapper">
+            {% if products %}
+                {% for product in products %}
+                    <div class="item-list">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <a href="{{ product.get_absolute_url }}">
+                          
+                                    {% with product.productimage_set.first as profile_image %}
+                                    <img class="img-fluid w-100" src="{{ profile_image.image.url }}" alt="">
+                                    {% endwith %}   
+                                 
+                                </a>
+                            </div>
+
+                            <div class="product-content">
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="d-none d-lg-block">
+                                            <div class="d-flex justify-content-center">
+                                                <h6><small>{{ product.title | truncatechars:30 }}</small></h6><h6 class="text-muted ml-2">${{ product.price }}</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-block d-lg-none">
+                                            <div class="d-flex justify-content-center">
+                                                <h6><small>{{ product.title | truncatechars:30 }}</small></h6><small><h6 class="text-muted ml-2">${{ product.price }}</small></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer d-flex justify-content-center bg-light border">
+                                    <a href="{{ product.get_url_path }}"
+                                    data-modal-title="{{ product.title }}"
+                                    data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
+                                    class="item d-block my-1">
+                                        <div class="">
+                                            <small>
+                                                <div class="">
+                                                    <div class="float-right">
+                                                        <div class="rating" aria-label="">
+                                                            <span style="width: {{ product.price }}"></span>
+                                                        </div>
+                                                    </div>
+                                                    <i class="fas fa-eye text-primary"></i>
+                                                </div>
+                                            </small>
+                                        </div>
+                                    </a>
+                                
+
+ 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+     
+                <div class="row">
+                    <div class="col text-center">
+                        {% include "misc/includes/pagination.html" %}  
+                    </div>
+                </div>
+         
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <!-- Pagination -->
+
+</div>
+</body>
+{% endblock %}

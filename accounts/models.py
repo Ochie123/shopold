@@ -54,25 +54,17 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    username = models.CharField(db_index=True, max_length=255, unique=True)
-    email = models.EmailField(db_index=True, unique=True,  null=True, blank=True)
+    username = None
+    email = models.EmailField('email address', unique=True)
     user_bio = models.CharField(max_length=600, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_professor = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
-
-    @property
-    def is_employee(self):
-        return self.is_active and (
-            self.is_superuser
-            or self.is_staff
-            and self.groups.filter(name="Employees").exists()
-        )
 
     def __str__(self):
         return f"{self.email}"
