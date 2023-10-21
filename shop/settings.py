@@ -170,8 +170,8 @@ PRODUCTS_PER_ROW = 7
 CART_SESSION_ID = 'cart'
 
 
-#PAYPAL_RECEIVER_EMAIL = 'sb-scyab27236618@personal.example.com' 
-#PAYPAL_TEST = True
+PAYPAL_RECEIVER_EMAIL = 'sb-scyab27236618@personal.example.com' 
+PAYPAL_TEST = True
 
 #EMAIL_HOST = 'smtp.gmail.com'
 
@@ -179,8 +179,8 @@ CART_SESSION_ID = 'cart'
 #EMAIL_HOST_PASSWORD =' ___'
 #EMAIL_PORT = 587
 #EMAIL_USE_TLS = True
-PAYPAL_RECEIVER_EMAIL = 'youngpope07@gmail.com' 
-PAYPAL_TEST = False
+#PAYPAL_RECEIVER_EMAIL = 'youngpope07@gmail.com' 
+#PAYPAL_TEST = False
 
 EMAIL_HOST = 'mail.privateemail.com'
 EMAIL_HOST_USER = 'sales@svgcraft.co'

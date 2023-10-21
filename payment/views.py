@@ -13,7 +13,10 @@ def payment_done(request):
 
 @csrf_exempt
 def payment_canceled(request):
-    return render(request, 'payment/canceled.html')
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+
+    return render(request, 'payment/canceled.html', {'order': order})
     
 
 def payment_process(request):

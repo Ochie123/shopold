@@ -127,21 +127,26 @@
                                         </div><!-- End .product-details-quantity -->
                                     </div><!-- End .details-filter-row -->
                         
-                                        <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
-                                            {% csrf_token %}
-                   
+                               
                                             <div class="product-details-action">
                                                 <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
                                                     <span>Add to Cart</span>
                                                     <span class="loader"></span>
                                                 </button>
+                                                {% if product.price == 0.00 %}
+                                                <div class="details-action-wrapper">
 
+                                                    <a href="#" class="btn-product icon-info-circle" title="Wishlist"><span>Free Download</span></a>
+                                                    <a href="#" class="btn-product btn-wrap"><span>
+                                                        
+                                                        <div class="btn-wrap">
+                                                         
+                                                            <a href="{% url 'products:download_free_product' product.download_url %}" class="btn btn-primary btn-round btn-shadow"><i class="icon-long-arrow-right"></i><span>Download</span></a>
+                                                        </div><!-- End .btn-wrap -->
+                                                    </span></a>
+                                                </div><!-- End .details-action-wrapper -->
+                                                {% endif %}
                                             </div><!-- End .product-details-action -->
-                                        </form>
-
-                                      {% if product.price == 0.00 %}
-                                         <a href="{% url 'products:download_free_product' product.download_url %}" class="download-link">Download</a>
-                                        {% endif %}
 
                                         <div class="details-action-wrapper">
                                             <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>

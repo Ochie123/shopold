@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.sites.shortcuts import get_current_site
+
 from django.urls import reverse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
@@ -57,9 +59,26 @@ def admin_order_detail(request, order_id):
 @staff_member_required
 def admin_order_pdf(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    html = render_to_string('orders/order/pdf.html', {'order': order})
+        # Add product download URLs to the context
+
+        # Get the current site's domain (you need to have the 'sites' app configured)
+    current_site = get_current_site(request)
+    domain = current_site.domain
+
+
+    # Add product download URLs to the context with the full URL
+    product_download_urls = [f'http://{domain}/product/download/{item.product.download_url}' for item in order.items.all()]
+    context = {
+        'order': order,
+        'product_download_urls': product_download_urls,
+    }
+
+    html = render_to_string('orders/order/pdf.html', context)
+    
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="order_{}.pdf"'.format(order.id)
     weasyprint.HTML(string=html).write_pdf(response,
                                            stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + 'css/pdf.css')])
     return response
+
+#nXg2GNuSoVgGClgoklz5 http://127.0.0.1:8000/product/download/nXg2GNuSoVgGClgoklz5
