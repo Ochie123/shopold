@@ -9,14 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <meta name="keywords" content="SVGs">
-    <meta name="description" content="SVG Craft - Best SVGs collection">
+    <meta name="description" content="Explore SVG Craft's extensive collection of high-quality SVG files for all your creative projects. Discover a wide range of beautifully designed vector graphics, icons, and illustrations, perfect for crafters, designers, and creators. Browse our diverse selection of SVGs, including seasonal, holiday, and thematic designs. Find the perfect SVG for your DIY crafts, digital design, and more at SVG Craft. Enhance your creative journey with our best SVGs today!">
+
     <meta name="author" content="p-themes">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/apple-touch-icon.png' %}">
+
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon.ico' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon.ico' %}">
     <link rel="manifest" href="{% static 'img/icons/site.html' %}">
-    <link rel="mask-icon" href="{% static 'img/icons/safari-pinned-tab.svg' %}" color="#666666">
+    <link rel="mask-icon" href="{% static 'img/favicon.ico' %}" color="#666666">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
     <meta name="apple-mobile-web-app-title" content="SVG Craft">
     <meta name="application-name" content="SVG Craft">
@@ -82,7 +85,7 @@
                                             <ul>
                                                 <li><a href="{% url 'my_order' %}">Profile</a></li>
                                                 <li><a href="/"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
-                                                <li><a href="{% url "signout" %}"><i class="fa fa-sign-out"></i> Signout</a></li>
+                                                <li><a href="{% url "logout" %}"><i class="fa fa-sign-out"></i> Signout</a></li>
                                             </ul>
                                         </div><!-- End .header-menu -->
                                     </div><!-- End .header-dropdown -->
@@ -107,12 +110,30 @@
     #search-container {
         display: block;
     }
+    .small-product-title {
+        font-size: 12px;
+    }
 
 }
 @media (min-width: 768px) {
     #search-container {
         display: block;
     }
+}
+/* Add this CSS in your stylesheet or in a <style> tag in your HTML */
+.btn-checkout {
+    background-color: #007BFF; /* Change the background color as needed */
+    color: #fff; /* Change the text color as needed */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none; /* Remove the border or customize it */
+    border-radius: 4px; /* Adjust the border radius as needed */
+    text-decoration: none; /* Remove underlines if any */
+    font-size: 16px; /* Adjust the font size as needed */
+    cursor: pointer;
+}
+
+.btn-checkout:hover {
+    background-color: #0056b3; /* Change the background color on hover */
 }
 </style>
             <div class="header-middle sticky-header">
@@ -157,57 +178,62 @@
                             </div><!-- End #search-container -->
                         
 
-                        <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="icon-shopping-cart"></i>
-                                <span class="cart-count" id="cart-count">
-                                    {% with total_items=cart|length %}
-                                        {% if total_items > 0 %}
-                                            {{ total_items }}
-                                        {% else %}
-                                            0
-                                        {% endif %}
-                                    {% endwith %}
-                                </span>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products">
-                                    {% for item in cart %}
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a>
-                                            </h4>
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">{{ item.quantity }}</span>
-                                                x {{ item.product.price }}
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-                                        <figure class="product-image-container">
-                                            <a href="{{ item.product.get_absolute_url }}">
-                                                {% with item.product.productimage_set.first as profile_image %}
-                                                <img src="{{ profile_image.image.url }}" alt="cover">
-                                                {% endwith %}
+                            <div class="dropdown cart-dropdown">
+                                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                    <i class="icon-shopping-cart"></i>
+                                    <span class="cart-count" id="cart-count">
+                                        {% with total_items=cart|length %}
+                                            {% if total_items > 0 %}
+                                                {{ total_items }}
+                                            {% else %}
+                                                0
+                                            {% endif %}
+                                        {% endwith %}
+                                    </span>
+                                </a>
+    
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <div class="dropdown-cart-products">
+                                        {% for item in cart %}
+                                        <div class="product">
+                                            <div class="product-cart-details">
+                                                <h4 class="product-title">
+                                                    <a href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a>
+                                                </h4>
+                                                <span class="cart-product-info">
+                                                    <span class="cart-product-qty">{{ item.quantity }}</span>
+                                                    x {{ item.product.price }}
+                                                </span>
+                                            </div><!-- End .product-cart-details -->
+                                            <figure class="product-image-container">
+                                                <a href="{{ item.product.get_absolute_url }}">
+                                                    {% with item.product.productimage_set.first as profile_image %}
+                                                    <img src="{{ profile_image.image.url }}" alt="cover">
+                                                    {% endwith %}
+                                                </a>
+                                            </figure>
+                                            <a href="#" class="btn-remove" title="Remove Product" data-product-uuid="{{ item.product.uuid }}">
+                                                <i class="icon-close"></i>
                                             </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product" data-product-uuid="{{ item.product.uuid }}">
-                                            <i class="icon-close"></i>
+                                        </div><!-- End .product -->
+                                        {% endfor %}
+                                    </div><!-- End .cart-product -->
+                                    <div class="dropdown-cart-total">
+                                        <span>Total</span>
+                                        <span class="cart-total-price">${{ cart.get_total_price }}</span>
+                                    </div><!-- End .dropdown-cart-total -->
+                                    <div class="dropdown-cart-action">
+                                        <a href="/cart" class="btn btn-primary">View Cart</a>
+                                        <a href="{% url 'orders:order_create' %}" class="btn btn-checkout">
+                                            <span>Checkout</span>
+                                            <i class="icon-long-arrow-right"></i>
                                         </a>
-                                    </div><!-- End .product -->
-                                    {% endfor %}
-                                </div><!-- End .cart-product -->
-                                <div class="dropdown-cart-total">
-                                    <span>Total</span>
-                                    <span class="cart-total-price">${{ cart.get_total_price }}</span>
-                                </div><!-- End .dropdown-cart-total -->
-                                <div class="dropdown-cart-action">
-                                    <a href="/cart" class="btn btn-primary">View Cart</a>
-                                    <a href="{% url 'orders:order_create' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
-                            </div><!-- End .dropdown-menu -->
-                            
-                        </div><!-- End .cart-dropdown -->
+                                        
+                                        
+                                    </div><!-- End .dropdown-cart-total -->
+                                </div><!-- End .dropdown-menu -->
+                                
+                            </div><!-- End .cart-dropdown -->
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
@@ -224,6 +250,7 @@
   
             
         {% block main %}
+        
         {% endblock %}
       
         <footer class="footer">
@@ -509,9 +536,8 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="//unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.3.9/jquery.jscroll.min.js"></script>
-    <script src="{% static 'js/list.js' %}"></script>
-    <script src="{% static 'js/search.js' %}"></script>
-    <script src="{% static 'js/layoutswitch.js' %}"></script>
+
+  
     <!--not required-->
     {% block js %}
 

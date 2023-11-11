@@ -38,29 +38,53 @@
 </div>
 
 <div class="row">
-<div class="modal-footer text-right">
-    <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
-        {% trans "See details…" %}
-    </a>
-</div>
+
 
 <div class="modal-footer text-left">
-    <div class="product-action">
-        <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
-            {% csrf_token %}
-                <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
-                    <span>Add to Cart</span>
-                    <span class="loader"></span>
-                </button> 
-        </form>
-    </div><!-- End .product-action -->                                   
-    <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
-        {% csrf_token %}
-            <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
-                <span>Add to Cart</span>
-                <span class="loader"></span>
-            </button> 
-    </form>
+    <div class="product-details-action">
+
+        <div class="col-6 justify-content-end">
+            <div class="product-price">
+                ${{ product.price }}
+            </div><!-- End .product-price -->
+
+            <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
+                {% csrf_token %}
+
+                        <div class="product-details-action">
+                            {% if product.price == 0.00 %}
+
+                            <div class="details-action-wrapper">
+                                <div class="btn-wrap">
+                                <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
+                                  <span>  {% trans "See details…" %}</span>
+                                </a>
+                                </div>
+                            
+                                    <div class="btn-wrap">
+                                     
+                                        <a href="{% url 'products:download_free_product' product.download_url %}" class="btn btn-primary btn-round btn-shadow"><i class="icon-long-arrow-right"></i><span>Download</span></a>
+                                    </div><!-- End .btn-wrap -->
+                                </span></a>
+                            </div><!-- End .details-action-wrapper -->
+                            {% else %}
+                            <div class="details-action-wrapper">
+                                <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
+                                    {% trans "See details…" %}
+                                </a>
+                            <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                                <span>Add to Cart</span>
+                                <span class="loader"></span>
+                            </button>
+                        </div>
+                            {% endif %}
+                        </div><!-- End .product-details-action -->
+
+
+            </form>
+            
+        </div><!-- End .col-6 -->
+    </div><!-- End .product-details-action -->                                  
 </div>
 <script type="text/javascript">
 $(document).ready(function() {

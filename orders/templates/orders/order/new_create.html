@@ -16,7 +16,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/cart">Shop</a></li>
+                <li class="breadcrumb-item"><a href="/cart">Cart</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Checkout</li>
             </ol>
         </div><!-- End .container -->
@@ -31,6 +31,18 @@
                         <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                     </form>
                 </div><!-- End .checkout-discount -->
+                {% if cart.get_total_price == 0.00 %}
+ 
+                <form method="post">
+                    <div class="row">
+                        <div class="col-lg-9">
+								<div class="form-group">                 
+                    </div> 
+   
+                    <p><p>No products added to the cart.</p></p>
+             
+                </form>
+                {% else %}
                 <form method="post">
                     <div class="row">
                         <div class="col-lg-9">
@@ -99,7 +111,8 @@
    
                     <p><input type="submit" value="Pay with Paypal" class="btn btn-primary"></p>
                     {% csrf_token %}
-                </form>
+               
+                {% endif %}
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
                             <div class="summary">
@@ -154,10 +167,9 @@
                                     <div class="card">
                                         <div class="card-header" id="heading-5">
                                             <h2 class="card-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
-                                                    Credit Card (Stripe)
+
                                                     <img src="{% static 'img/payments.png' %}" alt="payments cards">
-                                                </a>
+                                      
                                             </h2>
                                         </div><!-- End .card-header -->
                                         <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment">
@@ -165,12 +177,18 @@
                                             </div><!-- End .card-body -->
                                         </div><!-- End .collapse -->
                                     </div><!-- End .card -->
-                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                              
+                                    {% if cart.get_total_price == 0.00 %}
+                                        {% csrf_token %}
+                                </br>
+                                <p><p>No products added to the cart.</p></p>
+                                {% else %}
+                            </br>
+                                        <input type="submit" value="Pay with Paypal" class="btn btn-outline-primary-2 btn-order btn-block">
                                      
-                               
-                                </button>
-
+                                {% endif %}
+                                    
+                                    {% csrf_token %}
+                                </form>
  
                             </div><!-- End .accordion -->
                             </div><!-- End .summary -->

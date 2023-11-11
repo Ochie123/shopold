@@ -2,7 +2,7 @@ import os
 import logging
 from django.contrib.auth import login, authenticate 
 from django.contrib import messages
-
+from django.views import View
 from django.db.models import Q
 from django.http import FileResponse, HttpResponseNotFound
 from django.shortcuts import render
@@ -71,6 +71,9 @@ class SignupView(FormView):
 )
         return response
 
+
+class LogoutView(FormView): 
+    template_name = "registration/logged_out.html" 
 
 def tag(request, slug=None):
     tag = get_object_or_404(Tag, slug=slug)
@@ -166,6 +169,7 @@ def product_detail_modal(request, slug):
         product = get_object_or_404(Product, 
                                          slug=slug,
                                          )
+                                         
         cart_product_form = CartAddProductForm()
         stats.log_product_view(request, product)
         return render(request,
@@ -184,6 +188,18 @@ def product_detail(request, year, month, day, slug):
                                          status=Product.Status.PUBLISHED,
         
                                          )
+        
+        # Get the previous and next products
+        previous_product = Product.published.filter(publish__lt=product.publish).order_by('-publish').first()
+        next_product = Product.published.filter(publish__gt=product.publish).order_by('publish').first()
+
+        # Add logic to handle navigation to previous and next products
+        if request.method == 'POST':
+            if 'prev_product' in request.POST and previous_product:
+                return redirect('product_detail', year=previous_product.publish.year, month=previous_product.publish.month, day=previous_product.publish.day, slug=previous_product.slug)
+        elif 'next_product' in request.POST and next_product:
+            return redirect('product_detail', year=next_product.publish.year, month=next_product.publish.month, day=next_product.publish.day, slug=next_product.slug)
+
         cart_product_form = CartAddProductForm()
         stats.log_product_view(request, product)
         view_recs = stats.recommended_from_views(request)
@@ -202,6 +218,8 @@ def product_detail(request, year, month, day, slug):
         return render(request,
                   'products/product_detail_new.html',
                   {'product': product,
+                    'previous_product': previous_product, 
+                    'next_product': next_product, 
                    'view_recs': view_recs,
                    'search_recs': search_recs,
                    'recently_viewed': recently_viewed,
@@ -425,16 +443,19 @@ def download_product_file(request, pk):
         )
     
     return response
-def my_order_view(request):
-    email = request.user
-    orders=Order.objects.all().filter(email = email)
-    ordered_products=[]
-    for order in orders:
-        ordered_product=Order.objects.all().filter(id=order.id)
-        ordered_products.append(ordered_product)
+class MyOrderView(LoginRequiredMixin, View):
+    login_url = '/login/'  # Set the login URL
 
-    return render(request,'my_order.html',{'data':zip(ordered_products,orders)})
+    def get(self, request):
+        email = request.user
+        orders = Order.objects.filter(email=email)
+        ordered_products = []
 
+        for order in orders:
+            ordered_product = Order.objects.filter(id=order.id)
+            ordered_products.append(ordered_product)
+
+        return render(request, 'my_order.html', {'data': zip(ordered_products, orders)})
 
 from django.http import Http404, FileResponse
 from django.shortcuts import get_object_or_404

@@ -1,5 +1,7 @@
 from django import forms
 from django.core.mail import send_mail 
+from django.core.mail import EmailMessage
+
 import logging
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -91,15 +93,17 @@ class ContactForm(forms.Form):
         logger.info("Sending email to customer service")
         subject = "Site message"
         message = f"From: {self.cleaned_data['name']} <{self.cleaned_data['email']}>\n{self.cleaned_data['message']}"
-        sender_email = self.cleaned_data['email']  # Use the user's email as the sender
-        recipient_list = ['sales@svgcraft.co']  # Your domain email address
-        send_mail(
-            subject,
-            message,
-            sender_email,
-            recipient_list,
-            fail_silently=False,
+        sender_email = 'sales@svgcraft.co'  # Use your organization's email as the sender
+        recipient_list = ['sales@svgcraft.co']  # My domain email address
+
+        email = EmailMessage(
+        subject,
+        message,
+        sender_email,
+        recipient_list,
+        reply_to=[self.cleaned_data['email']],  # Use the user's email as the reply-to address
     )
+        email.send(fail_silently=False)
 
 class SearchsForm(forms.Form): 
     query = forms.CharField(

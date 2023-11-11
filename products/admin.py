@@ -189,7 +189,7 @@ class ProductAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
     list_display = ["first_image",'publish','status', "title", "has_description", "has_file", "price"]
     list_display_links = ["first_image", "title"]
     list_editable = ["price"]
-    list_filter = [ImageFilter, 'bestseller', 'toprated', 'status', ]
+    list_filter = [ImageFilter, 'bestseller', 'toprated', 'status', 'categories' ]
 
     actions = [export_xlsx]
 
@@ -229,7 +229,7 @@ class SearchTermAdmin(admin.ModelAdmin):
 
 @admin.register(ProductView)
 class ProductViewAdmin(admin.ModelAdmin):
-    list_display = ['product','ip_address', 'user', 'date', 'tracking_id']
+    list_display = ['product','ip_address', 'user', 'date', 'tracking_id', 'location']
     list_filter = ['product', 'user', 'date']
     exclude = ('user',)
   

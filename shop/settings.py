@@ -63,14 +63,14 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "products.urlcanon.WwwRedirectMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    "django.contrib.messages.middleware.MessageMiddleware",
     'products.urlcanon.WwwRedirectMiddleware',
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    #'products.middlewares.cart_middleware',
+    'cart.middlewares.cart_middleware',
 ]
 
 ROOT_URLCONF = "shop.urls"
@@ -138,7 +138,6 @@ AUTH_USER_MODEL = "accounts.User"
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
@@ -170,8 +169,8 @@ PRODUCTS_PER_ROW = 7
 CART_SESSION_ID = 'cart'
 
 
-PAYPAL_RECEIVER_EMAIL = 'sb-scyab27236618@personal.example.com' 
-PAYPAL_TEST = True
+#PAYPAL_RECEIVER_EMAIL = 'sb-scyab27236618@personal.example.com' 
+#PAYPAL_TEST = True
 
 #EMAIL_HOST = 'smtp.gmail.com'
 
@@ -179,8 +178,8 @@ PAYPAL_TEST = True
 #EMAIL_HOST_PASSWORD =' ___'
 #EMAIL_PORT = 587
 #EMAIL_USE_TLS = True
-#PAYPAL_RECEIVER_EMAIL = 'youngpope07@gmail.com' 
-#PAYPAL_TEST = False
+PAYPAL_RECEIVER_EMAIL = 'youngpope07@gmail.com' 
+PAYPAL_TEST = False
 
 EMAIL_HOST = 'mail.privateemail.com'
 EMAIL_HOST_USER = 'sales@svgcraft.co'
@@ -254,5 +253,6 @@ CKEDITOR_CONFIGS = {
 
 from django.urls import reverse_lazy
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('logout')
 
 SITE_ID = 1

@@ -1,21 +1,36 @@
 $(document).ready(function () {
     // Function to update the cart count
+// Function to update the cart count
     function updateCartCount() {
+        //console.log('updateCartCount function called');
         $.ajax({
-            url: '/cart/count/',
-            method: 'GET',
-            success: function (data) {
-                if (data.cart_count !== undefined) {
-                    $("#cart-count").text(data.cart_count);
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.error("Error:", errorThrown);
-            }
-        });
-    }
+        url: '/cart/count/',
+        method: 'GET',
+        success: function (data) {
+            if (data.cart_count !== undefined) {
+                $("#cart-count").text(data.cart_count);
 
-// Function to update the cart items
+                // Check if the cart is empty and hide/show the checkout button accordingly
+                //console.log(data.cart_count)
+               // console.log($('.btn-checkout').length)
+                if (data.cart_count === 0) {
+                    $('.btn-checkout').hide();
+                } else {
+                    $('.btn-checkout').show();
+                }
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.error("Error:", errorThrown);
+        }
+    });
+}
+
+// ... (your other functions)
+
+// Call the updateCartCount function initially to set the cart count
+updateCartCount();
+
 // Function to update the cart items
 function updateCartItems() {
     $.ajax({
@@ -24,8 +39,11 @@ function updateCartItems() {
         success: function (data) {
             var cartItemsContainer = $('.dropdown-cart-products');
             cartItemsContainer.empty();
+
+            // Check if the total price is 0
+
+
             data.cart_items.forEach(function (item) {
-                console.log(item.product_uuid); // Check if the product UUID is correctly extracted
                 var productHtml = `
                     <div class="product">
                         <div class="product-cart-details">
@@ -49,13 +67,15 @@ function updateCartItems() {
                 `;
                 cartItemsContainer.append(productHtml);
             });
+
             var totalCartPrice = $('.cart-total-price');
             totalCartPrice.text('$' + data.total_price);
+
+           // console.log(data.total_price)
 
             // Update subtotal and total in the summary table
             var summarySubtotal = $('.summary-subtotal td:last-child');
             summarySubtotal.text('$' + data.total_price);
-
             var summaryTotal = $('.summary-total td:last-child');
             summaryTotal.text('$' + data.total_price);
         },
@@ -150,7 +170,7 @@ $(document).on("click", ".btn-remove", function (e) {
             }
         });
     } else {
-        console.log("Product UUID is undefined or missing.");
+        //console.log("Product UUID is undefined or missing.");
     }
 });
 

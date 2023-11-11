@@ -1,4 +1,5 @@
 {% extends "best.html" %}
+{% load custw_filters %}
 {% load i18n %}
 
 {% block main %}
@@ -8,5 +9,6 @@
     <p>{% trans "There was a problem processing your payment." %}</p>
     
     </div>
+
 </div>
 {% endblock %}

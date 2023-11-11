@@ -7,6 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 <main class="main">
+    
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
@@ -15,16 +16,19 @@
             </ol>
 
             <nav class="product-pager ml-auto" aria-label="Product">
-                <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                    <i class="icon-angle-left"></i>
-                    <span>Prev</span>
-                </a>
-
-                <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                    <span>Next</span>
-                    <i class="icon-angle-right"></i>
-                </a>
-            </nav><!-- End .pager-nav -->
+                {% if previous_product %}
+                    <a class="product-pager-link product-pager-prev" href="{% url 'products:product_detail' previous_product.publish.year previous_product.publish|date:'m' previous_product.publish|date:'d' previous_product.slug %}" aria-label="Previous" tabindex="-1">
+                        <i class="icon-angle-left"></i>
+                        <span>Prev</span>
+                    </a>
+                {% endif %}
+                {% if next_product %}
+                    <a class="product-pager-link product-pager-next" href="{% url 'products:product_detail' next_product.publish.year next_product.publish|date:'m' next_product.publish|date:'d' next_product.slug %}" aria-label="Next" tabindex="-1">
+                        <span>Next</span>
+                        <i class="icon-angle-right"></i>
+                    </a>
+                {% endif %}
+            </nav>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
 
@@ -80,9 +84,7 @@
                             <div class="row">
                                 <figure class="product-main-image">
                                     <img id="product-zoom" src="{% if product.productimage_set.first %}{{ product.productimage_set.first.image.url|safe }}{% endif %}" data-zoom-image="{% if product.productimage_set.first %}{{ product.productimage_set.first.image.url|safe }}{% endif %}" alt="product image">
-                                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                        <i class="icon-arrows"></i>
-                                    </a>
+                            
                                 </figure><!-- End .product-main-image -->
                                 <div id="product-zoom-gallery" class="product-image-gallery">
                                     {% for image in product.productimage_set.all %}
@@ -129,14 +131,11 @@
                         
                                
                                             <div class="product-details-action">
-                                                <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
-                                                    <span>Add to Cart</span>
-                                                    <span class="loader"></span>
-                                                </button>
                                                 {% if product.price == 0.00 %}
+
                                                 <div class="details-action-wrapper">
 
-                                                    <a href="#" class="btn-product icon-info-circle" title="Wishlist"><span>Free Download</span></a>
+                                                    <a href="#" class="btn-product icon-info-circle" title="Free Download"><span>Free Download</span></a>
                                                     <a href="#" class="btn-product btn-wrap"><span>
                                                         
                                                         <div class="btn-wrap">
@@ -145,6 +144,12 @@
                                                         </div><!-- End .btn-wrap -->
                                                     </span></a>
                                                 </div><!-- End .details-action-wrapper -->
+                                                {% else %}
+                                                <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                                                    <span>Add to Cart</span>
+                                                    <span class="loader"></span>
+                                                </button>
+                                                
                                                 {% endif %}
                                             </div><!-- End .product-details-action -->
 
@@ -259,10 +264,32 @@
                     </div><!-- End .product-price -->
                     <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
                         {% csrf_token %}
-                    <div class="product-details-action">
-                        <button type="submit" class="btn-product btn-cart" id="add-to-cart-button" ><span>add to cart</span></button>
-                    </div><!-- End .product-details-action -->
-                </form>
+        
+                                <div class="product-details-action">
+                                    {% if product.price == 0.00 %}
+
+                                    <div class="details-action-wrapper">
+
+                                        <a href="#" class="btn-product icon-info-circle" title="Free Download"><span>Free Download</span></a>
+                                        <a href="#" class="btn-product btn-wrap"><span>
+                                            
+                                            <div class="btn-wrap">
+                                             
+                                                <a href="{% url 'products:download_free_product' product.download_url %}" class="btn btn-primary btn-round btn-shadow"><i class="icon-long-arrow-right"></i><span>Download</span></a>
+                                            </div><!-- End .btn-wrap -->
+                                        </span></a>
+                                    </div><!-- End .details-action-wrapper -->
+                                    {% else %}
+                                    <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                                        <span>Add to Cart</span>
+                                        <span class="loader"></span>
+                                    </button>
+                                    
+                                    {% endif %}
+                                </div><!-- End .product-details-action -->
+
+    
+                    </form>
                     
                 </div><!-- End .col-6 -->
             </div><!-- End .row -->

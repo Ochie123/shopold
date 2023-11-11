@@ -8,15 +8,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def payment_done(request):
-    return render(request, 'payment/done.html')
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+
+    return render(request, 'payment/done.html',  {'order': order})
 
 
 @csrf_exempt
 def payment_canceled(request):
-    order_id = request.session.get('order_id')
-    order = get_object_or_404(Order, id=order_id)
 
-    return render(request, 'payment/canceled.html', {'order': order})
+    return render(request, 'payment/canceled.html')
     
 
 def payment_process(request):

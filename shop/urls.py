@@ -49,8 +49,12 @@ urlpatterns = [
         form_class=forms.AuthenticationForm, ),
         name="login",
 ), 
-    path('signout/', auth_views.LogoutView.as_view(), name='signout'),
-    path('my-order/', views.my_order_view,name='my_order'),
+
+   path('logout/', auth_views.LogoutView.as_view( template_name="registration/logged_out.html"), name='logout'),
+
+   
+
+    path('my-order/', views.MyOrderView.as_view(), name='my_order'),
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     #path('search/', views.products, name="search_products"),
@@ -58,12 +62,14 @@ urlpatterns = [
     path('paypal/', include('paypal.standard.ipn.urls')),
     path('payment/', include('payment.urls', namespace='payment')),
     path('', views.index, name='index'),
+
     path('category/', views.index, name='category_filter'),
     #
     #path("", views.product_list, name="product_list"),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('product/', include(("products.urls", "products"), namespace="products")),
 
+ 
     path('sitemap.xml', sitemap, # new
         {'sitemaps': {'categories': GenericSitemap(info_dict, priority=0.6)}},
         name='django.contrib.sitemaps.views.sitemap'),

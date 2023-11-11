@@ -1,6 +1,10 @@
 {% extends "best.html" %}
 {% load static %}
+{% load custw_filters %}
 
+{% block title %}
+  My Account - SVG Craft
+{% endblock %}
 {% block main %}
 
 
@@ -41,7 +45,7 @@
                                 <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url "signout" %}">Sign Out</a>
+                                <a class="nav-link" href="{% url "logout" %}">Sign Out</a>
                             </li>
                         </ul>
                     </aside><!-- End .col-lg-3 -->
@@ -49,44 +53,69 @@
                     <div class="col-md-8 col-lg-9">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
-                                <p>Hello <span class="font-weight-normal text-dark">{{request.user}}</span> (not <span class="font-weight-normal text-dark">User</span>? <a href="{% url "signout" %}">Log out</a>) 
+                                <p>Hello <span class="font-weight-normal text-dark">{{request.user}}</span> (not <span class="font-weight-normal text-dark">User</span>? <a href="{% url 'logout' %}">Log out</a>) 
                                 <br>
                                 From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, view your <a href="#tab-downloads" class="tab-trigger-link">downloads</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
                             </div><!-- .End .tab-pane -->
-
                             <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
-           
-                                    {% for products,order in data %}
-                                    <div class="row">
-                                      <div class="col">
-                                        <table
-                                          class="table"
-                                          style="width: 95%; margin: 50px 0px 50px 0px">
-                                          <tr>
-                                            <th>Order date</th>
-                                            <th>Order id</th>
-                                            <th>Order Summary</th>
-                                            <th>Order Total Price</th>
-                                          </tr>
-                                            <tr>
-                                              <td>{{ order.date_added|date }}</td>
-                                              <td>{{ order.id }}</td>
-                                              <td>{{ order}}</td>
-                                              <td>{{ order.total_price }}</td>
-                                            </tr>
-                                        </table>
-                                      </div>
+                                {% for products, order in data %}
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <a href="#order{{ order.id }}Content" class="order-toggle" data-toggle="collapse" aria-expanded="false">
+                                            <table class="table">
+                                                <!-- Your order summary table goes here -->
+                                                <tr>
+                                                    <td>{{ order.created|date:"M d, Y" }}</td>
+                                                   
+                                                    <td>{{ order }}</td>
+                                                </tr>
+                                            </table>
+                                        </a>
+                                        <div class="collapse" id="order{{ order.id }}Content">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Price</th>
+                                                        <th>Qty</th>
+                                                        <th>Cost</th>
+                                                        <th>Download</th> <!-- Add this column for the download links -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in order.items.all %}
+                                                    <tr class="row{% cycle "1" "2" %}">
+                                                        <td>{{ item.product.title }}</td>
+                                                        <td class="num">${{ item.price }}</td>
+                                                        <td class="num">{{ item.quantity }}</td>
+                                                        <td class="num">${{ item.get_cost }}</td>
+                                                        <td class="num">
+                                                            {% if order.paid %}
+                                                            <a href="{% url 'products:download_free_product' item.product.download_url %}" class="btn btn-primary btn-round btn-shadow"><i class="icon-long-arrow-right"></i><span>Download</span></a>
+                                                              {% else %}
+                                                              N/A
+                                                              {% endif %}
+                                                      
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                <tr class="total">
+                                                    <td colspan="3">Total</td>
+                                                    <td class="num">${{ order.get_total_cost }}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                    {% empty %}
-                                  You have no orders.
-                                    {% endfor %}
-                                
-
-                            <p>
-
-                                <a href="/" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
-                            </p>
-                            </div><!-- .End .tab-pane -->
+                                </div>
+                                {% empty %}
+                                You have no orders.
+                                {% endfor %}
+                                <p>
+                                    <a href="/" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+                                </p>
+                            </div>
+                            
 
                             <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
                                 <p>No downloads available yet.</p>

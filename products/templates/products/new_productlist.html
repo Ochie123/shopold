@@ -2,6 +2,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 {% block main %}
+
 <main class="main">
 
     <div class="page-content">
@@ -40,7 +41,11 @@
                                 <div class="product product-7 text-center">
 
                                     <figure class="product-media">
-                                        <span class="product-label label-new">-33%</span>
+                                        {% if product.price == 0.00 %}
+                                        <span class="product-label label-new">Free</span>
+                                       {% else %}
+                                       <span class="product-label label-new">-33%</span>
+                                       {% endif %}
                                         <a href="{{ product.get_absolute_url }}">
 
                                             {% with product.productimage_set.first as profile_image %}
@@ -48,24 +53,31 @@
                                             {% endwith %}  
 
                                         </a>
-
                                         <div class="prod">
+                                            {% if product.price == 0.00 %}
+                                            <div class="product-action"> 
+                                            <a href="{% url 'products:download_free_product' product.download_url %}" class="btn btn-primary btn-round btn-shadow"><i class="icon-long-arrow-right"></i><span>Download</span></a>
+                                            </div>
+                                             {% else %}
                                             <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
-                                                {% csrf_token %}
-                       
-                                                <div class="product-action">
-                                                    <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
-                                                        <span>Add to Cart</span>
-                                                        <span class="loader"></span>
-                                                    </button>
+                                             {% csrf_token %}
 
-                                                </div><!-- End .product-details-action -->
-                                            </form>
+                                                <div class="product-action">
+                                                 <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                                                  <span>Add to Cart</span>
+                                                <span class="loader"></span>
+                                                </button>
+
+                                                 </div><!-- End .product-details-action -->
+                                                    </form>
+                                            {% endif %}
+
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">
-                                        <h5 class="product-title"><a href="/">{{product.title}}</a></h5><!-- End .product-title -->
+                                        
+                                        <h5 class="product-title small-product-title"><a href="{{ product.get_absolute_url }}">{{product.title}}</a></h5><!-- End .product-title -->
                                         <div class="product-price">
                                             ${{product.price}}
                                         </div><!-- End .product-price -->
@@ -75,11 +87,11 @@
                             </div><!-- End .col-sm-6 col-lg-4 -->
                             {% endfor %}
                             {% else %}
-    <p>No products found.</p>
+                        <p>No products found.</p>
                             {% endif %}
                         </div>
 
-                        </div><!-- End .row -->
+                        </div>
                     </div><!-- End .products -->
 
                     <nav aria-label="Page navigation">

@@ -33,3 +33,22 @@ jQuery(function ($) {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Get references to the navigation elements
+    const prevButton = document.querySelector(".product-pager-prev");
+    const nextButton = document.querySelector(".product-pager-next");
+    const productDetail = document.querySelector(".product-detail");
+
+    // Add event listeners to the "Prev" and "Next" buttons
+    prevButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        // Implement logic to load the previous product detail
+        // For example, you can fetch the data via AJAX and update the productDetail content
+    });
+
+    nextButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        // Implement logic to load the next product detail
+        // For example, you can fetch the data via AJAX and update the productDetail content
+    });
+});
