@@ -7,20 +7,16 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 import weasyprint
-<<<<<<< HEAD
 
 from decimal import Decimal
 from paypal.standard.forms import PayPalPaymentsForm
 from django.views.decorators.csrf import csrf_exempt
 
-=======
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from .tasks import order_created
 from cart.cart import Cart
 
-<<<<<<< HEAD
 
     
 from django.shortcuts import render, get_object_or_404
@@ -32,8 +28,6 @@ from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
 
-=======
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
@@ -48,7 +42,6 @@ def order_create(request):
             # clear the cart
             cart.clear()
             # launch asynchronous task
-<<<<<<< HEAD
             order_created.delay(order.id) # set the order in the session 
             request.session['order_id'] = order.id
             # redirect to the payment
@@ -58,16 +51,6 @@ def order_create(request):
     
     return render(request, 'orders/order/new_create.html', {'cart': cart, 'form': form,})
 
-=======
-            order_created.delay(order.id)
-            # set the order in the session
-            request.session['order_id'] = order.id
-            # redirect to the payment process
-            return redirect(reverse('payment:process'))
-    else:
-        form = OrderCreateForm()
-    return render(request, 'orders/order/new_create.html', {'cart': cart, 'form': form})
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
 def admin_order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)

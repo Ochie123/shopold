@@ -7,10 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 <main class="main">
-<<<<<<< HEAD
     
-=======
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
@@ -19,7 +16,6 @@
             </ol>
 
             <nav class="product-pager ml-auto" aria-label="Product">
-<<<<<<< HEAD
                 {% if previous_product %}
                     <a class="product-pager-link product-pager-prev" href="{% url 'products:product_detail' previous_product.publish.year previous_product.publish|date:'m' previous_product.publish|date:'d' previous_product.slug %}" aria-label="Previous" tabindex="-1">
                         <i class="icon-angle-left"></i>
@@ -33,18 +29,6 @@
                     </a>
                 {% endif %}
             </nav>
-=======
-                <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                    <i class="icon-angle-left"></i>
-                    <span>Prev</span>
-                </a>
-
-                <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                    <span>Next</span>
-                    <i class="icon-angle-right"></i>
-                </a>
-            </nav><!-- End .pager-nav -->
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
 
@@ -100,13 +84,7 @@
                             <div class="row">
                                 <figure class="product-main-image">
                                     <img id="product-zoom" src="{% if product.productimage_set.first %}{{ product.productimage_set.first.image.url|safe }}{% endif %}" data-zoom-image="{% if product.productimage_set.first %}{{ product.productimage_set.first.image.url|safe }}{% endif %}" alt="product image">
-<<<<<<< HEAD
                             
-=======
-                                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                        <i class="icon-arrows"></i>
-                                    </a>
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                                 </figure><!-- End .product-main-image -->
                                 <div id="product-zoom-gallery" class="product-image-gallery">
                                     {% for image in product.productimage_set.all %}
@@ -139,7 +117,6 @@
                                 <p>{{product.description|safe}} </p>
                             </div><!-- End .product-content -->
 
-<<<<<<< HEAD
                             <div class="product">
                              
                                 <p>Price: ${{ product.price }}</p>
@@ -182,29 +159,6 @@
                                     <!-- End .product-details-action -->
                                 </form>
 
-=======
-                            <div class="details-filter-row details-row-size">
-                                <label for="qty">Qty:</label>
-                                <div class="product-details-quantity">
-                                    <input type="number" id="qty" class="form-control" value="1" min="1" max="1" step="1" data-decimals="0" required>
-                                </div><!-- End .product-details-quantity -->
-                            </div><!-- End .details-filter-row -->
-                            
-                            <div class="product-details-action">
-                                <a href="{% url 'cart:cart_add' product.uuid %}" class="btn-product btn-cart" id="add-to-cart-button" data-product-uuid="{{ product.uuid }}">
-                                    <span>add to cart</span>
-                                </a>
-
-                                <div class="details-action-wrapper">
-                                    <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                </div><!-- End .details-action-wrapper -->
-                            </div><!-- End .product-details-action -->
-                            <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post" style="margin-top: 20px; text-align: center;">
-                                {{ cart_product_form }}
-                                {% csrf_token %}
-                                <button type="submit" class="btn-theme btn buy-btn" style="background-color: #3498db; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Add to cart</button>
-                            </form>
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                             <div class="product-details-footer">
                                 <div class="product-cat">
                                     <span>Tags:</span>
@@ -308,7 +262,6 @@
                     <div class="product-price">
                         ${{ product.price }}
                     </div><!-- End .product-price -->
-<<<<<<< HEAD
                     <form class="add-to-cart-form" data-product-uuid="{{ product.uuid }}">
                         {% csrf_token %}
         
@@ -338,13 +291,6 @@
     
                     </form>
                     
-=======
-                    <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post" style="margin-top: 20px; text-align: center;">
-                        {{ cart_product_form }}
-                        {% csrf_token %}
-                        <button type="submit" class="btn-theme btn buy-btn" style="background-color: #3498db; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Add to cart</button>
-                    </form>
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                 </div><!-- End .col-6 -->
             </div><!-- End .row -->
         </div><!-- End .container -->
@@ -354,36 +300,4 @@
     <div class="container my-1 px-2">
     {% include "products/footerpd.html" %}
     </div>
-<<<<<<< HEAD
-=======
-    
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#add-to-cart-form').on('submit', function(event) {
-                event.preventDefault(); // Prevent the form from submitting normally
-        
-                var form = $(this);
-                var url = form.data('url');
-                var formData = form.serialize();
-        
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        // Handle the success response here, if needed
-                        // Handle the success response here, if needed
-        
-                        // Update the product count in the header HTML
-                        var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
-                        $('#cart-count').text(cartCount);
-                    },
-                    error: function(xhr, errmsg, err) {
-                        // Handle any error that occurred during the Ajax request
-                    }
-                });
-            });
-        });
-        </script>
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 {% endblock %}

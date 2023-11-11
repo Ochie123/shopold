@@ -1,10 +1,7 @@
 from django import forms
 from django.core.mail import send_mail 
-<<<<<<< HEAD
 from django.core.mail import EmailMessage
 
-=======
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 import logging
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -41,7 +38,6 @@ class UserCreationForm(DjangoUserCreationForm):
             "Sending signup email for email=%s", 
             self.cleaned_data["email"],
 )
-<<<<<<< HEAD
         subject = "Welcome to SVG Craft"
         # HTML content for the email message
         message = render_to_string('welcome_email.html', {'email': self.cleaned_data["email"]})
@@ -54,16 +50,6 @@ class UserCreationForm(DjangoUserCreationForm):
             html_message=message,  # Include the HTML content here
             fail_silently=True,
         )
-=======
-        message = "Welcome{}".format(self.cleaned_data["email"]) 
-        send_mail(
-            "Welcome to SVG Craft", 
-            message, 
-            "csales@svgcraft.co", 
-            [self.cleaned_data["email"]], 
-            fail_silently=True,
-)
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
 class AuthenticationForm(forms.Form):
     email = forms.EmailField()
@@ -107,7 +93,6 @@ class ContactForm(forms.Form):
         logger.info("Sending email to customer service")
         subject = "Site message"
         message = f"From: {self.cleaned_data['name']} <{self.cleaned_data['email']}>\n{self.cleaned_data['message']}"
-<<<<<<< HEAD
         sender_email = 'sales@svgcraft.co'  # Use your organization's email as the sender
         recipient_list = ['sales@svgcraft.co']  # My domain email address
 
@@ -119,17 +104,6 @@ class ContactForm(forms.Form):
         reply_to=[self.cleaned_data['email']],  # Use the user's email as the reply-to address
     )
         email.send(fail_silently=False)
-=======
-        sender_email = self.cleaned_data['email']  # Use the user's email as the sender
-        recipient_list = ['sales@svgcraft.co']  # Your domain email address
-        send_mail(
-            subject,
-            message,
-            sender_email,
-            recipient_list,
-            fail_silently=False,
-    )
->>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
 class SearchsForm(forms.Form): 
     query = forms.CharField(
