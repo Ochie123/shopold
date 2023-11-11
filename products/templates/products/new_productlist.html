@@ -2,7 +2,10 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 {% block main %}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 <main class="main">
 
     <div class="page-content">
@@ -28,7 +31,57 @@
                                 </div>
                             </div><!-- End .toolbox-sort -->
                             
+<<<<<<< HEAD
    
+=======
+                            <div class="toolbox-layout">
+                          <!--      <a href="category-list.html" class="btn-layout"> -->
+                                    <a href="javascript:void(0);" class="btn-layout layout-1">
+                                    <svg width="16" height="10">
+                                        <rect x="0" y="0" width="4" height="4" />
+                                        <rect x="6" y="0" width="10" height="4" />
+                                        <rect x="0" y="6" width="4" height="4" />
+                                        <rect x="6" y="6" width="10" height="4" />
+                                    </svg>
+                                </a>
+
+                            <!--     <a href="category-2cols.html" class="btn-layout"> -->
+                                 <a href="javascript:void(0);" class="btn-layout layout-2">
+                                    <svg width="10" height="10">
+                                        <rect x="0" y="0" width="4" height="4" />
+                                        <rect x="6" y="0" width="4" height="4" />
+                                        <rect x="0" y="6" width="4" height="4" />
+                                        <rect x="6" y="6" width="4" height="4" />
+                                    </svg>
+                                </a>
+
+                              <!-- <a href="category.html" class="btn-layout active"> --> 
+                                <a href="javascript:void(0);" class="btn-layout layout-3 active">
+                                    <svg width="16" height="10">
+                                        <rect x="0" y="0" width="4" height="4" />
+                                        <rect x="6" y="0" width="4" height="4" />
+                                        <rect x="12" y="0" width="4" height="4" />
+                                        <rect x="0" y="6" width="4" height="4" />
+                                        <rect x="6" y="6" width="4" height="4" />
+                                        <rect x="12" y="6" width="4" height="4" />
+                                    </svg>
+                                </a>
+
+                              <!--  <a href="category-4cols.html" class="btn-layout"> -->
+                                <a href="javascript:void(0);" class="btn-layout layout-4">
+                                    <svg width="22" height="10">
+                                        <rect x="0" y="0" width="4" height="4" />
+                                        <rect x="6" y="0" width="4" height="4" />
+                                        <rect x="12" y="0" width="4" height="4" />
+                                        <rect x="18" y="0" width="4" height="4" />
+                                        <rect x="0" y="6" width="4" height="4" />
+                                        <rect x="6" y="6" width="4" height="4" />
+                                        <rect x="12" y="6" width="4" height="4" />
+                                        <rect x="18" y="6" width="4" height="4" />
+                                    </svg>
+                                </a>
+                            </div><!-- End .toolbox-layout -->
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                         </div><!-- End .toolbox-right -->
                     </div><!-- End .toolbox -->
 
@@ -41,11 +94,15 @@
                                 <div class="product product-7 text-center">
 
                                     <figure class="product-media">
+<<<<<<< HEAD
                                         {% if product.price == 0.00 %}
                                         <span class="product-label label-new">Free</span>
                                        {% else %}
                                        <span class="product-label label-new">-33%</span>
                                        {% endif %}
+=======
+                                        <span class="product-label label-new">New</span>
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                                         <a href="{{ product.get_absolute_url }}">
 
                                             {% with product.productimage_set.first as profile_image %}
@@ -53,6 +110,7 @@
                                             {% endwith %}  
 
                                         </a>
+<<<<<<< HEAD
                                         <div class="prod">
                                             {% if product.price == 0.00 %}
                                             <div class="product-action"> 
@@ -72,12 +130,54 @@
                                                     </form>
                                             {% endif %}
 
+=======
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                      
+                                                    <div class="card-footer d-flex justify-content-center bg-light border">
+                                                        <a href="{{ product.get_url_path }}"
+                                                        data-modal-title="{{ product.title }}"
+                                                        data-modal-url="{% url 'products:product_detail_modal' slug=product.slug %}"
+                                                        class="item d-block my-1">
+                                                            <div class="">
+                                                                <small>
+                                                                    <div class="">
+                                                                        <div class="float-right">
+                                                                            <div class="rating" aria-label="">
+                                                                                <span style="width: {{ product.price }}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <i class="btn-product-icon btn-quickview"></i>
+                                                                    </div>
+                                                                </small>
+                                                            </div>
+                                                        </a>
+                                                    
+                    
+                     
+                                                    </div>
+
+                                        
+                                            <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                        </div><!-- End .product-action-vertical -->
+
+                                        <div class="product-action">
+                                            <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post" style="margin-top: 20px; text-align: center;">
+                                                {{ cart_product_form }}
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn-theme btn buy-btn" style="background-color: #3498db; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Add to cart</button>
+                                            </form>
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">
+<<<<<<< HEAD
                                         
                                         <h5 class="product-title small-product-title"><a href="{{ product.get_absolute_url }}">{{product.title}}</a></h5><!-- End .product-title -->
+=======
+                                        <h3 class="product-title"><a href="/">{{product.title}}</a></h3><!-- End .product-title -->
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                                         <div class="product-price">
                                             ${{product.price}}
                                         </div><!-- End .product-price -->
@@ -86,12 +186,19 @@
                                 </div><!-- End .product -->
                             </div><!-- End .col-sm-6 col-lg-4 -->
                             {% endfor %}
+<<<<<<< HEAD
                             {% else %}
                         <p>No products found.</p>
                             {% endif %}
                         </div>
 
                         </div>
+=======
+                            {% endif %}
+                        </div>
+
+                        </div><!-- End .row -->
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
                     </div><!-- End .products -->
 
                     <nav aria-label="Page navigation">
@@ -127,7 +234,10 @@
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
+<<<<<<< HEAD
 
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 <script type="text/javascript">
     $(document).ready(function() {
         $('#add-to-cart-form').on('submit', function(event) {
@@ -156,6 +266,9 @@
         });
     });
     </script>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 {% endblock %}

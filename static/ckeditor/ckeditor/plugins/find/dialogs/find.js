@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 (function(){function F(d){return d.type==CKEDITOR.NODE_TEXT&&0<d.getLength()&&(!m||!d.isReadOnly())}function v(d){return!(d.type==CKEDITOR.NODE_ELEMENT&&d.isBlockBoundary(CKEDITOR.tools.extend({},CKEDITOR.dtd.$empty,CKEDITOR.dtd.$nonEditable)))}var m,w=function(){return{textNode:this.textNode,offset:this.offset,character:this.textNode?this.textNode.getText().charAt(this.offset):null,hitMatchBoundary:this._.matchBoundary}},x=["find","replace"],q=[["txtFindFind","txtFindReplace"],["txtFindCaseChk",

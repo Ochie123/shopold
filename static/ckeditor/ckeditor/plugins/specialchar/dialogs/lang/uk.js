@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("specialchar","uk",{euro:"Знак євро",lsquo:"Ліві одинарні лапки",rsquo:"Праві одинарні лапки",ldquo:"Ліві подвійні лапки",rdquo:"Праві подвійні лапки",ndash:"Середнє тире",mdash:"Довге тире",iexcl:"Перевернутий знак оклику",cent:"Знак цента",pound:"Знак фунта",curren:"Знак валюти",yen:"Знак єни",brvbar:"Переривчаста вертикальна лінія",sect:"Знак параграфу",uml:"Умлаут",copy:"Знак авторських прав",ordf:"Жіночий порядковий вказівник",laquo:"ліві вказівні подвійні кутові дужки",

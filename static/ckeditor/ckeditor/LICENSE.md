@@ -1,8 +1,24 @@
+<<<<<<< HEAD
 Software License Agreement
 ==========================
 
 CKEditor - The text editor for Internet - https://ckeditor.com/
 Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+Software License Agreement for CKEditor 4 LTS (4.23.0 and above)
+================================================================
+
+CKEditor - The text editor for Internet - https://ckeditor.com/ <br>
+Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+
+CKEditor 4 LTS ("Long Term Support") is available under exclusive terms of the [Extended Support Model](https://ckeditor.com/ckeditor-4-support/). [Contact us](https://ckeditor.com/contact/) to obtain a commercial license.
+
+Software License Agreement for CKEditor 4.22.* and below
+========================================================
+
+CKEditor - The text editor for Internet - https://ckeditor.com/ <br>
+Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
 Licensed under the terms of any of the following licenses at your
 choice:
@@ -37,7 +53,11 @@ done by developers outside of CKSource with their express permission.
 
 The following libraries are included in CKEditor under the MIT license (see Appendix D):
 
+<<<<<<< HEAD
 * CKSource Samples Framework (included in the samples) - Copyright (c) 2014-2022, CKSource Holding sp. z o.o.
+=======
+* CKSource Samples Framework (included in the samples) - Copyright (c) 2014-2023, CKSource Holding sp. z o.o.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 * PicoModal (included in `samples/js/sf.js`) - Copyright (c) 2012 James Frasca.
 * CodeMirror (included in the samples) - Copyright (C) 2014 by Marijn Haverbeke <marijnh@gmail.com> and others.
 * ES6Promise - Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors.

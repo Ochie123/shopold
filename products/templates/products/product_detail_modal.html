@@ -38,6 +38,7 @@
 </div>
 
 <div class="row">
+<<<<<<< HEAD
 
 
 <div class="modal-footer text-left">
@@ -112,3 +113,48 @@ $(document).ready(function() {
 </script>
 </div>
 
+=======
+<div class="modal-footer text-right">
+    <a href="{{ product.get_absolute_url }}" class="btn btn-primary pull-right">
+        {% trans "See details…" %}
+    </a>
+</div>
+
+<div class="modal-footer text-left">
+                                     
+    <form id="add-to-cart-form" data-url="{% url 'cart:cart_add' product.uuid %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+        <button type="submit" class="btn-theme btn buy-btn">Add to cart</button>
+    </form>
+
+
+
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#add-to-cart-form').on('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        var form = $(this);
+        var url = form.data('url');
+        var formData = form.serialize();
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                var cartCount = response.cart_count; // Assuming your Ajax response contains the updated cart count
+                $('#cart-count').text(cartCount);
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle any error that occurred during the Ajax request
+            }
+        });
+    });
+});
+</script>
+</div>
+
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035

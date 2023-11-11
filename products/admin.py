@@ -189,7 +189,11 @@ class ProductAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
     list_display = ["first_image",'publish','status', "title", "has_description", "has_file", "price"]
     list_display_links = ["first_image", "title"]
     list_editable = ["price"]
+<<<<<<< HEAD
     list_filter = [ImageFilter, 'bestseller', 'toprated', 'status', 'categories' ]
+=======
+    list_filter = [ImageFilter, 'bestseller', 'toprated', 'status', ]
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
     actions = [export_xlsx]
 

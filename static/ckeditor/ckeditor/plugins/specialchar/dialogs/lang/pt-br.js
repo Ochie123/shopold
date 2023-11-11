@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("specialchar","pt-br",{euro:"Euro",lsquo:"Aspas simples esquerda",rsquo:"Aspas simples direita",ldquo:"Aspas duplas esquerda",rdquo:"Aspas duplas direita",ndash:"Traço",mdash:"Travessão",iexcl:"Ponto de exclamação invertido",cent:"Cent",pound:"Cerquilha",curren:"Dinheiro",yen:"Yen",brvbar:"Bara interrompida",sect:"Símbolo de Parágrafo",uml:"Trema",copy:"Direito de Cópia",ordf:"Indicador ordinal feminino",laquo:"Aspas duplas angulares esquerda",not:"Negação",reg:"Marca Registrada",

@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("specialchar","hr",{euro:"Euro znak",lsquo:"Lijevi jednostruki navodnik",rsquo:"Desni jednostruki navodnik",ldquo:"Lijevi dvostruki navodnik",rdquo:"Desni dvostruki navodnik",ndash:"En crtica",mdash:"Em crtica",iexcl:"Naopaki uskličnik",cent:"Cent znak",pound:"Funta znak",curren:"Znak valute",yen:"Yen znak",brvbar:"Potrgana prečka",sect:"Znak odjeljka",uml:"Prijeglasi",copy:"Copyright znak",ordf:"Ženska redna oznaka",laquo:"Lijevi dvostruki uglati navodnik",not:"Not znak",

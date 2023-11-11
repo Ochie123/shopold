@@ -2,6 +2,7 @@
 {% load custw_filters %}
 {% load i18n %}
 
+<<<<<<< HEAD
 {% block main %}
 <div class="container d-flex justify-content-center align-items-center">
     <div class="text-center">
@@ -12,3 +13,11 @@
 
 </div>
 {% endblock %}
+=======
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{% trans "Your payment has not been processed" %}</h1>
+    <p class="text-center">{% trans "There was a problem processing your payment." %}</p>
+</div>
+{% endblock %}
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035

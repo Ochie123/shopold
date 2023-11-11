@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("specialchar","sv",{euro:"Eurotecken",lsquo:"Enkelt vänster citattecken",rsquo:"Enkelt höger citattecken",ldquo:"Dubbelt vänster citattecken",rdquo:"Dubbelt höger citattecken",ndash:"Snedstreck",mdash:"Långt tankstreck",iexcl:"Inverterad utropstecken",cent:"Centtecken",pound:"Pundtecken",curren:"Valutatecken",yen:"Yentecken",brvbar:"Brutet lodrätt streck",sect:"Paragraftecken",uml:"Diaeresis",copy:"Upphovsrättstecken",ordf:"Feminit ordningstalsindikator",laquo:"Vänsterställt dubbelt vinkelcitationstecken",

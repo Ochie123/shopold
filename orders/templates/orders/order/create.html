@@ -4,7 +4,11 @@
   Checkout
 {% endblock %}
 
+<<<<<<< HEAD
 {% block main %}
+=======
+{% block content %}
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 <style>
   .container {
     overflow: auto; /* Clear the float */
@@ -24,10 +28,11 @@
     </ul>
     <p>Total: ${{ cart.get_total_price }}</p>
   </div>
-  <form method="post" class="order-form">
+  <form method="post" class="order-form" action="{% url 'payment:process' %}">
     {{ form.as_p }}
     <p><input type="submit" value="Pay with Paypal"></p>
     {% csrf_token %}
+<<<<<<< HEAD
   </form>
 
   <div class="container d-flex justify-content-center align-items-center">
@@ -36,5 +41,9 @@
      
     </div>
 </div>
+=======
+</form>
+  
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 </div>
 {% endblock %}

@@ -31,17 +31,21 @@ data-owl-options='{
 {% for product in products %}  
 <div class="product product-7 text-center">
     <figure class="product-media">
+<<<<<<< HEAD
         {% if product.price == 0.00 %}
         <span class="product-label label-new">Free</span>
        {% else %}
        <span class="product-label label-new">-33%</span>
        {% endif %}
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
         <a href="{{ product.get_absolute_url }}">
             {% with product.productimage_set.first as profile_image %}
             <img class="product-image" src="{{ profile_image.image.url }}" alt="Product image">
             {% endwith %}
         </a>
 
+<<<<<<< HEAD
         <div class="product-action">
             {% if product.price == 0.00 %}
             <div class="product-action"> 
@@ -60,12 +64,36 @@ data-owl-options='{
                 </div><!-- End .product-details-action -->
             </form>
             {% endif %}
+=======
+        <div class="product-action-vertical">
+            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+            <a href="#" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+            <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+        </div><!-- End .product-action-vertical -->
+
+        <div class="product-action">
+            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
 
     <div class="product-body">
+<<<<<<< HEAD
 
         <h5 class="product-title small-product-title"><a href="{{ product.get_absolute_url }}">{{product.title}}</a></h5><!-- End .product-title -->
+=======
+        <div class="product-cat">
+            {% if product.tags %}
+            {% for tag in product.tags.all %}
+            <a href="{% url 'products:tag' slug=tag.slug %}">{{tag }},</a> 
+          {% endfor %}                          
+       {% endif %}
+        </div><!-- End .product-cat -->
+
+
+
+        <h3 class="product-title"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3><!-- End .product-title -->
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
         <div class="product-price">
             ${{product.price}}
         </div><!-- End .product-price -->

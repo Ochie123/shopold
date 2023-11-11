@@ -8,8 +8,11 @@ from django.utils.timezone import now as timezone_now
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.utils import timezone
+<<<<<<< HEAD
 import secrets
 import string
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
 from ckeditor_uploader.fields import RichTextUploadingField 
 
@@ -78,8 +81,11 @@ class Product(models.Model):
     objects = models.Manager() # The default manager.
     published = PublishedManager() # Our custom manager.
 
+<<<<<<< HEAD
     download_url = models.CharField(max_length=20, unique=True)
     
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
     
     class Meta:
         ordering = ['-publish']

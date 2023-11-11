@@ -12,6 +12,7 @@ from .forms import CartAddProductForm
 def cart_add(request, product_uuid):
     cart = request.cart  # Retrieve the cart from the request
     product = get_object_or_404(Product, uuid=product_uuid)
+<<<<<<< HEAD
 
     try:
         quantity = int(request.POST.get('quantity', 1))
@@ -78,6 +79,22 @@ def get_cart_items(request):
    # total_price = cart.get_total_price()
 
     return JsonResponse({'cart_items': cart_items,})
+=======
+    form = CartAddProductForm(request.POST)
+    
+    if form.is_valid():
+        cd = form.cleaned_data
+        cart.add(product=product, quantity=cd['quantity'], override_quantity=cd['override'])
+        
+        # Calculate the updated cart count
+        cart_count = len(cart)  # Assuming the cart is an iterable
+        
+        # Return the cart count in the JSON response
+        return JsonResponse({'message': 'Product added to cart successfully', 'cart_count': cart_count})
+    else:
+        return JsonResponse({'error': 'Invalid form data'}, status=400)
+    
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
 
 @require_POST
@@ -91,6 +108,7 @@ def cart_remove(request, product_uuid):
 
 
 def cart_detail(request):
+<<<<<<< HEAD
     cart = request.cart
     cart_count = cart.count()
     cart_lines = cart.cartline_set.all()  # Retrieve cart lines
@@ -100,3 +118,11 @@ def cart_detail(request):
             'override': True
         })
     return render(request, 'cart/new_detail.html', {'cart': cart, 'cart_count': cart_count, 'cart_lines': cart_lines})
+=======
+    cart = Cart(request)
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={
+                            'quantity': item['quantity'],
+                            'override': True})
+    return render(request, 'cart/new_detail.html', {'cart': cart})
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035

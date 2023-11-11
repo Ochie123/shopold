@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("specialchar","el",{euro:"Σύμβολο Ευρώ",lsquo:"Αριστερός χαρακτήρας μονού εισαγωγικού",rsquo:"Δεξιός χαρακτήρας μονού εισαγωγικού",ldquo:"Αριστερός χαρακτήρας ευθύγραμμων εισαγωγικών",rdquo:"Δεξιός χαρακτήρας ευθύγραμμων εισαγωγικών",ndash:"Παύλα en",mdash:"Παύλα em",iexcl:"Ανάποδο θαυμαστικό",cent:"Σύμβολο σεντ",pound:"Σύμβολο λίρας",curren:"Σύμβολο συναλλαγματικής μονάδας",yen:"Σύμβολο Γιεν",brvbar:"Σπασμένη μπάρα",sect:"Σύμβολο τμήματος",uml:"Διαίρεση",copy:"Σύμβολο πνευματικών δικαιωμάτων",

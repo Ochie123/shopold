@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("a11yhelp","el",{title:"Οδηγίες Προσβασιμότητας",contents:"Περιεχόμενα Βοήθειας. Πατήστε ESC για κλείσιμο.",legend:[{name:"Γενικά",items:[{name:"Εργαλειοθήκη Επεξεργαστή",legend:"Πατήστε ${toolbarFocus} για να περιηγηθείτε στην γραμμή εργαλείων. Μετακινηθείτε ανάμεσα στις ομάδες της γραμμής εργαλείων με TAB και SHIFT+TAB. Μετακινηθείτε ανάμεσα στα κουμπιά εργαλείων με το ΔΕΞΙ ή ΑΡΙΣΤΕΡΟ ΒΕΛΑΚΙ. Πατήστε ΔΙΑΣΤΗΜΑ ή ENTER για να ενεργοποιήσετε το ενεργό κουμπί εργαλείου."},{name:"Παράθυρο Διαλόγου Επεξεργαστή",

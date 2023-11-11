@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("specialchar","sl",{euro:"Znak za evro",lsquo:"Levi enojni narekovaj",rsquo:"Desni enojni narekovaj",ldquo:"Levi dvojni narekovaj",rdquo:"Desni dvojni narekovaj",ndash:"Pomišljaj",mdash:"Dolgi pomišljaj",iexcl:"Obrnjen klicaj",cent:"Znak za cent",pound:"Znak za funt",curren:"Znak valute",yen:"Znak za jen",brvbar:"Zlomljena črta",sect:"Znak za člen",uml:"Diereza",copy:"Znak avtorskih pravic",ordf:"Ženski zaporedni kazalnik",laquo:"Levi dvojni lomljeni narekovaj",not:"Znak za ne",

@@ -2,7 +2,11 @@ import os
 import logging
 from django.contrib.auth import login, authenticate 
 from django.contrib import messages
+<<<<<<< HEAD
 from django.views import View
+=======
+
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 from django.db.models import Q
 from django.http import FileResponse, HttpResponseNotFound
 from django.shortcuts import render
@@ -71,9 +75,12 @@ class SignupView(FormView):
 )
         return response
 
+<<<<<<< HEAD
 
 class LogoutView(FormView): 
     template_name = "registration/logged_out.html" 
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
 
 def tag(request, slug=None):
     tag = get_object_or_404(Tag, slug=slug)
@@ -169,7 +176,10 @@ def product_detail_modal(request, slug):
         product = get_object_or_404(Product, 
                                          slug=slug,
                                          )
+<<<<<<< HEAD
                                          
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
         cart_product_form = CartAddProductForm()
         stats.log_product_view(request, product)
         return render(request,
@@ -188,6 +198,7 @@ def product_detail(request, year, month, day, slug):
                                          status=Product.Status.PUBLISHED,
         
                                          )
+<<<<<<< HEAD
         
         # Get the previous and next products
         previous_product = Product.published.filter(publish__lt=product.publish).order_by('-publish').first()
@@ -200,6 +211,8 @@ def product_detail(request, year, month, day, slug):
         elif 'next_product' in request.POST and next_product:
             return redirect('product_detail', year=next_product.publish.year, month=next_product.publish.month, day=next_product.publish.day, slug=next_product.slug)
 
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
         cart_product_form = CartAddProductForm()
         stats.log_product_view(request, product)
         view_recs = stats.recommended_from_views(request)
@@ -420,8 +433,13 @@ def filter_facets(facets, qs, form, filters):
     return qs
 
 
+<<<<<<< HEAD
 def download_product_file(request, pk):
     product = get_object_or_404(Product, pk=pk)
+=======
+def download_product_file(request, pk, slug):
+    product = get_object_or_404(Product, uuid=pk, slug=slug)
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
     
     if product.file:
         # Extract filename and extension from the FieldFile's name
@@ -443,6 +461,7 @@ def download_product_file(request, pk):
         )
     
     return response
+<<<<<<< HEAD
 class MyOrderView(LoginRequiredMixin, View):
     login_url = '/login/'  # Set the login URL
 
@@ -475,3 +494,5 @@ def download_free_product(request, random_url):
         return response
 
     raise Http404("The requested product is not available for download.")
+=======
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035

@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("a11yhelp","es-mx",{title:"Instrucciones de accesibilidad",contents:"Contenidos de ayuda. Para cerrar este cuadro de diálogo presione ESC.",legend:[{name:"General",items:[{name:"Barra de herramientas del editor",legend:"Presione ${toolbarFocus} para navegar a la barra de herramientas. Desplácese al grupo de barras de herramientas siguiente y anterior con  SHIFT + TAB. Desplácese al botón siguiente y anterior de la barra de herramientas con FLECHA DERECHA o FLECHA IZQUIERDA. Presione SPACE o ENTER para activar el botón de la barra de herramientas."},

@@ -1,5 +1,9 @@
 ﻿/*
+<<<<<<< HEAD
  Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+=======
+ Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+>>>>>>> 309766bdf0e7bfa8ea615d7bf18962f3fa438035
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("specialchar","ca",{euro:"Símbol d'euro",lsquo:"Signe de cometa simple esquerra",rsquo:"Signe de cometa simple dreta",ldquo:"Signe de cometa doble esquerra",rdquo:"Signe de cometa doble dreta",ndash:"Guió",mdash:"Guió baix",iexcl:"Signe d'exclamació inversa",cent:"Símbol de percentatge",pound:"Símbol de lliura",curren:"Símbol de moneda",yen:"Símbol de Yen",brvbar:"Barra trencada",sect:"Símbol de secció",uml:"Dièresi",copy:"Símbol de Copyright",ordf:"Indicador ordinal femení",
